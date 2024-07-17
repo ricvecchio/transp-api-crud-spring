@@ -11,7 +11,7 @@
 	<groupId>com.transportadora</groupId>
 	<artifactId>transp-api-crud-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>crud-spring</name>
+	<name>transp-api-crud-spring</name>
 	<description>Projeto com CRUD Spring + Angular</description>
 	<properties>
 		<java.version>17</java.version>
