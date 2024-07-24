@@ -1,4 +1,4 @@
-package com.transportadora.model;
+package com.transportadora.model.app;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -55,8 +55,9 @@ public class Cliente {
     @Column(nullable = false)
     private String estado;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente")
-    private List<Pedido> pedidos = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente")
+//    @OneToMany(mappedBy = "cliente")
+//    private List<Pedido> pedidos = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -162,12 +163,12 @@ public class Cliente {
         this.estado = estado;
     }
 
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
+//    public List<Pedido> getPedidos() {
+//        return pedidos;
+//    }
+//
+//    public void setPedidos(List<Pedido> pedidos) {
+//        this.pedidos = pedidos;
+//    }
 
 }

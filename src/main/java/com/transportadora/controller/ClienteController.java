@@ -2,7 +2,9 @@ package com.transportadora.controller;
 
 import com.transportadora.dto.ClienteDTO;
 import com.transportadora.dto.ClientePaginacaoDTO;
+import com.transportadora.dto.PedidoPaginacaoDTO;
 import com.transportadora.service.ClienteService;
+import com.transportadora.service.PedidoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
@@ -22,6 +24,7 @@ public class ClienteController {
     public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;
     }
+
 
     @GetMapping
     public ClientePaginacaoDTO list(@RequestParam(defaultValue = "0") @PositiveOrZero int page,

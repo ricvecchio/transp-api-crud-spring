@@ -1,4 +1,4 @@
-package com.transportadora.model;
+package com.transportadora.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -98,10 +98,10 @@ public class Pedido {
     @Convert(converter = StatusConverter.class)
     private Status status = Status.EMITIDO;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "cliente_id", nullable = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Cliente cliente;
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "cliente_id", nullable = false)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    private Cliente cliente;
 
     public Long getId() {
         return id;
@@ -311,12 +311,12 @@ public class Pedido {
         this.status = status;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+//    public Cliente getCliente() {
+//        return cliente;
+//    }
+//
+//    public void setCliente(Cliente cliente) {
+//        this.cliente = cliente;
+//    }
 
 }

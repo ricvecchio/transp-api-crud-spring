@@ -4,8 +4,8 @@ import com.transportadora.dto.ClienteDTO;
 import com.transportadora.dto.ClientePaginacaoDTO;
 import com.transportadora.dto.mapper.ClienteMapper;
 import com.transportadora.exception.RecordNotFoundException;
-import com.transportadora.model.Cliente;
-import com.transportadora.repository.ClienteRepository;
+import com.transportadora.model.app.Cliente;
+import com.transportadora.repository.app.ClienteRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
@@ -60,7 +60,7 @@ public class ClienteService {
                     recordFound.setBairro(clienteDTO.bairro());
                     recordFound.setCidade(clienteDTO.cidade());
                     recordFound.setEstado(clienteDTO.estado());
-                    recordFound.getPedidos().forEach(recordFound.getPedidos()::add);
+//                    recordFound.getPedidos().forEach(recordFound.getPedidos()::add);
                     return clienteMapper.toDTO(clienteRepository.save(recordFound));
                 }).orElseThrow(() -> new RecordNotFoundException(id));
     }

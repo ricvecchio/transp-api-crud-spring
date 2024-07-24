@@ -20,8 +20,9 @@ public record ClienteDTO(
         String complemento,
         String bairro,
         String cidade,
-        String estado,
-        List<PedidoDTO> pedidos) {
-//    @NotNull @NotEmpty @Valid List<PedidoDTO> pedidos) {
+        String estado) {
+//        String estado,
+//        List<PedidoDTO> pedidos) {
+
 
 }

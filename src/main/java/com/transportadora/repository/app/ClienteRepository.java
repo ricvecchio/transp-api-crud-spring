@@ -1,6 +1,6 @@
-package com.transportadora.repository;
+package com.transportadora.repository.app;
 
-import com.transportadora.model.Cliente;
+import com.transportadora.model.app.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
