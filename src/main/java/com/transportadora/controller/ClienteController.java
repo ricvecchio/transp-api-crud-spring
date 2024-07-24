@@ -2,14 +2,13 @@ package com.transportadora.controller;
 
 import com.transportadora.dto.ClienteDTO;
 import com.transportadora.dto.ClientePaginacaoDTO;
-import com.transportadora.dto.PedidoPaginacaoDTO;
 import com.transportadora.service.ClienteService;
-import com.transportadora.service.PedidoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,6 @@ public class ClienteController {
     public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;
     }
-
 
     @GetMapping
     public ClientePaginacaoDTO list(@RequestParam(defaultValue = "0") @PositiveOrZero int page,

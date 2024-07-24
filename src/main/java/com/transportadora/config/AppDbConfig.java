@@ -1,40 +1,49 @@
 package com.transportadora.config;
 
-import com.transportadora.repository.app.ClienteRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 
-import javax.sql.DataSource;
-
-@Configuration
 @EnableJpaRepositories(
-        basePackageClasses = ClienteRepository.class,
-        entityManagerFactoryRef = "appEntityManager")
+        basePackages = "com.transportadora.repository.app",
+        entityManagerFactoryRef = "clientesEntityManager",
+        transactionManagerRef = "clientesTransactionManager"
+)
+@Configuration
 public class AppDbConfig {
 
-    @Bean
     @Primary
-    @ConfigurationProperties(prefix = "app.datasource")
-    public DataSource appDataSource() {
-        return DataSourceBuilder.create().build();
+    @Bean
+    public DataSourceProperties clienteDataSource() {
+        return new DataSourceProperties();
     }
 
     @Bean
-    @Primary
-    public LocalContainerEntityManagerFactoryBean appEntityManager(
-            EntityManagerFactoryBuilder builder,
-            @Qualifier("appDataSource") DataSource dataSource) {
-        return builder
-                .dataSource(dataSource)
-                .packages("com.transportadora.model.app")
-                .build();
+    public LocalContainerEntityManagerFactoryBean clientesEntityManager() {
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(clienteDataSource().initializeDataSourceBuilder().build());
+        em.setPackagesToScan("com.transportadora.model.app");
+
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true);
+        vendorAdapter.setShowSql(true);
+        em.setJpaVendorAdapter(vendorAdapter);
+
+        return em;
     }
 
+    @Primary
+    @Bean
+    public PlatformTransactionManager clientesTransactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(clientesEntityManager().getObject());
+
+        return transactionManager;
+    }
 }

@@ -5,9 +5,12 @@ import com.transportadora.dto.PedidoPaginacaoDTO;
 import com.transportadora.dto.mapper.PedidoMapper;
 import com.transportadora.model.auth.Pedido;
 import com.transportadora.repository.auth.PedidoRepository;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -19,7 +22,9 @@ import java.util.stream.Collectors;
 @Validated
 @Service
 public class PedidoService {
+
     private final PedidoRepository pedidoRepository;
+
     private final PedidoMapper pedidoMapper;
 
     public PedidoService(PedidoRepository pedidoRepository, PedidoMapper pedidoMapper) {
@@ -38,9 +43,9 @@ public class PedidoService {
 //                .orElseThrow(() -> new RecordNotFoundException(id));
 //    }
 
-//    public ClienteDTO create(@Valid @NotNull ClienteDTO clienteDTO) {
-//        return clienteMapper.toDTO(clienteRepository.save(clienteMapper.toEntity(clienteDTO)));
-//    }
+    public PedidoDTO create(@Valid @NotNull PedidoDTO pedidoDTO) {
+        return pedidoMapper.toDTO(pedidoRepository.save(pedidoMapper.toEntity(pedidoDTO)));
+    }
 
 //    public ClienteDTO update(@NotNull @Positive Long id, @Valid ClienteDTO clienteDTO) {
 //        return clienteRepository.findById(id)

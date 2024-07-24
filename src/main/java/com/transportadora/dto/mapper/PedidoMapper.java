@@ -3,6 +3,7 @@ package com.transportadora.dto.mapper;
 import com.transportadora.dto.PedidoDTO;
 import com.transportadora.enums.Status;
 import com.transportadora.model.auth.Pedido;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

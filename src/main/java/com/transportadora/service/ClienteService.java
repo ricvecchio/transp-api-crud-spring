@@ -11,6 +11,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,9 @@ import java.util.stream.Collectors;
 @Validated
 @Service
 public class ClienteService {
+
     private final ClienteRepository clienteRepository;
+
     private final ClienteMapper clienteMapper;
 
     public ClienteService(ClienteRepository clienteRepository, ClienteMapper clienteMapper) {
