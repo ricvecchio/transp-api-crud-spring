@@ -25,7 +25,7 @@ public class PedidoController {
         this.pedidoService = pedidoService;
     }
 
-    @GetMapping("/api/pedidos")
+    @GetMapping
     public PedidoPaginacaoDTO list(@RequestParam(defaultValue = "0") @PositiveOrZero int page,
                                    @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize) {
         return pedidoService.list(page, pageSize);
