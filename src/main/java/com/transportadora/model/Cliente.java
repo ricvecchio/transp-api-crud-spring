@@ -1,12 +1,9 @@
-package com.transportadora.model.app;
+package com.transportadora.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "Clientes")
@@ -54,10 +51,6 @@ public class Cliente {
 
     @Column(nullable = false)
     private String estado;
-
-//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente")
-//    @OneToMany(mappedBy = "cliente")
-//    private List<Pedido> pedidos = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -162,13 +155,5 @@ public class Cliente {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
-//    public List<Pedido> getPedidos() {
-//        return pedidos;
-//    }
-//
-//    public void setPedidos(List<Pedido> pedidos) {
-//        this.pedidos = pedidos;
-//    }
 
 }

@@ -3,14 +3,14 @@ package com.transportadora.service;
 import com.transportadora.dto.PedidoDTO;
 import com.transportadora.dto.PedidoPaginacaoDTO;
 import com.transportadora.dto.mapper.PedidoMapper;
-import com.transportadora.model.auth.Pedido;
-import com.transportadora.repository.auth.PedidoRepository;
+import com.transportadora.exception.RecordNotFoundException;
+import com.transportadora.model.Pedido;
+import com.transportadora.repository.PedidoRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -38,37 +38,50 @@ public class PedidoService {
         return new PedidoPaginacaoDTO(pedidos, pagePedido.getTotalElements(), pagePedido.getTotalPages());
     }
 
-//    public ClienteDTO findById(@NotNull @Positive Long id) {
-//        return clienteRepository.findById(id).map(clienteMapper::toDTO)
-//                .orElseThrow(() -> new RecordNotFoundException(id));
-//    }
+    public PedidoDTO findById(@NotNull @Positive Long id) {
+        return pedidoRepository.findById(id).map(pedidoMapper::toDTO)
+                .orElseThrow(() -> new RecordNotFoundException(id));
+    }
 
     public PedidoDTO create(@Valid @NotNull PedidoDTO pedidoDTO) {
         return pedidoMapper.toDTO(pedidoRepository.save(pedidoMapper.toEntity(pedidoDTO)));
     }
 
-//    public ClienteDTO update(@NotNull @Positive Long id, @Valid ClienteDTO clienteDTO) {
-//        return clienteRepository.findById(id)
-//                .map(recordFound -> {
-//                    recordFound.setNome(clienteDTO.nome());
-//                    recordFound.setCpfcnpj(clienteDTO.cpfcnpj());
-//                    recordFound.setTelefone(clienteDTO.telefone());
-//                    recordFound.setCelular(clienteDTO.celular());
-//                    recordFound.setEmail(clienteDTO.email());
-//                    recordFound.setCep(clienteDTO.cep());
-//                    recordFound.setLogradouro(clienteDTO.logradouro());
-//                    recordFound.setNumero(clienteDTO.numero());
-//                    recordFound.setComplemento(clienteDTO.complemento());
-//                    recordFound.setBairro(clienteDTO.bairro());
-//                    recordFound.setCidade(clienteDTO.cidade());
-//                    recordFound.setEstado(clienteDTO.estado());
-//                    return clienteMapper.toDTO(clienteRepository.save(recordFound));
-//                }).orElseThrow(() -> new RecordNotFoundException(id));
-//    }
+    public PedidoDTO update(@NotNull @Positive Long id, @Valid PedidoDTO pedidoDTO) {
+        return pedidoRepository.findById(id)
+                .map(recordFound -> {
+                    recordFound.setNomePedido(pedidoDTO.nomePedido());
+                    recordFound.setRazaoSocial(pedidoDTO.razaoSocial());
+                    recordFound.setCpfcnpjPedido(pedidoDTO.cpfcnpjPedido());
+                    recordFound.setTipoPgto(pedidoDTO.tipoPgto());
+                    recordFound.setCepPedido(pedidoDTO.cepPedido());
+                    recordFound.setLogradouroPedido(pedidoDTO.logradouroPedido());
+                    recordFound.setNumeroPedido(pedidoDTO.numeroPedido());
+                    recordFound.setComplementoPedido(pedidoDTO.complementoPedido());
+                    recordFound.setBairroPedido(pedidoDTO.bairroPedido());
+                    recordFound.setCidadePedido(pedidoDTO.cidadePedido());
+                    recordFound.setEstadoPedido(pedidoDTO.estadoPedido());
+                    recordFound.setSfobras(pedidoDTO.sfobras());
+                    recordFound.setCno(pedidoDTO.cno());
+                    recordFound.setIe(pedidoDTO.ie());
+                    recordFound.setMangueira(pedidoDTO.mangueira());
+                    recordFound.setVolume(pedidoDTO.volume());
+                    recordFound.setPrecoCx5(pedidoDTO.precoCx5());
+                    recordFound.setPrecoCx10(pedidoDTO.precoCx10());
+                    recordFound.setPrecoCx15(pedidoDTO.precoCx15());
+                    recordFound.setPrecoLv5(pedidoDTO.precoLv5());
+                    recordFound.setPrecoLv10(pedidoDTO.precoLv10());
+                    recordFound.setPrecoLv15(pedidoDTO.precoLv15());
+                    recordFound.setAjudanteHora(pedidoDTO.ajudanteHora());
+                    recordFound.setObservacao(pedidoDTO.observacao());
+                    recordFound.setStatus((pedidoMapper.convertStatusValue(pedidoDTO.status())));
+                    return pedidoMapper.toDTO(pedidoRepository.save(recordFound));
+                }).orElseThrow(() -> new RecordNotFoundException(id));
+    }
 
-//    public void delete(@NotNull @Positive Long id) {
-//        clienteRepository.delete(clienteRepository.findById(id)
-//                .orElseThrow(() -> new RecordNotFoundException(id)));
-//
-//    }
+    public void delete(@NotNull @Positive Long id) {
+        pedidoRepository.delete(pedidoRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException(id)));
+
+    }
 }

@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +29,26 @@ public class PedidoController {
         return pedidoService.list(page, pageSize);
     }
 
+    @GetMapping("/{id}")
+    public PedidoDTO findById(@PathVariable @NotNull @Positive Long id) {
+        return pedidoService.findById(id);
+    }
+
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public PedidoDTO save(@RequestBody @Valid @NotNull PedidoDTO pedido) {
         return pedidoService.create(pedido);
+    }
+
+    @PutMapping("/{id}")
+    public PedidoDTO update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid PedidoDTO pedido) {
+        return pedidoService.update(id, pedido);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable @NotNull @Positive Long id) {
+        pedidoService.delete(id);
     }
 
 }

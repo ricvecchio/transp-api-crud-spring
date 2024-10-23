@@ -1,6 +1,6 @@
-package com.transportadora.repository.auth;
+package com.transportadora.repository;
 
-import com.transportadora.model.auth.Pedido;
+import com.transportadora.model.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

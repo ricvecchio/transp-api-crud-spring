@@ -1,7 +1,6 @@
-package com.transportadora.model.auth;
+package com.transportadora.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.transportadora.enums.Status;
 import com.transportadora.enums.converters.StatusConverter;
 import jakarta.persistence.*;
@@ -97,11 +96,6 @@ public class Pedido {
     @Column(length = 15, nullable = false)
     @Convert(converter = StatusConverter.class)
     private Status status = Status.EMITIDO;
-
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "cliente_id", nullable = false)
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-//    private Cliente cliente;
 
     public Long getId() {
         return id;
@@ -310,13 +304,5 @@ public class Pedido {
     public void setStatus(Status status) {
         this.status = status;
     }
-
-//    public Cliente getCliente() {
-//        return cliente;
-//    }
-//
-//    public void setCliente(Cliente cliente) {
-//        this.cliente = cliente;
-//    }
 
 }
