@@ -1,6 +1,5 @@
 package com.transportadora.repository;
 
-import com.transportadora.dto.ClienteDTO;
 import com.transportadora.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
