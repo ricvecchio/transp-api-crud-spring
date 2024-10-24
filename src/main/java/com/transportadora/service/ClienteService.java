@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,6 +42,18 @@ public class ClienteService {
     public ClienteDTO findById(@NotNull @Positive Long id) {
         return clienteRepository.findById(id).map(clienteMapper::toDTO)
                 .orElseThrow(() -> new RecordNotFoundException(id));
+    }
+
+    @GetMapping
+    public List<ClienteDTO> buscarTrechoNome(String nome) {
+
+        List<Cliente> clientesEncontrados = clienteRepository.clientesPorTrecho(nome);
+        if (clientesEncontrados.isEmpty() == true) {
+            return null;
+        } else {
+//            return clientesEncontrados;
+            return converteDadosCliente(clientesEncontrados);
+        }
     }
 
     public ClienteDTO create(@Valid @NotNull ClienteDTO clienteDTO) {
@@ -71,4 +84,24 @@ public class ClienteService {
                 .orElseThrow(() -> new RecordNotFoundException(id)));
 
     }
+
+    private List<ClienteDTO> converteDadosCliente(List<Cliente> cliente) {
+        return cliente.stream()
+                .map(c -> new ClienteDTO(
+                        c.getId(),
+                        c.getNome(),
+                        c.getCpfcnpj(),
+                        c.getTelefone(),
+                        c.getCelular(),
+                        c.getEmail(),
+                        c.getCep(),
+                        c.getLogradouro(),
+                        c.getNumero(),
+                        c.getComplemento(),
+                        c.getBairro(),
+                        c.getCidade(),
+                        c.getEstado()))
+                .collect(Collectors.toList());
+    }
 }
+

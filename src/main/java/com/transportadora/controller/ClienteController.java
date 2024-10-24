@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Validated
 @RestController
 @RequestMapping("/api/clientes")
@@ -32,6 +34,11 @@ public class ClienteController {
     @GetMapping("/{id}")
     public ClienteDTO findById(@PathVariable @NotNull @Positive Long id) {
         return clienteService.findById(id);
+    }
+
+    @GetMapping("/trecho/{nome}")
+    public List<ClienteDTO> buscarTrechoNome(@PathVariable String nome) {
+        return clienteService.buscarTrechoNome(nome);
     }
 
     @PostMapping
