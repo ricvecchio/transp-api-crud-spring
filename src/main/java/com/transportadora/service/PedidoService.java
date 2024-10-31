@@ -38,17 +38,17 @@ public class PedidoService {
         return new PedidoPaginacaoDTO(pedidos, pagePedido.getTotalElements(), pagePedido.getTotalPages());
     }
 
-    public PedidoDTO findById(@NotNull @Positive Long id) {
-        return pedidoRepository.findById(id).map(pedidoMapper::toDTO)
-                .orElseThrow(() -> new RecordNotFoundException(id));
+    public PedidoDTO findById(@NotNull @Positive Long idPedido) {
+        return pedidoRepository.findById(idPedido).map(pedidoMapper::toDTO)
+                .orElseThrow(() -> new RecordNotFoundException(idPedido));
     }
 
     public PedidoDTO create(@Valid @NotNull PedidoDTO pedidoDTO) {
         return pedidoMapper.toDTO(pedidoRepository.save(pedidoMapper.toEntity(pedidoDTO)));
     }
 
-    public PedidoDTO update(@NotNull @Positive Long id, @Valid PedidoDTO pedidoDTO) {
-        return pedidoRepository.findById(id)
+    public PedidoDTO update(@NotNull @Positive Long idPedido, @Valid PedidoDTO pedidoDTO) {
+        return pedidoRepository.findById(idPedido)
                 .map(recordFound -> {
                     recordFound.setNomePedido(pedidoDTO.nomePedido());
                     recordFound.setRazaoSocial(pedidoDTO.razaoSocial());
@@ -75,13 +75,14 @@ public class PedidoService {
                     recordFound.setAjudanteHora(pedidoDTO.ajudanteHora());
                     recordFound.setObservacao(pedidoDTO.observacao());
                     recordFound.setStatus((pedidoMapper.convertStatusValue(pedidoDTO.status())));
+                    recordFound.setIdCliente(pedidoDTO.idCliente());
                     return pedidoMapper.toDTO(pedidoRepository.save(recordFound));
-                }).orElseThrow(() -> new RecordNotFoundException(id));
+                }).orElseThrow(() -> new RecordNotFoundException(idPedido));
     }
 
-    public void delete(@NotNull @Positive Long id) {
-        pedidoRepository.delete(pedidoRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException(id)));
+    public void delete(@NotNull @Positive Long idPedido) {
+        pedidoRepository.delete(pedidoRepository.findById(idPedido)
+                .orElseThrow(() -> new RecordNotFoundException(idPedido)));
 
     }
 }

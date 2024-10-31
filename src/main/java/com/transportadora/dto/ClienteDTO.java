@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 public record ClienteDTO(
-        @JsonProperty("id") Long id,
+        @JsonProperty("idCliente") Long idCliente,
         @NotBlank @NotNull @Length(min = 1, max = 100) String nome,
         String cpfcnpj,
         String telefone,

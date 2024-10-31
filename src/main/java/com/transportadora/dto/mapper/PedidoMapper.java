@@ -12,7 +12,7 @@ public class PedidoMapper {
         if (pedido == null) {
             return null;
         }
-        return new PedidoDTO(pedido.getId(), pedido.getNomePedido(), pedido.getRazaoSocial()
+        return new PedidoDTO(pedido.getIdPedido(), pedido.getNomePedido(), pedido.getRazaoSocial()
                 , pedido.getCpfcnpjPedido(), pedido.getTipoPgto(), pedido.getCepPedido()
                 , pedido.getLogradouroPedido(), pedido.getNumeroPedido(), pedido.getComplementoPedido()
                 , pedido.getBairroPedido(), pedido.getCidadePedido(), pedido.getEstadoPedido()
@@ -20,7 +20,8 @@ public class PedidoMapper {
                 , pedido.getVolume(), pedido.getPrecoCx5(), pedido.getPrecoCx10(), pedido.getPrecoCx15()
                 , pedido.getPrecoLv5(), pedido.getPrecoLv10(), pedido.getPrecoLv15(), pedido.getAjudanteHora()
                 , pedido.getObservacao()
-                , pedido.getStatus().getValue());
+                , pedido.getStatus().getValue()
+                , pedido.getIdCliente());
     }
 
     public Pedido toEntity(PedidoDTO pedidoDTO) {
@@ -30,8 +31,8 @@ public class PedidoMapper {
         }
 
         Pedido pedido = new Pedido();
-        if (pedidoDTO.id() != null) {
-            pedido.setId(pedidoDTO.id());
+        if (pedidoDTO.idPedido() != null) {
+            pedido.setIdPedido(pedidoDTO.idPedido());
         }
         pedido.setNomePedido(pedidoDTO.nomePedido());
         pedido.setRazaoSocial(pedidoDTO.razaoSocial());
@@ -58,6 +59,7 @@ public class PedidoMapper {
         pedido.setAjudanteHora(pedidoDTO.ajudanteHora());
         pedido.setObservacao(pedidoDTO.observacao());
         pedido.setStatus(convertStatusValue(pedidoDTO.status()));
+        pedido.setIdCliente(pedidoDTO.idCliente());
         return pedido;
     }
 

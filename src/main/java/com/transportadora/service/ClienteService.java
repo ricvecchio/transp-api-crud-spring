@@ -15,7 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,19 +38,15 @@ public class ClienteService {
         return new ClientePaginacaoDTO(clientes, pageCliente.getTotalElements(), pageCliente.getTotalPages());
     }
 
-    public ClienteDTO findById(@NotNull @Positive Long id) {
-        return clienteRepository.findById(id).map(clienteMapper::toDTO)
-                .orElseThrow(() -> new RecordNotFoundException(id));
+    public ClienteDTO findById(Long idCliente) {
+        return clienteRepository.findById(idCliente).map(clienteMapper::toDTO).orElse(null);
     }
 
-    @GetMapping
     public List<ClienteDTO> buscarTrechoNome(String nome) {
-
         List<Cliente> clientesEncontrados = clienteRepository.clientesPorTrecho(nome);
         if (clientesEncontrados.isEmpty() == true) {
             return null;
         } else {
-//            return clientesEncontrados;
             return converteDadosCliente(clientesEncontrados);
         }
     }
@@ -60,8 +55,8 @@ public class ClienteService {
         return clienteMapper.toDTO(clienteRepository.save(clienteMapper.toEntity(clienteDTO)));
     }
 
-    public ClienteDTO update(@NotNull @Positive Long id, @Valid ClienteDTO clienteDTO) {
-        return clienteRepository.findById(id)
+    public ClienteDTO update(@NotNull @Positive Long idCliente, @Valid ClienteDTO clienteDTO) {
+        return clienteRepository.findById(idCliente)
                 .map(recordFound -> {
                     recordFound.setNome(clienteDTO.nome());
                     recordFound.setCpfcnpj(clienteDTO.cpfcnpj());
@@ -76,19 +71,18 @@ public class ClienteService {
                     recordFound.setCidade(clienteDTO.cidade());
                     recordFound.setEstado(clienteDTO.estado());
                     return clienteMapper.toDTO(clienteRepository.save(recordFound));
-                }).orElseThrow(() -> new RecordNotFoundException(id));
+                }).orElseThrow(() -> new RecordNotFoundException(idCliente));
     }
 
-    public void delete(@NotNull @Positive Long id) {
-        clienteRepository.delete(clienteRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException(id)));
-
+    public void delete(@NotNull @Positive Long idCliente) {
+        clienteRepository.delete(clienteRepository.findById(idCliente)
+                .orElseThrow(() -> new RecordNotFoundException(idCliente)));
     }
 
     private List<ClienteDTO> converteDadosCliente(List<Cliente> cliente) {
         return cliente.stream()
                 .map(c -> new ClienteDTO(
-                        c.getId(),
+                        c.getIdCliente(),
                         c.getNome(),
                         c.getCpfcnpj(),
                         c.getTelefone(),

@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 public record PedidoDTO(
-        @JsonProperty("id") Long id,
+        @JsonProperty("idPedido") Long idPedido,
         @NotBlank @NotNull @Length(min = 5, max = 100) String nomePedido,
         String razaoSocial,
         String cpfcnpjPedido,
@@ -33,5 +33,6 @@ public record PedidoDTO(
         String precoLv15,
         String ajudanteHora,
         String observacao,
-        @NotNull @Length(max = 10) @ValueOfEnum(enumClass = Status.class) String status) {
+        @NotNull @Length(max = 10) @ValueOfEnum(enumClass = Status.class) String status,
+        Long idCliente) {
 }

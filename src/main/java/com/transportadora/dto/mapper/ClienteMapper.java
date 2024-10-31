@@ -12,7 +12,7 @@ public class ClienteMapper {
             return null;
         }
 
-        return new ClienteDTO(cliente.getId(), cliente.getNome(), cliente.getCpfcnpj(), cliente.getTelefone(), cliente.getCelular(),
+        return new ClienteDTO(cliente.getIdCliente(), cliente.getNome(), cliente.getCpfcnpj(), cliente.getTelefone(), cliente.getCelular(),
                 cliente.getEmail(), cliente.getCep(), cliente.getLogradouro(), cliente.getNumero(), cliente.getComplemento(),
                 cliente.getBairro(), cliente.getCidade(), cliente.getEstado());
     }
@@ -24,8 +24,8 @@ public class ClienteMapper {
         }
 
         Cliente cliente = new Cliente();
-        if (clienteDTO.id() != null) {
-            cliente.setId(clienteDTO.id());
+        if (clienteDTO.idCliente() != null) {
+            cliente.setIdCliente(clienteDTO.idCliente());
         }
         cliente.setNome(clienteDTO.nome());
         cliente.setCpfcnpj(clienteDTO.cpfcnpj());

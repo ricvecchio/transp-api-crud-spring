@@ -29,9 +29,9 @@ public class PedidoController {
         return pedidoService.list(page, pageSize);
     }
 
-    @GetMapping("/{id}")
-    public PedidoDTO findById(@PathVariable @NotNull @Positive Long id) {
-        return pedidoService.findById(id);
+    @GetMapping("/{idPedido}")
+    public PedidoDTO findById(@PathVariable @NotNull @Positive Long idPedido) {
+        return pedidoService.findById(idPedido);
     }
 
     @PostMapping
@@ -40,15 +40,15 @@ public class PedidoController {
         return pedidoService.create(pedido);
     }
 
-    @PutMapping("/{id}")
-    public PedidoDTO update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid PedidoDTO pedido) {
-        return pedidoService.update(id, pedido);
+    @PutMapping("/{idPedido}")
+    public PedidoDTO update(@PathVariable @NotNull @Positive Long idPedido, @RequestBody @Valid PedidoDTO pedido) {
+        return pedidoService.update(idPedido, pedido);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{idPedido}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable @NotNull @Positive Long id) {
-        pedidoService.delete(id);
+    public void delete(@PathVariable @NotNull @Positive Long idPedido) {
+        pedidoService.delete(idPedido);
     }
 
 }

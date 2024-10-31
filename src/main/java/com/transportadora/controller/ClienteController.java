@@ -31,9 +31,9 @@ public class ClienteController {
         return clienteService.list(page, pageSize);
     }
 
-    @GetMapping("/{id}")
-    public ClienteDTO findById(@PathVariable @NotNull @Positive Long id) {
-        return clienteService.findById(id);
+    @GetMapping("/{idCliente}")
+    public ClienteDTO findById(@PathVariable @NotNull @Positive Long idCliente) {
+        return clienteService.findById(idCliente);
     }
 
     @GetMapping("/trecho/{nome}")
@@ -47,14 +47,14 @@ public class ClienteController {
         return clienteService.create(cliente);
     }
 
-    @PutMapping("/{id}")
-    public ClienteDTO update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid ClienteDTO cliente) {
-        return clienteService.update(id, cliente);
+    @PutMapping("/{idCliente}")
+    public ClienteDTO update(@PathVariable @NotNull @Positive Long idCliente, @RequestBody @Valid ClienteDTO cliente) {
+        return clienteService.update(idCliente, cliente);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{idCliente}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable @NotNull @Positive Long id) {
-        clienteService.delete(id);
+    public void delete(@PathVariable @NotNull @Positive Long idCliente) {
+        clienteService.delete(idCliente);
     }
 }

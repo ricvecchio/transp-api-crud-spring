@@ -15,7 +15,7 @@ public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long idPedido;
 
     @NotNull
     @NotBlank
@@ -97,12 +97,15 @@ public class Pedido {
     @Convert(converter = StatusConverter.class)
     private Status status = Status.EMITIDO;
 
-    public Long getId() {
-        return id;
+    @Column(nullable = false)
+    private Long idCliente;
+
+    public Long getIdPedido() {
+        return idPedido;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdPedido(Long idPedido) {
+        this.idPedido = idPedido;
     }
 
     public String getNomePedido() {
@@ -303,6 +306,14 @@ public class Pedido {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Long getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
     }
 
 }
