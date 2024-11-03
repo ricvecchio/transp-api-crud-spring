@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -33,7 +34,8 @@ public class PedidoService {
     }
 
     public PedidoPaginacaoDTO list(@PositiveOrZero int page, @Positive @Max(100) int tamPagina) {
-        Page<Pedido> pagePedido = pedidoRepository.findAll(PageRequest.of(page, tamPagina));
+        Pageable pageable = PageRequest.of(page, tamPagina);
+        Page<Pedido> pagePedido = pedidoRepository.findAllByOrderByIdPedidoDesc(pageable);
         List<PedidoDTO> pedidos = pagePedido.get().map(pedidoMapper::toDTO).collect(Collectors.toList());
         return new PedidoPaginacaoDTO(pedidos, pagePedido.getTotalElements(), pagePedido.getTotalPages());
     }
