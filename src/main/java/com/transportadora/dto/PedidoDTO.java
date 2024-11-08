@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDateTime;
+
 public record PedidoDTO(
         @JsonProperty("idPedido") Long idPedido,
         @NotBlank @NotNull @Length(min = 5, max = 100) String nomePedido,
@@ -34,5 +36,18 @@ public record PedidoDTO(
         String ajudanteHora,
         String observacao,
         @NotNull @Length(max = 10) @ValueOfEnum(enumClass = Status.class) String status,
-        Long idCliente) {
+        Long idCliente,
+        @NotBlank @NotNull @Length(min = 1, max = 100) String nome,
+        String cpfcnpj,
+        String telefone,
+        String celular,
+        String email,
+        String cep,
+        String logradouro,
+        String numero,
+        String complemento,
+        String bairro,
+        String cidade,
+        String estado,
+        LocalDateTime dataAtualizacaoPedido) {
 }

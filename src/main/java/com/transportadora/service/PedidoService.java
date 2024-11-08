@@ -78,6 +78,19 @@ public class PedidoService {
                     recordFound.setObservacao(pedidoDTO.observacao());
                     recordFound.setStatus((pedidoMapper.convertStatusValue(pedidoDTO.status())));
                     recordFound.setIdCliente(pedidoDTO.idCliente());
+                    recordFound.setNome(pedidoDTO.nome());
+                    recordFound.setCpfcnpj(pedidoDTO.cpfcnpj());
+                    recordFound.setTelefone(pedidoDTO.telefone());
+                    recordFound.setCelular(pedidoDTO.celular());
+                    recordFound.setEmail(pedidoDTO.email());
+                    recordFound.setCep(pedidoDTO.cep());
+                    recordFound.setLogradouro(pedidoDTO.logradouro());
+                    recordFound.setNumero(pedidoDTO.numero());
+                    recordFound.setComplemento(pedidoDTO.complemento());
+                    recordFound.setBairro(pedidoDTO.bairro());
+                    recordFound.setCidade(pedidoDTO.cidade());
+                    recordFound.setEstado(pedidoDTO.estado());
+                    recordFound.setDataAtualizacaoPedido(pedidoDTO.dataAtualizacaoPedido());
                     return pedidoMapper.toDTO(pedidoRepository.save(recordFound));
                 }).orElseThrow(() -> new RecordNotFoundException(idPedido));
     }
@@ -85,6 +98,5 @@ public class PedidoService {
     public void delete(@NotNull @Positive Long idPedido) {
         pedidoRepository.delete(pedidoRepository.findById(idPedido)
                 .orElseThrow(() -> new RecordNotFoundException(idPedido)));
-
     }
 }

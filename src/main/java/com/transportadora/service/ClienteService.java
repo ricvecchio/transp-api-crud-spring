@@ -72,6 +72,7 @@ public class ClienteService {
                     recordFound.setBairro(clienteDTO.bairro());
                     recordFound.setCidade(clienteDTO.cidade());
                     recordFound.setEstado(clienteDTO.estado());
+                    recordFound.setDataAtualizacaoCliente(clienteDTO.dataAtualizacaoPedido());
                     return clienteMapper.toDTO(clienteRepository.save(recordFound));
                 }).orElseThrow(() -> new RecordNotFoundException(idCliente));
     }
@@ -96,7 +97,8 @@ public class ClienteService {
                         c.getComplemento(),
                         c.getBairro(),
                         c.getCidade(),
-                        c.getEstado()))
+                        c.getEstado(),
+                        c.getDataAtualizacaoCliente()))
                 .collect(Collectors.toList());
     }
 }

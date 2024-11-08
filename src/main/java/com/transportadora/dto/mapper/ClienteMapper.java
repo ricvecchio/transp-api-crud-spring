@@ -14,7 +14,7 @@ public class ClienteMapper {
 
         return new ClienteDTO(cliente.getIdCliente(), cliente.getNome(), cliente.getCpfcnpj(), cliente.getTelefone(), cliente.getCelular(),
                 cliente.getEmail(), cliente.getCep(), cliente.getLogradouro(), cliente.getNumero(), cliente.getComplemento(),
-                cliente.getBairro(), cliente.getCidade(), cliente.getEstado());
+                cliente.getBairro(), cliente.getCidade(), cliente.getEstado(), cliente.getDataAtualizacaoCliente());
     }
 
     public Cliente toEntity(ClienteDTO clienteDTO) {
@@ -39,6 +39,7 @@ public class ClienteMapper {
         cliente.setBairro(clienteDTO.bairro());
         cliente.setCidade(clienteDTO.cidade());
         cliente.setEstado(clienteDTO.estado());
+        cliente.setDataAtualizacaoCliente(clienteDTO.dataAtualizacaoPedido());
 
         return cliente;
     }

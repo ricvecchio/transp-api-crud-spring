@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDateTime;
+
 public record ClienteDTO(
         @JsonProperty("idCliente") Long idCliente,
         @NotBlank @NotNull @Length(min = 1, max = 100) String nome,
@@ -18,6 +20,7 @@ public record ClienteDTO(
         String complemento,
         String bairro,
         String cidade,
-        String estado) {
+        String estado,
+        LocalDateTime dataAtualizacaoPedido) {
 
 }
