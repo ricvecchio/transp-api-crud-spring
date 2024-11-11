@@ -56,9 +56,10 @@ public class Cliente {
     @Column(nullable = false)
     private String estado;
 
-    @UpdateTimestamp
-    @Column(nullable = false)
-    private LocalDateTime dataAtualizacaoCliente;
+//    @UpdateTimestamp
+//    @Column(nullable = false)
+//    private LocalDateTime dataAtualizacaoCliente;
+    private String dataAtualizacaoCliente;
 
     public Long getIdCliente() {
         return idCliente;
@@ -164,19 +165,15 @@ public class Cliente {
         this.estado = estado;
     }
 
-    public LocalDateTime getDataAtualizacaoCliente() {
+    public String getDataAtualizacaoCliente() {
         LocalDateTime localDateTime = LocalDateTime.now();
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        String formattedDate = localDateTime.format(formatter);
-        System.out.println("Data formatter: " + formatter);
-        System.out.println("Data formattedDate: " + formattedDate);
-        System.out.println("Data dataAtualizacaoCliente: " + dataAtualizacaoCliente);
+        String dataAtualizacaoCliente = localDateTime.format(formatter);
 
         return dataAtualizacaoCliente;
     }
 
-    public void setDataAtualizacaoCliente(LocalDateTime dataAtualizacaoCliente) {
+    public void setDataAtualizacaoCliente(String dataAtualizacaoCliente) {
         this.dataAtualizacaoCliente = dataAtualizacaoCliente;
     }
 

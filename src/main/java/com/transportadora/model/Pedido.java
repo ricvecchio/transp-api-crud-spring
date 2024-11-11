@@ -142,9 +142,7 @@ public class Pedido {
     @Column(nullable = false)
     private String estado;
 
-    @UpdateTimestamp
-    @Column(nullable = false)
-    private LocalDateTime dataAtualizacaoPedido;
+    private String dataAtualizacaoPedido;
 
     public Long getIdPedido() {
         return idPedido;
@@ -458,19 +456,16 @@ public class Pedido {
         this.estado = estado;
     }
 
-    public LocalDateTime getDataAtualizacaoPedido() {
+    public String getDataAtualizacaoPedido() {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        String formattedDate = localDateTime.format(formatter);
-        System.out.println("Data formatter: " + formatter);
-        System.out.println("Data formattedDate: " + formattedDate);
-        System.out.println("Data dataAtualizacaoPedido: " + dataAtualizacaoPedido);
+        String dataAtualizacaoPedido = localDateTime.format(formatter);
 
         return dataAtualizacaoPedido;
     }
 
-    public void setDataAtualizacaoPedido(LocalDateTime dataAtualizacaoPedido) {
+    public void setDataAtualizacaoPedido(String dataAtualizacaoPedido) {
         this.dataAtualizacaoPedido = dataAtualizacaoPedido;
     }
 

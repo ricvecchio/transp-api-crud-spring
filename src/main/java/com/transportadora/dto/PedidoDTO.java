@@ -49,5 +49,5 @@ public record PedidoDTO(
         String bairro,
         String cidade,
         String estado,
-        LocalDateTime dataAtualizacaoPedido) {
+        String dataAtualizacaoPedido) {
 }
