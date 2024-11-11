@@ -72,7 +72,7 @@ public class ClienteService {
                     recordFound.setBairro(clienteDTO.bairro());
                     recordFound.setCidade(clienteDTO.cidade());
                     recordFound.setEstado(clienteDTO.estado());
-                    recordFound.setDataAtualizacaoCliente(clienteDTO.dataAtualizacaoPedido());
+                    recordFound.setDataAtualizacaoCliente(clienteDTO.dataAtualizacaoCliente());
                     return clienteMapper.toDTO(clienteRepository.save(recordFound));
                 }).orElseThrow(() -> new RecordNotFoundException(idCliente));
     }

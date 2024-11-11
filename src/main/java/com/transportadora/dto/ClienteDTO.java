@@ -21,6 +21,6 @@ public record ClienteDTO(
         String bairro,
         String cidade,
         String estado,
-        LocalDateTime dataAtualizacaoPedido) {
+        LocalDateTime dataAtualizacaoCliente) {
 
 }

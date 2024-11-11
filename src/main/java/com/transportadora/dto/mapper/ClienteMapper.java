@@ -39,7 +39,7 @@ public class ClienteMapper {
         cliente.setBairro(clienteDTO.bairro());
         cliente.setCidade(clienteDTO.cidade());
         cliente.setEstado(clienteDTO.estado());
-        cliente.setDataAtualizacaoCliente(clienteDTO.dataAtualizacaoPedido());
+        cliente.setDataAtualizacaoCliente(clienteDTO.dataAtualizacaoCliente());
 
         return cliente;
     }
