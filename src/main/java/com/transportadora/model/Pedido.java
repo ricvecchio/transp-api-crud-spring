@@ -72,22 +72,22 @@ public class Pedido {
     @Column(length = 10, nullable = false)
     private String volume;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 12, nullable = false)
     private String precoCx5;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 12, nullable = false)
     private String precoCx10;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 12, nullable = false)
     private String precoCx15;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 12, nullable = false)
     private String precoLv5;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 12, nullable = false)
     private String precoLv10;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 12, nullable = false)
     private String precoLv15;
 
     @Column(nullable = false)
