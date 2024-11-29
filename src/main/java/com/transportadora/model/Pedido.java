@@ -457,10 +457,10 @@ public class Pedido {
     }
 
     public String getDataAtualizacaoPedido() {
-        LocalDateTime localDateTime = LocalDateTime.now();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        String dataAtualizacaoPedido = localDateTime.format(formatter);
+//        LocalDateTime localDateTime = LocalDateTime.now();
+//
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+//        String dataAtualizacaoPedido = localDateTime.format(formatter);
 
         return dataAtualizacaoPedido;
     }
