@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public record ClienteDTO(
         @JsonProperty("idCliente") Long idCliente,
         @NotBlank @NotNull @Length(min = 1, max = 100) String nome,
-        String cpfcnpj,
+        String cpfCnpj,
         String razaoSocial,
         String telefone,
         String celular,

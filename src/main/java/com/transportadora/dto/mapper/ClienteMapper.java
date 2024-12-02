@@ -15,7 +15,7 @@ public class ClienteMapper {
         return new ClienteDTO(
                 cliente.getIdCliente(),
                 cliente.getNome(),
-                cliente.getCpfcnpj(),
+                cliente.getCpfCnpj(),
                 cliente.getRazaoSocial(),
                 cliente.getTelefone(),
                 cliente.getCelular(),
@@ -60,7 +60,7 @@ public class ClienteMapper {
             cliente.setIdCliente(clienteDTO.idCliente());
         }
         cliente.setNome(clienteDTO.nome());
-        cliente.setCpfcnpj(clienteDTO.cpfcnpj());
+        cliente.setCpfCnpj(clienteDTO.cpfCnpj());
         cliente.setRazaoSocial(clienteDTO.razaoSocial());
         cliente.setTelefone(clienteDTO.telefone());
         cliente.setCelular(clienteDTO.celular());

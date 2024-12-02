@@ -25,7 +25,7 @@ public class Cliente {
     private String nome;
 
     @Column(length = 20, nullable = false)
-    private String cpfcnpj;
+    private String cpfCnpj;
 
     @Column(length = 100, nullable = false)
     private String razaoSocial;
@@ -136,12 +136,12 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getCpfcnpj() {
-        return cpfcnpj;
+    public String getCpfCnpj() {
+        return cpfCnpj;
     }
 
-    public void setCpfcnpj(String cpfcnpj) {
-        this.cpfcnpj = cpfcnpj;
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
     }
 
     public String getRazaoSocial() {

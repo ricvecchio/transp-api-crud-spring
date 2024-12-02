@@ -61,7 +61,7 @@ public class ClienteService {
         return clienteRepository.findById(idCliente)
                 .map(recordFound -> {
                     recordFound.setNome(clienteDTO.nome());
-                    recordFound.setCpfcnpj(clienteDTO.cpfcnpj());
+                    recordFound.setCpfCnpj(clienteDTO.cpfCnpj());
                     recordFound.setRazaoSocial(clienteDTO.razaoSocial());
                     recordFound.setTelefone(clienteDTO.telefone());
                     recordFound.setCelular(clienteDTO.celular());
@@ -107,7 +107,7 @@ public class ClienteService {
                 .map(c -> new ClienteDTO(
                         c.getIdCliente(),
                         c.getNome(),
-                        c.getCpfcnpj(),
+                        c.getCpfCnpj(),
                         c.getRazaoSocial(),
                         c.getTelefone(),
                         c.getCelular(),
