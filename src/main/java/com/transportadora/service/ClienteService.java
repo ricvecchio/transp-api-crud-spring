@@ -62,6 +62,7 @@ public class ClienteService {
                 .map(recordFound -> {
                     recordFound.setNome(clienteDTO.nome());
                     recordFound.setCpfcnpj(clienteDTO.cpfcnpj());
+                    recordFound.setRazaoSocial(clienteDTO.razaoSocial());
                     recordFound.setTelefone(clienteDTO.telefone());
                     recordFound.setCelular(clienteDTO.celular());
                     recordFound.setEmail(clienteDTO.email());
@@ -72,6 +73,25 @@ public class ClienteService {
                     recordFound.setBairro(clienteDTO.bairro());
                     recordFound.setCidade(clienteDTO.cidade());
                     recordFound.setEstado(clienteDTO.estado());
+                    recordFound.setTipoPgto(clienteDTO.tipoPgto());
+                    recordFound.setCepEntrega(clienteDTO.cepEntrega());
+                    recordFound.setLogradouroEntrega(clienteDTO.logradouroEntrega());
+                    recordFound.setNumeroEntrega(clienteDTO.numeroEntrega());
+                    recordFound.setComplementoEntrega(clienteDTO.complementoEntrega());
+                    recordFound.setBairroEntrega(clienteDTO.bairroEntrega());
+                    recordFound.setCidadeEntrega(clienteDTO.cidadeEntrega());
+                    recordFound.setEstadoEntrega(clienteDTO.estadoEntrega());
+                    recordFound.setSfobras(clienteDTO.sfobras());
+                    recordFound.setCno(clienteDTO.cno());
+                    recordFound.setIe(clienteDTO.ie());
+                    recordFound.setMangueira(clienteDTO.mangueira());
+                    recordFound.setPrecoCx5(clienteDTO.precoCx5());
+                    recordFound.setPrecoCx10(clienteDTO.precoCx10());
+                    recordFound.setPrecoCx15(clienteDTO.precoCx15());
+                    recordFound.setPrecoLv5(clienteDTO.precoLv5());
+                    recordFound.setPrecoLv10(clienteDTO.precoLv10());
+                    recordFound.setPrecoLv15(clienteDTO.precoLv15());
+                    recordFound.setObservacao(clienteDTO.observacao());
                     recordFound.setDataAtualizacaoCliente(clienteDTO.dataAtualizacaoCliente());
                     return clienteMapper.toDTO(clienteRepository.save(recordFound));
                 }).orElseThrow(() -> new RecordNotFoundException(idCliente));
@@ -88,6 +108,7 @@ public class ClienteService {
                         c.getIdCliente(),
                         c.getNome(),
                         c.getCpfcnpj(),
+                        c.getRazaoSocial(),
                         c.getTelefone(),
                         c.getCelular(),
                         c.getEmail(),
@@ -98,6 +119,25 @@ public class ClienteService {
                         c.getBairro(),
                         c.getCidade(),
                         c.getEstado(),
+                        c.getTipoPgto(),
+                        c.getCepEntrega(),
+                        c.getLogradouroEntrega(),
+                        c.getNumeroEntrega(),
+                        c.getComplementoEntrega(),
+                        c.getBairroEntrega(),
+                        c.getCidadeEntrega(),
+                        c.getEstadoEntrega(),
+                        c.getSfobras(),
+                        c.getCno(),
+                        c.getIe(),
+                        c.getMangueira(),
+                        c.getPrecoCx5(),
+                        c.getPrecoCx10(),
+                        c.getPrecoCx15(),
+                        c.getPrecoLv5(),
+                        c.getPrecoLv10(),
+                        c.getPrecoLv15(),
+                        c.getObservacao(),
                         c.getDataAtualizacaoCliente()))
                 .collect(Collectors.toList());
     }

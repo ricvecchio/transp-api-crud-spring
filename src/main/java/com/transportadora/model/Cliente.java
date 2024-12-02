@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +26,9 @@ public class Cliente {
 
     @Column(length = 20, nullable = false)
     private String cpfcnpj;
+
+    @Column(length = 100, nullable = false)
+    private String razaoSocial;
 
     @Column(nullable = false)
     private String telefone;
@@ -56,9 +60,64 @@ public class Cliente {
     @Column(nullable = false)
     private String estado;
 
-//    @UpdateTimestamp
-//    @Column(nullable = false)
-//    private LocalDateTime dataAtualizacaoCliente;
+    @Column(nullable = false)
+    private String tipoPgto;
+
+    @Column(nullable = false)
+    private String cepEntrega;
+
+    @Column(nullable = false)
+    private String logradouroEntrega;
+
+    @Column(nullable = false)
+    private String numeroEntrega;
+
+    @Column(nullable = false)
+    private String complementoEntrega;
+
+    @Column(nullable = false)
+    private String bairroEntrega;
+
+    @Column(nullable = false)
+    private String cidadeEntrega;
+
+    @Column(nullable = false)
+    private String estadoEntrega;
+
+    @Column(nullable = false)
+    private String sfobras;
+
+    @Column(nullable = false)
+    private String cno;
+
+    @Column(nullable = false)
+    private String ie;
+
+    @Column(length = 15, nullable = false)
+    private String mangueira;
+
+    @Column(length = 12, nullable = false)
+    private String precoCx5;
+
+    @Column(length = 12, nullable = false)
+    private String precoCx10;
+
+    @Column(length = 12, nullable = false)
+    private String precoCx15;
+
+    @Column(length = 12, nullable = false)
+    private String precoLv5;
+
+    @Column(length = 12, nullable = false)
+    private String precoLv10;
+
+    @Column(length = 12, nullable = false)
+    private String precoLv15;
+
+    @Column(nullable = false)
+    private String observacao;
+
+    @Column(nullable = false)
     private String dataAtualizacaoCliente;
 
     public Long getIdCliente() {
@@ -83,6 +142,14 @@ public class Cliente {
 
     public void setCpfcnpj(String cpfcnpj) {
         this.cpfcnpj = cpfcnpj;
+    }
+
+    public String getRazaoSocial() {
+        return razaoSocial;
+    }
+
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
     }
 
     public String getTelefone() {
@@ -165,16 +232,166 @@ public class Cliente {
         this.estado = estado;
     }
 
+    public String getTipoPgto() {
+        return tipoPgto;
+    }
+
+    public void setTipoPgto(String tipoPgto) {
+        this.tipoPgto = tipoPgto;
+    }
+
+    public String getCepEntrega() {
+        return cepEntrega;
+    }
+
+    public void setCepEntrega(String cepEntrega) {
+        this.cepEntrega = cepEntrega;
+    }
+
+    public String getLogradouroEntrega() {
+        return logradouroEntrega;
+    }
+
+    public void setLogradouroEntrega(String logradouroEntrega) {
+        this.logradouroEntrega = logradouroEntrega;
+    }
+
+    public String getNumeroEntrega() {
+        return numeroEntrega;
+    }
+
+    public void setNumeroEntrega(String numeroEntrega) {
+        this.numeroEntrega = numeroEntrega;
+    }
+
+    public String getComplementoEntrega() {
+        return complementoEntrega;
+    }
+
+    public void setComplementoEntrega(String complementoEntrega) {
+        this.complementoEntrega = complementoEntrega;
+    }
+
+    public String getBairroEntrega() {
+        return bairroEntrega;
+    }
+
+    public void setBairroEntrega(String bairroEntrega) {
+        this.bairroEntrega = bairroEntrega;
+    }
+
+    public String getCidadeEntrega() {
+        return cidadeEntrega;
+    }
+
+    public void setCidadeEntrega(String cidadeEntrega) {
+        this.cidadeEntrega = cidadeEntrega;
+    }
+
+    public String getEstadoEntrega() {
+        return estadoEntrega;
+    }
+
+    public void setEstadoEntrega(String estadoPedido) {
+        this.estadoEntrega = estadoEntrega;
+    }
+
+    public String getSfobras() {
+        return sfobras;
+    }
+
+    public void setSfobras(String sfobras) {
+        this.sfobras = sfobras;
+    }
+
+    public String getCno() {
+        return cno;
+    }
+
+    public void setCno(String cno) {
+        this.cno = cno;
+    }
+
+    public String getIe() {
+        return ie;
+    }
+
+    public void setIe(String ie) {
+        this.ie = ie;
+    }
+
+    public String getMangueira() {
+        return mangueira;
+    }
+
+    public void setMangueira(String mangueira) {
+        this.mangueira = mangueira;
+    }
+
+    public String getPrecoCx5() {
+        return precoCx5;
+    }
+
+    public void setPrecoCx5(String precoCx5) {
+        this.precoCx5 = precoCx5;
+    }
+
+    public String getPrecoCx10() {
+        return precoCx10;
+    }
+
+    public void setPrecoCx10(String precoCx10) {
+        this.precoCx10 = precoCx10;
+    }
+
+    public String getPrecoCx15() {
+        return precoCx15;
+    }
+
+    public void setPrecoCx15(String precoCx15) {
+        this.precoCx15 = precoCx15;
+    }
+
+    public String getPrecoLv5() {
+        return precoLv5;
+    }
+
+    public void setPrecoLv5(String precoLv5) {
+        this.precoLv5 = precoLv5;
+    }
+
+    public String getPrecoLv10() {
+        return precoLv10;
+    }
+
+    public void setPrecoLv10(String precoLv10) {
+        this.precoLv10 = precoLv10;
+    }
+
+    public String getPrecoLv15() {
+        return precoLv15;
+    }
+
+    public void setPrecoLv15(String precoLv15) {
+        this.precoLv15 = precoLv15;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
     public String getDataAtualizacaoCliente() {
 //        LocalDateTime localDateTime = LocalDateTime.now();
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 //        String dataAtualizacaoCliente = localDateTime.format(formatter);
-
         return dataAtualizacaoCliente;
     }
 
     public void setDataAtualizacaoCliente(String dataAtualizacaoCliente) {
         this.dataAtualizacaoCliente = dataAtualizacaoCliente;
     }
-
 }
