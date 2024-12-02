@@ -25,37 +25,70 @@ public class Pedido {
     @NotBlank
     @Length(min = 5, max = 100)
     @Column(length = 100, nullable = false)
-    private String nomePedido;
+    private String nome;
+
+    @Column(length = 20, nullable = false)
+    private String cpfCnpj;
 
     @Column(length = 100, nullable = false)
     private String razaoSocial;
 
-    @Column(length = 20, nullable = false)
-    private String cpfcnpjPedido;
+    @Column(nullable = false)
+    private Long idCliente;
+
+    @Column(nullable = false)
+    private String telefone;
+
+    @Column(nullable = false)
+    private String celular;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String cep;
+
+    @Column(nullable = false)
+    private String logradouro;
+
+    @Column(nullable = false)
+    private String numero;
+
+    @Column(nullable = false)
+    private String complemento;
+
+    @Column(nullable = false)
+    private String bairro;
+
+    @Column(nullable = false)
+    private String cidade;
+
+    @Column(nullable = false)
+    private String estado;
 
     @Column(nullable = false)
     private String tipoPgto;
 
     @Column(nullable = false)
-    private String cepPedido;
+    private String cepEntrega;
 
     @Column(nullable = false)
-    private String logradouroPedido;
+    private String logradouroEntrega;
 
     @Column(nullable = false)
-    private String numeroPedido;
+    private String numeroEntrega;
 
     @Column(nullable = false)
-    private String complementoPedido;
+    private String complementoEntrega;
 
     @Column(nullable = false)
-    private String bairroPedido;
+    private String bairroEntrega;
 
     @Column(nullable = false)
-    private String cidadePedido;
+    private String cidadeEntrega;
 
     @Column(nullable = false)
-    private String estadoPedido;
+    private String estadoEntrega;
 
     @Column(nullable = false)
     private String sfobras;
@@ -91,7 +124,7 @@ public class Pedido {
     private String precoLv15;
 
     @Column(nullable = false)
-    private String ajudanteHora;
+    private boolean ajudante;
 
     @Column(nullable = false)
     private String observacao;
@@ -102,46 +135,6 @@ public class Pedido {
     private Status status = Status.EMITIDO;
 
     @Column(nullable = false)
-    private Long idCliente;
-
-    @NotBlank
-    @NotNull
-    @Column(length = 100, nullable = false)
-    private String nome;
-
-    @Column(length = 20, nullable = false)
-    private String cpfcnpj;
-
-    @Column(nullable = false)
-    private String telefone;
-
-    @Column(nullable = false)
-    private String celular;
-
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
-    private String cep;
-
-    @Column(nullable = false)
-    private String logradouro;
-
-    @Column(nullable = false)
-    private String numero;
-
-    @Column(nullable = false)
-    private String complemento;
-
-    @Column(nullable = false)
-    private String bairro;
-
-    @Column(nullable = false)
-    private String cidade;
-
-    @Column(nullable = false)
-    private String estado;
-
     private String dataAtualizacaoPedido;
 
     public Long getIdPedido() {
@@ -152,12 +145,20 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public String getNomePedido() {
-        return nomePedido;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomePedido(String nomePedido) {
-        this.nomePedido = nomePedido;
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpfCnpj() {
+        return cpfCnpj;
+    }
+
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
     }
 
     public String getRazaoSocial() {
@@ -168,12 +169,92 @@ public class Pedido {
         this.razaoSocial = razaoSocial;
     }
 
-    public String getCpfcnpjPedido() {
-        return cpfcnpjPedido;
+    public Long getIdCliente() {
+        return idCliente;
     }
 
-    public void setCpfcnpjPedido(String cpfcnpjPedido) {
-        this.cpfcnpjPedido = cpfcnpjPedido;
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getTipoPgto() {
@@ -184,60 +265,60 @@ public class Pedido {
         this.tipoPgto = tipoPgto;
     }
 
-    public String getCepPedido() {
-        return cepPedido;
+    public String getCepEntrega() {
+        return cepEntrega;
     }
 
-    public void setCepPedido(String cepPedido) {
-        this.cepPedido = cepPedido;
+    public void setCepEntrega(String cepEntrega) {
+        this.cepEntrega = cepEntrega;
     }
 
-    public String getLogradouroPedido() {
-        return logradouroPedido;
+    public String getLogradouroEntrega() {
+        return logradouroEntrega;
     }
 
-    public void setLogradouroPedido(String logradouroPedido) {
-        this.logradouroPedido = logradouroPedido;
+    public void setLogradouroEntrega(String logradouroEntrega) {
+        this.logradouroEntrega = logradouroEntrega;
     }
 
-    public String getNumeroPedido() {
-        return numeroPedido;
+    public String getNumeroEntrega() {
+        return numeroEntrega;
     }
 
-    public void setNumeroPedido(String numeroPedido) {
-        this.numeroPedido = numeroPedido;
+    public void setNumeroEntrega(String numeroEntrega) {
+        this.numeroEntrega = numeroEntrega;
     }
 
-    public String getComplementoPedido() {
-        return complementoPedido;
+    public String getComplementoEntrega() {
+        return complementoEntrega;
     }
 
-    public void setComplementoPedido(String complementoPedido) {
-        this.complementoPedido = complementoPedido;
+    public void setComplementoEntrega(String complementoEntrega) {
+        this.complementoEntrega = complementoEntrega;
     }
 
-    public String getBairroPedido() {
-        return bairroPedido;
+    public String getBairroEntrega() {
+        return bairroEntrega;
     }
 
-    public void setBairroPedido(String bairroPedido) {
-        this.bairroPedido = bairroPedido;
+    public void setBairroEntrega(String bairroEntrega) {
+        this.bairroEntrega = bairroEntrega;
     }
 
-    public String getCidadePedido() {
-        return cidadePedido;
+    public String getCidadeEntrega() {
+        return cidadeEntrega;
     }
 
-    public void setCidadePedido(String cidadePedido) {
-        this.cidadePedido = cidadePedido;
+    public void setCidadeEntrega(String cidadeEntrega) {
+        this.cidadeEntrega = cidadeEntrega;
     }
 
-    public String getEstadoPedido() {
-        return estadoPedido;
+    public String getEstadoEntrega() {
+        return estadoEntrega;
     }
 
-    public void setEstadoPedido(String estadoPedido) {
-        this.estadoPedido = estadoPedido;
+    public void setEstadoEntrega(String estadoEntrega) {
+        this.estadoEntrega = estadoEntrega;
     }
 
     public String getSfobras() {
@@ -328,12 +409,12 @@ public class Pedido {
         this.precoLv15 = precoLv15;
     }
 
-    public String getAjudanteHora() {
-        return ajudanteHora;
+    public boolean getAjudante() {
+        return ajudante;
     }
 
-    public void setAjudanteHora(String ajudanteHora) {
-        this.ajudanteHora = ajudanteHora;
+    public void setAjudante(boolean ajudanteHora) {
+        this.ajudante = ajudante;
     }
 
     public String getObservacao() {
@@ -352,115 +433,10 @@ public class Pedido {
         this.status = status;
     }
 
-    public Long getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpfcnpj() {
-        return cpfcnpj;
-    }
-
-    public void setCpfcnpj(String cpfcnpj) {
-        this.cpfcnpj = cpfcnpj;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     public String getDataAtualizacaoPedido() {
 //        LocalDateTime localDateTime = LocalDateTime.now();
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 //        String dataAtualizacaoPedido = localDateTime.format(formatter);
-
         return dataAtualizacaoPedido;
     }
 

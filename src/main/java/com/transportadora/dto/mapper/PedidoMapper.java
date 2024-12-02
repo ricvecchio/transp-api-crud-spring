@@ -12,22 +12,45 @@ public class PedidoMapper {
         if (pedido == null) {
             return null;
         }
-        return new PedidoDTO(pedido.getIdPedido(), pedido.getNomePedido(), pedido.getRazaoSocial()
-                , pedido.getCpfcnpjPedido(), pedido.getTipoPgto(), pedido.getCepPedido()
-                , pedido.getLogradouroPedido(), pedido.getNumeroPedido(), pedido.getComplementoPedido()
-                , pedido.getBairroPedido(), pedido.getCidadePedido(), pedido.getEstadoPedido()
-                , pedido.getSfobras(), pedido.getCno(), pedido.getIe(), pedido.getMangueira()
-                , pedido.getVolume(), pedido.getPrecoCx5(), pedido.getPrecoCx10(), pedido.getPrecoCx15()
-                , pedido.getPrecoLv5(), pedido.getPrecoLv10(), pedido.getPrecoLv15(), pedido.getAjudanteHora()
-                , pedido.getObservacao()
-                , pedido.getStatus().getValue()
-                , pedido.getIdCliente()
-                , pedido.getNome()
-                , pedido.getCpfcnpj()
-                , pedido.getTelefone()
-                , pedido.getCelular()
-                , pedido.getEmail(), pedido.getCep(), pedido.getLogradouro(), pedido.getNumero(), pedido.getComplemento(),
-                pedido.getBairro(), pedido.getCidade(), pedido.getEstado(), pedido.getDataAtualizacaoPedido());
+        return new PedidoDTO(
+                pedido.getIdPedido(),
+                pedido.getNome(),
+                pedido.getCpfCnpj(),
+                pedido.getRazaoSocial(),
+                pedido.getIdCliente(),
+                pedido.getTelefone(),
+                pedido.getCelular(),
+                pedido.getEmail(),
+                pedido.getCep(),
+                pedido.getLogradouro(),
+                pedido.getNumero(),
+                pedido.getComplemento(),
+                pedido.getBairro(),
+                pedido.getCidade(),
+                pedido.getEstado(),
+                pedido.getTipoPgto(),
+                pedido.getCepEntrega(),
+                pedido.getLogradouroEntrega(),
+                pedido.getNumeroEntrega(),
+                pedido.getComplementoEntrega(),
+                pedido.getBairroEntrega(),
+                pedido.getCidadeEntrega(),
+                pedido.getEstadoEntrega(),
+                pedido.getSfobras(),
+                pedido.getCno(),
+                pedido.getIe(),
+                pedido.getMangueira(),
+                pedido.getVolume(),
+                pedido.getPrecoCx5(),
+                pedido.getPrecoCx10(),
+                pedido.getPrecoCx15(),
+                pedido.getPrecoLv5(),
+                pedido.getPrecoLv10(),
+                pedido.getPrecoLv15(),
+                pedido.getAjudante(),
+                pedido.getObservacao(),
+                pedido.getStatus().getValue(),
+                pedido.getDataAtualizacaoPedido());
     }
 
     public Pedido toEntity(PedidoDTO pedidoDTO) {
@@ -40,17 +63,28 @@ public class PedidoMapper {
         if (pedidoDTO.idPedido() != null) {
             pedido.setIdPedido(pedidoDTO.idPedido());
         }
-        pedido.setNomePedido(pedidoDTO.nomePedido());
+        pedido.setNome(pedidoDTO.nome());
+        pedido.setCpfCnpj(pedidoDTO.cpfCnpj());
         pedido.setRazaoSocial(pedidoDTO.razaoSocial());
-        pedido.setCpfcnpjPedido(pedidoDTO.cpfcnpjPedido());
+        pedido.setIdCliente(pedidoDTO.idCliente());
+        pedido.setTelefone(pedidoDTO.telefone());
+        pedido.setCelular(pedidoDTO.celular());
+        pedido.setEmail(pedidoDTO.email());
+        pedido.setCep(pedidoDTO.cep());
+        pedido.setLogradouro(pedidoDTO.logradouro());
+        pedido.setNumero(pedidoDTO.numero());
+        pedido.setComplemento(pedidoDTO.complemento());
+        pedido.setBairro(pedidoDTO.bairro());
+        pedido.setCidade(pedidoDTO.cidade());
+        pedido.setEstado(pedidoDTO.estado());
         pedido.setTipoPgto(pedidoDTO.tipoPgto());
-        pedido.setCepPedido(pedidoDTO.cepPedido());
-        pedido.setLogradouroPedido(pedidoDTO.logradouroPedido());
-        pedido.setNumeroPedido(pedidoDTO.numeroPedido());
-        pedido.setComplementoPedido(pedidoDTO.complementoPedido());
-        pedido.setBairroPedido(pedidoDTO.bairroPedido());
-        pedido.setCidadePedido(pedidoDTO.cidadePedido());
-        pedido.setEstadoPedido(pedidoDTO.estadoPedido());
+        pedido.setCepEntrega(pedidoDTO.cepEntrega());
+        pedido.setLogradouroEntrega(pedidoDTO.logradouroEntrega());
+        pedido.setNumeroEntrega(pedidoDTO.numeroEntrega());
+        pedido.setComplementoEntrega(pedidoDTO.complementoEntrega());
+        pedido.setBairroEntrega(pedidoDTO.bairroEntrega());
+        pedido.setCidadeEntrega(pedidoDTO.cidadeEntrega());
+        pedido.setEstadoEntrega(pedidoDTO.estadoEntrega());
         pedido.setSfobras(pedidoDTO.sfobras());
         pedido.setCno(pedidoDTO.cno());
         pedido.setIe(pedidoDTO.ie());
@@ -62,22 +96,9 @@ public class PedidoMapper {
         pedido.setPrecoLv5(pedidoDTO.precoLv5());
         pedido.setPrecoLv10(pedidoDTO.precoLv10());
         pedido.setPrecoLv15(pedidoDTO.precoLv15());
-        pedido.setAjudanteHora(pedidoDTO.ajudanteHora());
+        pedido.setAjudante(pedidoDTO.ajudante());
         pedido.setObservacao(pedidoDTO.observacao());
         pedido.setStatus(convertStatusValue(pedidoDTO.status()));
-        pedido.setIdCliente(pedidoDTO.idCliente());
-        pedido.setNome(pedidoDTO.nome());
-        pedido.setCpfcnpj(pedidoDTO.cpfcnpj());
-        pedido.setTelefone(pedidoDTO.telefone());
-        pedido.setCelular(pedidoDTO.celular());
-        pedido.setEmail(pedidoDTO.email());
-        pedido.setCep(pedidoDTO.cep());
-        pedido.setLogradouro(pedidoDTO.logradouro());
-        pedido.setNumero(pedidoDTO.numero());
-        pedido.setComplemento(pedidoDTO.complemento());
-        pedido.setBairro(pedidoDTO.bairro());
-        pedido.setCidade(pedidoDTO.cidade());
-        pedido.setEstado(pedidoDTO.estado());
         pedido.setDataAtualizacaoPedido(pedidoDTO.dataAtualizacaoPedido());
         return pedido;
     }
