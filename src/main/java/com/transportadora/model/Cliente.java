@@ -292,7 +292,7 @@ public class Cliente {
         return estadoEntrega;
     }
 
-    public void setEstadoEntrega(String estadoPedido) {
+    public void setEstadoEntrega(String estadoEntrega) {
         this.estadoEntrega = estadoEntrega;
     }
 
