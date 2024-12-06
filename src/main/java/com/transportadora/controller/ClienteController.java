@@ -36,9 +36,10 @@ public class ClienteController {
         return clienteService.findById(idCliente);
     }
 
-    @GetMapping("/trecho/{nome}")
-    public List<ClienteDTO> buscarTrechoNome(@PathVariable String nome) {
-        return clienteService.buscarTrechoNome(nome);
+    @GetMapping("/trecho/{trechoBusca}")
+    public List<ClienteDTO> buscarTrechoNome(@PathVariable String trechoBusca) {
+        System.out.println("Trecho da Busca: " + trechoBusca);
+        return clienteService.buscarTrechoNome(trechoBusca);
     }
 
     @PostMapping

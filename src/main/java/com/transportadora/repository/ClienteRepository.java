@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
-    @Query("SELECT v FROM Cliente v WHERE v.nome ILIKE %:trechoNome%")
-    List<Cliente> clientesPorTrecho(String trechoNome);
+    @Query("SELECT v FROM Cliente v WHERE v.nome ILIKE %:trechoBusca% OR v.cpfCnpj ILIKE %:trechoBusca% OR v.razaoSocial ILIKE %:trechoBusca% OR v.logradouroEntrega ILIKE %:trechoBusca%")
+    List<Cliente> clientesPorTrecho(String trechoBusca);
 
     Page<Cliente> findAllByOrderByIdClienteDesc(Pageable pageable);
 }

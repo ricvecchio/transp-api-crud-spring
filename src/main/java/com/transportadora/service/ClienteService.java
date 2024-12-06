@@ -44,8 +44,10 @@ public class ClienteService {
         return clienteRepository.findById(idCliente).map(clienteMapper::toDTO).orElse(null);
     }
 
-    public List<ClienteDTO> buscarTrechoNome(String nome) {
-        List<Cliente> clientesEncontrados = clienteRepository.clientesPorTrecho(nome);
+    public List<ClienteDTO> buscarTrechoNome(String trechoBusca) {
+        List<Cliente> clientesEncontrados = clienteRepository.clientesPorTrecho(trechoBusca);
+        System.out.println("Trecho da Busca: " + trechoBusca);
+        System.out.println("clientesEncontrados: " + clientesEncontrados);
         if (clientesEncontrados.isEmpty() == true) {
             return null;
         } else {
