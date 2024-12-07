@@ -44,7 +44,7 @@ public record PedidoDTO(
         String precoLv5,
         String precoLv10,
         String precoLv15,
-        boolean ajudante,
+        String ajudante,
         String observacao,
         @NotNull @Length(max = 10) @ValueOfEnum(enumClass = Status.class) String status,
         String dataAtualizacaoPedido) {

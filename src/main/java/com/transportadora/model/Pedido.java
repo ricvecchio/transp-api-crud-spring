@@ -124,7 +124,7 @@ public class Pedido {
     private String precoLv15;
 
     @Column(nullable = false)
-    private boolean ajudante;
+    private String ajudante;
 
     @Column(nullable = false)
     private String observacao;
@@ -409,11 +409,11 @@ public class Pedido {
         this.precoLv15 = precoLv15;
     }
 
-    public boolean getAjudante() {
+    public String getAjudante() {
         return ajudante;
     }
 
-    public void setAjudante(boolean ajudanteHora) {
+    public void setAjudante(String ajudante) {
         this.ajudante = ajudante;
     }
 
