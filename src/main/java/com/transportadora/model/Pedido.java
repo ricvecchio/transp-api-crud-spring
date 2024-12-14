@@ -135,7 +135,7 @@ public class Pedido {
     private Status status = Status.EMITIDO;
 
     @Column(nullable = false)
-    private String dataAtualizacaoPedido;
+    private LocalDateTime dataAtualizacaoPedido;
 
     public Long getIdPedido() {
         return idPedido;
@@ -433,14 +433,14 @@ public class Pedido {
         this.status = status;
     }
 
-    public String getDataAtualizacaoPedido() {
+    public LocalDateTime getDataAtualizacaoPedido() {
 //        LocalDateTime localDateTime = LocalDateTime.now();
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 //        String dataAtualizacaoPedido = localDateTime.format(formatter);
         return dataAtualizacaoPedido;
     }
 
-    public void setDataAtualizacaoPedido(String dataAtualizacaoPedido) {
+    public void setDataAtualizacaoPedido(LocalDateTime dataAtualizacaoPedido) {
         this.dataAtualizacaoPedido = dataAtualizacaoPedido;
     }
 

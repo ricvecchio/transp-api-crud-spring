@@ -43,7 +43,7 @@ public record ClienteDTO(
         String precoLv10,
         String precoLv15,
         String observacao,
-        String dataAtualizacaoCliente) {
+        LocalDateTime dataAtualizacaoCliente) {
 }
 
 

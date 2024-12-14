@@ -26,9 +26,11 @@ public class ClienteController {
     }
 
     @GetMapping
-    public ClientePaginacaoDTO list(@RequestParam(defaultValue = "0") @PositiveOrZero int page,
-                                    @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize) {
-        return clienteService.list(page, pageSize);
+    public ClientePaginacaoDTO list(
+            @RequestParam(defaultValue = "0") @PositiveOrZero int page,
+            @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
+            @RequestParam(defaultValue = "") String filter) {
+        return clienteService.list(page, pageSize, filter);
     }
 
     @GetMapping("/{idCliente}")

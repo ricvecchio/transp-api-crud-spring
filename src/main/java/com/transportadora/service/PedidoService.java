@@ -7,16 +7,16 @@ import com.transportadora.exception.RecordNotFoundException;
 import com.transportadora.model.Pedido;
 import com.transportadora.repository.PedidoRepository;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,10 +33,34 @@ public class PedidoService {
         this.pedidoMapper = pedidoMapper;
     }
 
-    public PedidoPaginacaoDTO list(@PositiveOrZero int page, @Positive @Max(100) int tamPagina) {
+    public PedidoPaginacaoDTO list(int page, int tamPagina, LocalDate dataInicial, LocalDate dataFinal) {
         Pageable pageable = PageRequest.of(page, tamPagina);
-        Page<Pedido> pagePedido = pedidoRepository.findAllByOrderByIdPedidoDesc(pageable);
-        List<PedidoDTO> pedidos = pagePedido.get().map(pedidoMapper::toDTO).collect(Collectors.toList());
+
+        Page<Pedido> pagePedido;
+        if (dataInicial != null && dataFinal != null) {
+            pagePedido = pedidoRepository.findByDataAtualizacaoPedidoBetweenOrderByIdPedidoDesc(
+                    dataInicial.atStartOfDay(),
+                    dataFinal.atTime(LocalTime.MAX),
+                    pageable
+            );
+        } else if (dataInicial != null) {
+            pagePedido = pedidoRepository.findByDataAtualizacaoPedidoAfterOrderByIdPedidoDesc(
+                    dataInicial.atStartOfDay(),
+                    pageable
+            );
+        } else if (dataFinal != null) {
+            pagePedido = pedidoRepository.findByDataAtualizacaoPedidoBeforeOrderByIdPedidoDesc(
+                    dataFinal.atTime(LocalTime.MAX),
+                    pageable
+            );
+        } else {
+            pagePedido = pedidoRepository.findAllByOrderByIdPedidoDesc(pageable);
+        }
+
+        List<PedidoDTO> pedidos = pagePedido.getContent().stream()
+                .map(pedidoMapper::toDTO)
+                .collect(Collectors.toList());
+
         return new PedidoPaginacaoDTO(pedidos, pagePedido.getTotalElements(), pagePedido.getTotalPages());
     }
 

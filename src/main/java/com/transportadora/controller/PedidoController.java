@@ -8,9 +8,12 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @Validated
 @RestController
@@ -24,9 +27,12 @@ public class PedidoController {
     }
 
     @GetMapping
-    public PedidoPaginacaoDTO list(@RequestParam(defaultValue = "0") @PositiveOrZero int page,
-                                   @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize) {
-        return pedidoService.list(page, pageSize);
+    public PedidoPaginacaoDTO list(
+            @RequestParam(defaultValue = "0") @PositiveOrZero int page,
+            @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal) {
+        return pedidoService.list(page, pageSize, dataInicial, dataFinal);
     }
 
     @GetMapping("/{idPedido}")

@@ -47,5 +47,5 @@ public record PedidoDTO(
         String ajudante,
         String observacao,
         @NotNull @Length(max = 10) @ValueOfEnum(enumClass = Status.class) String status,
-        String dataAtualizacaoPedido) {
+        LocalDateTime dataAtualizacaoPedido) {
 }

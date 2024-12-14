@@ -118,7 +118,7 @@ public class Cliente {
     private String observacao;
 
     @Column(nullable = false)
-    private String dataAtualizacaoCliente;
+    private LocalDateTime dataAtualizacaoCliente;
 
     public Long getIdCliente() {
         return idCliente;
@@ -384,14 +384,14 @@ public class Cliente {
         this.observacao = observacao;
     }
 
-    public String getDataAtualizacaoCliente() {
+    public LocalDateTime getDataAtualizacaoCliente() {
 //        LocalDateTime localDateTime = LocalDateTime.now();
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 //        String dataAtualizacaoCliente = localDateTime.format(formatter);
         return dataAtualizacaoCliente;
     }
 
-    public void setDataAtualizacaoCliente(String dataAtualizacaoCliente) {
+    public void setDataAtualizacaoCliente(LocalDateTime dataAtualizacaoCliente) {
         this.dataAtualizacaoCliente = dataAtualizacaoCliente;
     }
 }

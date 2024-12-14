@@ -33,10 +33,18 @@ public class ClienteService {
         this.clienteMapper = clienteMapper;
     }
 
-    public ClientePaginacaoDTO list(@PositiveOrZero int page, @Positive @Max(100) int tamPagina) {
+    public ClientePaginacaoDTO list(@PositiveOrZero int page, @Positive @Max(100) int tamPagina, String filter) {
         Pageable pageable = PageRequest.of(page, tamPagina);
-        Page<Cliente> pageCliente = clienteRepository.findAllByOrderByIdClienteDesc(pageable);
+        Page<Cliente> pageCliente;
+
+        if (filter.isBlank()) {
+            pageCliente = clienteRepository.findAllByOrderByIdClienteDesc(pageable);
+        } else {
+            pageCliente = clienteRepository.findAllByFilter(filter, pageable);
+        }
+
         List<ClienteDTO> clientes = pageCliente.get().map(clienteMapper::toDTO).collect(Collectors.toList());
+
         return new ClientePaginacaoDTO(clientes, pageCliente.getTotalElements(), pageCliente.getTotalPages());
     }
 
