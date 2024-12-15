@@ -33,27 +33,50 @@ public class PedidoService {
         this.pedidoMapper = pedidoMapper;
     }
 
-    public PedidoPaginacaoDTO list(int page, int tamPagina, LocalDate dataInicial, LocalDate dataFinal) {
+    public PedidoPaginacaoDTO list(int page, int tamPagina, String clienteFiltro, LocalDate dataInicial, LocalDate dataFinal) {
         Pageable pageable = PageRequest.of(page, tamPagina);
-
         Page<Pedido> pagePedido;
-        if (dataInicial != null && dataFinal != null) {
+
+        String clienteFiltroLike = (clienteFiltro != null && !clienteFiltro.isEmpty())
+                ? "%" + clienteFiltro.toLowerCase() + "%"
+                : null;
+
+        if (clienteFiltroLike != null && dataInicial != null && dataFinal != null) {
+            // Combinação de clienteFiltro + intervalo de datas
+            pagePedido = pedidoRepository.findByClienteFiltroAndDataBetween(
+                    clienteFiltroLike, dataInicial.atStartOfDay(), dataFinal.atTime(LocalTime.MAX), pageable);
+
+        } else if (clienteFiltroLike != null && dataInicial != null) {
+            // Combinação de clienteFiltro + data inicial
+            pagePedido = pedidoRepository.findByClienteFiltroAndDataAfter(
+                    clienteFiltroLike, dataInicial.atStartOfDay(), pageable);
+
+        } else if (clienteFiltroLike != null && dataFinal != null) {
+            // Combinação de clienteFiltro + data final
+            pagePedido = pedidoRepository.findByClienteFiltroAndDataBefore(
+                    clienteFiltroLike, dataFinal.atTime(LocalTime.MAX), pageable);
+
+        } else if (clienteFiltroLike != null) {
+            // Apenas clienteFiltro
+            pagePedido = pedidoRepository.findByClienteFiltro(clienteFiltroLike, pageable);
+
+        } else if (dataInicial != null && dataFinal != null) {
+            // Apenas intervalo de datas
             pagePedido = pedidoRepository.findByDataAtualizacaoPedidoBetweenOrderByIdPedidoDesc(
-                    dataInicial.atStartOfDay(),
-                    dataFinal.atTime(LocalTime.MAX),
-                    pageable
-            );
+                    dataInicial.atStartOfDay(), dataFinal.atTime(LocalTime.MAX), pageable);
+
         } else if (dataInicial != null) {
+            // Apenas data inicial
             pagePedido = pedidoRepository.findByDataAtualizacaoPedidoAfterOrderByIdPedidoDesc(
-                    dataInicial.atStartOfDay(),
-                    pageable
-            );
+                    dataInicial.atStartOfDay(), pageable);
+
         } else if (dataFinal != null) {
+            // Apenas data final
             pagePedido = pedidoRepository.findByDataAtualizacaoPedidoBeforeOrderByIdPedidoDesc(
-                    dataFinal.atTime(LocalTime.MAX),
-                    pageable
-            );
+                    dataFinal.atTime(LocalTime.MAX), pageable);
+
         } else {
+            // Sem filtros
             pagePedido = pedidoRepository.findAllByOrderByIdPedidoDesc(pageable);
         }
 
