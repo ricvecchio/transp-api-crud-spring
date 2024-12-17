@@ -2,6 +2,7 @@ package com.transportadora.controller;
 
 import com.transportadora.dto.PedidoDTO;
 import com.transportadora.dto.PedidoPaginacaoDTO;
+import com.transportadora.enums.Status;
 import com.transportadora.service.PedidoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -32,8 +33,9 @@ public class PedidoController {
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
             @RequestParam(required = false) String clienteFiltro,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal) {
-        return pedidoService.list(page, pageSize, clienteFiltro, dataInicial, dataFinal);
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal,
+            @RequestParam(required = false) String statusFiltro) {
+        return pedidoService.list(page, pageSize, clienteFiltro, dataInicial, dataFinal, statusFiltro);
     }
 
     @GetMapping("/{idPedido}")

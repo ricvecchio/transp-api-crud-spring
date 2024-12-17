@@ -49,7 +49,7 @@ public class PedidoMapper {
                 pedido.getPrecoLv15(),
                 pedido.getAjudante(),
                 pedido.getObservacao(),
-                pedido.getStatus().getValue(),
+                pedido.getStatus(),
                 pedido.getDataAtualizacaoPedido());
     }
 
@@ -98,20 +98,20 @@ public class PedidoMapper {
         pedido.setPrecoLv15(pedidoDTO.precoLv15());
         pedido.setAjudante(pedidoDTO.ajudante());
         pedido.setObservacao(pedidoDTO.observacao());
-        pedido.setStatus(convertStatusValue(pedidoDTO.status()));
+        pedido.setStatus(pedidoDTO.status());
         pedido.setDataAtualizacaoPedido(pedidoDTO.dataAtualizacaoPedido());
         return pedido;
     }
 
-    public Status convertStatusValue(String value) {
-        if (value == null) {
-            return null;
-        }
-        return switch (value) {
-            case "Emitido" -> Status.EMITIDO;
-            case "Cancelado" -> Status.CANCELADO;
-            case "Salvo" -> Status.SALVO;
-            default -> throw new IllegalArgumentException("Status inválido: " + value);
-        };
-    }
+//    public Status convertStatusValue(String value) {
+//        if (value == null) {
+//            return null;
+//        }
+//        return switch (value) {
+//            case "Emitido" -> Status.EMITIDO;
+//            case "Cancelado" -> Status.CANCELADO;
+//            case "Salvo" -> Status.SALVO;
+//            default -> throw new IllegalArgumentException("Status inválido: " + value);
+//        };
+//    }
 };

@@ -2,7 +2,6 @@ package com.transportadora.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.transportadora.enums.Status;
-import com.transportadora.enums.converters.StatusConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -131,8 +130,7 @@ public class Pedido {
 
     @NotNull
     @Column(length = 15, nullable = false)
-    @Convert(converter = StatusConverter.class)
-    private Status status = Status.EMITIDO;
+    private String status;
 
     @Column(nullable = false)
     private LocalDateTime dataAtualizacaoPedido;
@@ -425,11 +423,11 @@ public class Pedido {
         this.observacao = observacao;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

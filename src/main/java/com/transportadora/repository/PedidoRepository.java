@@ -17,52 +17,74 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Query("SELECT p FROM Pedido p WHERE " +
             "(LOWER(p.nome) LIKE :clienteFiltro OR LOWER(p.razaoSocial) LIKE :clienteFiltro) " +
-            "AND p.dataAtualizacaoPedido BETWEEN :dataInicial AND :dataFinal")
-    Page<Pedido> findByClienteFiltroAndDataBetween(
+            "AND p.dataAtualizacaoPedido BETWEEN :dataInicial AND :dataFinal " +
+            "AND p.status = :statusFiltro")
+    Page<Pedido> findByClienteFiltroAndDataBetweenAndStatus(
             @Param("clienteFiltro") String clienteFiltro,
             @Param("dataInicial") LocalDateTime dataInicial,
             @Param("dataFinal") LocalDateTime dataFinal,
+            @Param("statusFiltro") String statusFiltro,
             Pageable pageable
     );
 
     @Query("SELECT p FROM Pedido p WHERE " +
             "(LOWER(p.nome) LIKE :clienteFiltro OR LOWER(p.razaoSocial) LIKE :clienteFiltro) " +
-            "AND p.dataAtualizacaoPedido >= :dataInicial")
-    Page<Pedido> findByClienteFiltroAndDataAfter(
+            "AND p.dataAtualizacaoPedido >= :dataInicial " +
+            "AND p.status = :statusFiltro")
+    Page<Pedido> findByClienteFiltroAndDataAfterAndStatus(
             @Param("clienteFiltro") String clienteFiltro,
             @Param("dataInicial") LocalDateTime dataInicial,
+            @Param("statusFiltro") String statusFiltro,
             Pageable pageable
     );
 
     @Query("SELECT p FROM Pedido p WHERE " +
             "(LOWER(p.nome) LIKE :clienteFiltro OR LOWER(p.razaoSocial) LIKE :clienteFiltro) " +
-            "AND p.dataAtualizacaoPedido <= :dataFinal")
-    Page<Pedido> findByClienteFiltroAndDataBefore(
+            "AND p.dataAtualizacaoPedido <= :dataFinal " +
+            "AND p.status = :statusFiltro")
+    Page<Pedido> findByClienteFiltroAndDataBeforeAndStatus(
             @Param("clienteFiltro") String clienteFiltro,
             @Param("dataFinal") LocalDateTime dataFinal,
+            @Param("statusFiltro") String statusFiltro,
             Pageable pageable
     );
 
     @Query("SELECT p FROM Pedido p WHERE " +
-            "(LOWER(p.nome) LIKE :clienteFiltro OR LOWER(p.razaoSocial) LIKE :clienteFiltro)")
-    Page<Pedido> findByClienteFiltro(
+            "(LOWER(p.nome) LIKE :clienteFiltro OR LOWER(p.razaoSocial) LIKE :clienteFiltro) " +
+            "AND p.status = :statusFiltro")
+    Page<Pedido> findByClienteFiltroAndStatus(
             @Param("clienteFiltro") String clienteFiltro,
+            @Param("statusFiltro") String statusFiltro,
             Pageable pageable
     );
 
-    Page<Pedido> findByDataAtualizacaoPedidoBetweenOrderByIdPedidoDesc(
-            LocalDateTime dataInicial,
-            LocalDateTime dataFinal,
+    @Query("SELECT p FROM Pedido p WHERE " +
+            "p.dataAtualizacaoPedido BETWEEN :dataInicial AND :dataFinal " +
+            "AND p.status = :statusFiltro")
+    Page<Pedido> findByDataBetweenAndStatus(
+            @Param("dataInicial") LocalDateTime dataInicial,
+            @Param("dataFinal") LocalDateTime dataFinal,
+            @Param("statusFiltro") String statusFiltro,
             Pageable pageable
     );
 
-    Page<Pedido> findByDataAtualizacaoPedidoAfterOrderByIdPedidoDesc(
-            LocalDateTime dataInicial,
+    @Query("SELECT p FROM Pedido p WHERE " +
+            "p.dataAtualizacaoPedido >= :dataInicial " +
+            "AND p.status = :statusFiltro")
+    Page<Pedido> findByDataAfterAndStatus(
+            @Param("dataInicial") LocalDateTime dataInicial,
+            @Param("statusFiltro") String statusFiltro,
             Pageable pageable
     );
 
-    Page<Pedido> findByDataAtualizacaoPedidoBeforeOrderByIdPedidoDesc(
-            LocalDateTime dataFinal,
+    @Query("SELECT p FROM Pedido p WHERE " +
+            "p.dataAtualizacaoPedido <= :dataFinal " +
+            "AND p.status = :statusFiltro")
+    Page<Pedido> findByDataBeforeAndStatus(
+            @Param("dataFinal") LocalDateTime dataFinal,
+            @Param("statusFiltro") String statusFiltro,
             Pageable pageable
     );
+
+    Page<Pedido> findByStatus(String statusFiltro, Pageable pageable);
 }
