@@ -18,7 +18,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     @Query("SELECT p FROM Pedido p WHERE " +
             "(LOWER(p.nome) LIKE :clienteFiltro OR LOWER(p.razaoSocial) LIKE :clienteFiltro) " +
             "AND p.dataAtualizacaoPedido BETWEEN :dataInicial AND :dataFinal " +
-            "AND p.status = :statusFiltro")
+            "AND p.status = :statusFiltro " +
+            "ORDER BY p.idPedido DESC")
     Page<Pedido> findByClienteFiltroAndDataBetweenAndStatus(
             @Param("clienteFiltro") String clienteFiltro,
             @Param("dataInicial") LocalDateTime dataInicial,
@@ -30,7 +31,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     @Query("SELECT p FROM Pedido p WHERE " +
             "(LOWER(p.nome) LIKE :clienteFiltro OR LOWER(p.razaoSocial) LIKE :clienteFiltro) " +
             "AND p.dataAtualizacaoPedido >= :dataInicial " +
-            "AND p.status = :statusFiltro")
+            "AND p.status = :statusFiltro " +
+            "ORDER BY p.idPedido DESC")
     Page<Pedido> findByClienteFiltroAndDataAfterAndStatus(
             @Param("clienteFiltro") String clienteFiltro,
             @Param("dataInicial") LocalDateTime dataInicial,
@@ -41,7 +43,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     @Query("SELECT p FROM Pedido p WHERE " +
             "(LOWER(p.nome) LIKE :clienteFiltro OR LOWER(p.razaoSocial) LIKE :clienteFiltro) " +
             "AND p.dataAtualizacaoPedido <= :dataFinal " +
-            "AND p.status = :statusFiltro")
+            "AND p.status = :statusFiltro " +
+            "ORDER BY p.idPedido DESC")
     Page<Pedido> findByClienteFiltroAndDataBeforeAndStatus(
             @Param("clienteFiltro") String clienteFiltro,
             @Param("dataFinal") LocalDateTime dataFinal,
@@ -51,7 +54,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Query("SELECT p FROM Pedido p WHERE " +
             "(LOWER(p.nome) LIKE :clienteFiltro OR LOWER(p.razaoSocial) LIKE :clienteFiltro) " +
-            "AND p.status = :statusFiltro")
+            "AND p.status = :statusFiltro " +
+            "ORDER BY p.idPedido DESC")
     Page<Pedido> findByClienteFiltroAndStatus(
             @Param("clienteFiltro") String clienteFiltro,
             @Param("statusFiltro") String statusFiltro,
@@ -60,7 +64,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Query("SELECT p FROM Pedido p WHERE " +
             "p.dataAtualizacaoPedido BETWEEN :dataInicial AND :dataFinal " +
-            "AND p.status = :statusFiltro")
+            "AND p.status = :statusFiltro " +
+            "ORDER BY p.idPedido DESC")
     Page<Pedido> findByDataBetweenAndStatus(
             @Param("dataInicial") LocalDateTime dataInicial,
             @Param("dataFinal") LocalDateTime dataFinal,
@@ -70,7 +75,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Query("SELECT p FROM Pedido p WHERE " +
             "p.dataAtualizacaoPedido >= :dataInicial " +
-            "AND p.status = :statusFiltro")
+            "AND p.status = :statusFiltro " +
+            "ORDER BY p.idPedido DESC")
     Page<Pedido> findByDataAfterAndStatus(
             @Param("dataInicial") LocalDateTime dataInicial,
             @Param("statusFiltro") String statusFiltro,
@@ -79,12 +85,15 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Query("SELECT p FROM Pedido p WHERE " +
             "p.dataAtualizacaoPedido <= :dataFinal " +
-            "AND p.status = :statusFiltro")
+            "AND p.status = :statusFiltro " +
+            "ORDER BY p.idPedido DESC")
     Page<Pedido> findByDataBeforeAndStatus(
             @Param("dataFinal") LocalDateTime dataFinal,
             @Param("statusFiltro") String statusFiltro,
             Pageable pageable
     );
 
-    Page<Pedido> findByStatus(String statusFiltro, Pageable pageable);
+    @Query(value = "SELECT p FROM Pedido p WHERE p.status = :statusFiltro ORDER BY p.idPedido DESC",
+            countQuery = "SELECT COUNT(p) FROM Pedido p WHERE p.status = :statusFiltro")
+    Page<Pedido> findByStatus(@Param("statusFiltro") String statusFiltro, Pageable pageable);
 }
