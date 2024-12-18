@@ -385,9 +385,6 @@ public class Cliente {
     }
 
     public LocalDateTime getDataAtualizacaoCliente() {
-//        LocalDateTime localDateTime = LocalDateTime.now();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-//        String dataAtualizacaoCliente = localDateTime.format(formatter);
         return dataAtualizacaoCliente;
     }
 

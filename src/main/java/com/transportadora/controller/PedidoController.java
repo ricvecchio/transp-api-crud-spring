@@ -57,7 +57,6 @@ public class PedidoController {
     @DeleteMapping("/{idPedido}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable @NotNull @Positive Long idPedido) {
-        pedidoService.delete(idPedido);
+        pedidoService.cancel(idPedido);
     }
-
 }

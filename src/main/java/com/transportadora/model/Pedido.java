@@ -432,9 +432,6 @@ public class Pedido {
     }
 
     public LocalDateTime getDataAtualizacaoPedido() {
-//        LocalDateTime localDateTime = LocalDateTime.now();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-//        String dataAtualizacaoPedido = localDateTime.format(formatter);
         return dataAtualizacaoPedido;
     }
 

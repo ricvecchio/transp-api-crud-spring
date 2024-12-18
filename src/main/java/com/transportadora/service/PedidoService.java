@@ -6,6 +6,7 @@ import com.transportadora.dto.mapper.PedidoMapper;
 import com.transportadora.exception.RecordNotFoundException;
 import com.transportadora.model.Pedido;
 import com.transportadora.repository.PedidoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -15,8 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -133,8 +133,13 @@ public class PedidoService {
                 }).orElseThrow(() -> new RecordNotFoundException(idPedido));
     }
 
-    public void delete(@NotNull @Positive Long idPedido) {
-        pedidoRepository.delete(pedidoRepository.findById(idPedido)
-                .orElseThrow(() -> new RecordNotFoundException(idPedido)));
+    public void cancel(@NotNull @Positive Long idPedido) {
+        Pedido pedido = pedidoRepository.findById(idPedido)
+                .orElseThrow(() -> new RecordNotFoundException(idPedido));
+
+        pedido.setStatus("Cancelado");
+        LocalDateTime localDateTime = LocalDateTime.now();
+        pedido.setDataAtualizacaoPedido(localDateTime);
+        pedidoRepository.save(pedido);
     }
 }
