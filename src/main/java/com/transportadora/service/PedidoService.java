@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Positive;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -83,6 +84,12 @@ public class PedidoService {
     public PedidoDTO findById(@NotNull @Positive Long idPedido) {
         return pedidoRepository.findById(idPedido).map(pedidoMapper::toDTO)
                 .orElseThrow(() -> new RecordNotFoundException(idPedido));
+    }
+
+    public List<PedidoDTO> findLastPedidosByCliente(@NotNull @Positive Long idCliente, int limite) {
+        Pageable pageable = PageRequest.of(0, limite, Sort.by(Sort.Direction.DESC, "dataAtualizacaoPedido"));
+        List<Pedido> pedidos = pedidoRepository.findTopByIdClienteOrderByDataAtualizacaoPedidoDesc(idCliente, pageable);
+        return pedidos.stream().map(pedidoMapper::toDTO).collect(Collectors.toList());
     }
 
     public PedidoDTO create(@Valid @NotNull PedidoDTO pedidoDTO) {

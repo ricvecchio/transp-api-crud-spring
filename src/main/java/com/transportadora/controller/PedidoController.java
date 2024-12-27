@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Validated
 @RestController
@@ -41,6 +42,13 @@ public class PedidoController {
     @GetMapping("/{idPedido}")
     public PedidoDTO findById(@PathVariable @NotNull @Positive Long idPedido) {
         return pedidoService.findById(idPedido);
+    }
+
+    @GetMapping("/ultimos")
+    public List<PedidoDTO> findLastPedidosByCliente(
+            @RequestParam @NotNull @Positive Long idCliente,
+            @RequestParam(defaultValue = "3") @Positive int limite) {
+        return pedidoService.findLastPedidosByCliente(idCliente, limite);
     }
 
     @PostMapping

@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
@@ -96,4 +97,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     @Query(value = "SELECT p FROM Pedido p WHERE p.status = :statusFiltro ORDER BY p.idPedido DESC",
             countQuery = "SELECT COUNT(p) FROM Pedido p WHERE p.status = :statusFiltro")
     Page<Pedido> findByStatus(@Param("statusFiltro") String statusFiltro, Pageable pageable);
+
+    @Query("SELECT p FROM Pedido p WHERE p.idCliente = :idCliente ORDER BY p.dataAtualizacaoPedido DESC")
+    List<Pedido> findTopByIdClienteOrderByDataAtualizacaoPedidoDesc(
+            @Param("idCliente") Long idCliente,
+            Pageable pageable);
 }
