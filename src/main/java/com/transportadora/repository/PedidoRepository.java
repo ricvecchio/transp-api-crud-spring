@@ -17,7 +17,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     Page<Pedido> findAllByOrderByIdPedidoDesc(Pageable pageable);
 
     @Query("SELECT p FROM Pedido p WHERE " +
-            "(LOWER(p.nome) LIKE :clienteFiltro OR LOWER(p.razaoSocial) LIKE :clienteFiltro) " +
+            "(LOWER(p.nome) LIKE :clienteFiltro OR " +
+            "LOWER(p.razaoSocial) LIKE :clienteFiltro OR " +
+            "CAST(p.idCliente AS string) LIKE :clienteFiltro) " +
             "AND p.dataAtualizacaoPedido BETWEEN :dataInicial AND :dataFinal " +
             "AND p.status = :statusFiltro " +
             "ORDER BY p.idPedido DESC")
@@ -30,7 +32,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     );
 
     @Query("SELECT p FROM Pedido p WHERE " +
-            "(LOWER(p.nome) LIKE :clienteFiltro OR LOWER(p.razaoSocial) LIKE :clienteFiltro) " +
+            "(LOWER(p.nome) LIKE :clienteFiltro OR " +
+            "LOWER(p.razaoSocial) LIKE :clienteFiltro OR " +
+            "CAST(p.idCliente AS string) LIKE :clienteFiltro) " +
             "AND p.dataAtualizacaoPedido >= :dataInicial " +
             "AND p.status = :statusFiltro " +
             "ORDER BY p.idPedido DESC")
@@ -42,7 +46,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     );
 
     @Query("SELECT p FROM Pedido p WHERE " +
-            "(LOWER(p.nome) LIKE :clienteFiltro OR LOWER(p.razaoSocial) LIKE :clienteFiltro) " +
+            "(LOWER(p.nome) LIKE :clienteFiltro OR " +
+            "LOWER(p.razaoSocial) LIKE :clienteFiltro OR " +
+            "CAST(p.idCliente AS string) LIKE :clienteFiltro) " +
             "AND p.dataAtualizacaoPedido <= :dataFinal " +
             "AND p.status = :statusFiltro " +
             "ORDER BY p.idPedido DESC")
@@ -54,7 +60,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     );
 
     @Query("SELECT p FROM Pedido p WHERE " +
-            "(LOWER(p.nome) LIKE :clienteFiltro OR LOWER(p.razaoSocial) LIKE :clienteFiltro) " +
+            "(LOWER(p.nome) LIKE :clienteFiltro OR " +
+            "LOWER(p.razaoSocial) LIKE :clienteFiltro OR " +
+            "CAST(p.idCliente AS string) LIKE :clienteFiltro) " +
             "AND p.status = :statusFiltro " +
             "ORDER BY p.idPedido DESC")
     Page<Pedido> findByClienteFiltroAndStatus(
