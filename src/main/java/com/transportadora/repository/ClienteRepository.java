@@ -13,16 +13,20 @@ import java.util.List;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
-    @Query("SELECT v FROM Cliente v WHERE v.nome ILIKE %:trechoBusca% OR v.cpfCnpj ILIKE %:trechoBusca% OR v.razaoSocial ILIKE %:trechoBusca% OR v.logradouroEntrega ILIKE %:trechoBusca%")
-    List<Cliente> clientesPorTrecho(String trechoBusca);
+    @Query("SELECT v FROM Cliente v WHERE " +
+            "TRANSLATE(LOWER(v.nome), 'áéíóúàèìòùãõâêîôûç', 'aeiouaeiouaoaeiouc') LIKE LOWER(CONCAT('%', TRANSLATE(:filter, 'áéíóúàèìòùãõâêîôûç', 'aeiouaeiouaoaeiouc'), '%')) OR " +
+            "REPLACE(REPLACE(REPLACE(v.cpfCnpj, '.', ''), '-', ''), '/', '') LIKE CONCAT('%', REPLACE(REPLACE(REPLACE(:filter, '.', ''), '-', ''), '/', ''), '%') OR " +
+            "TRANSLATE(LOWER(v.razaoSocial), 'áéíóúàèìòùãõâêîôûç', 'aeiouaeiouaoaeiouc') LIKE LOWER(CONCAT('%', TRANSLATE(:filter, 'áéíóúàèìòùãõâêîôûç', 'aeiouaeiouaoaeiouc'), '%')) OR " +
+            "TRANSLATE(LOWER(v.logradouroEntrega), 'áéíóúàèìòùãõâêîôûç', 'aeiouaeiouaoaeiouc') LIKE LOWER(CONCAT('%', TRANSLATE(:filter, 'áéíóúàèìòùãõâêîôûç', 'aeiouaeiouaoaeiouc'), '%'))")
+    List<Cliente> clientesPorTrecho(@Param("filter") String filter);
 
     Page<Cliente> findAllByOrderByIdClienteDesc(Pageable pageable);
 
+    // Manter o uso de 'filter' também na consulta paginada
     @Query("SELECT v FROM Cliente v WHERE " +
-            "LOWER(v.nome) LIKE LOWER(CONCAT('%', :filter, '%')) OR " +
-            "LOWER(v.cpfCnpj) LIKE LOWER(CONCAT('%', :filter, '%')) OR " +
-            "LOWER(v.razaoSocial) LIKE LOWER(CONCAT('%', :filter, '%')) OR " +
-            "LOWER(v.logradouroEntrega) LIKE LOWER(CONCAT('%', :filter, '%'))")
+            "TRANSLATE(LOWER(v.nome), 'áéíóúàèìòùãõâêîôûç', 'aeiouaeiouaoaeiouc') LIKE LOWER(CONCAT('%', TRANSLATE(:filter, 'áéíóúàèìòùãõâêîôûç', 'aeiouaeiouaoaeiouc'), '%')) OR " +
+            "REPLACE(REPLACE(REPLACE(v.cpfCnpj, '.', ''), '-', ''), '/', '') LIKE CONCAT('%', REPLACE(REPLACE(REPLACE(:filter, '.', ''), '-', ''), '/', ''), '%') OR " +
+            "TRANSLATE(LOWER(v.razaoSocial), 'áéíóúàèìòùãõâêîôûç', 'aeiouaeiouaoaeiouc') LIKE LOWER(CONCAT('%', TRANSLATE(:filter, 'áéíóúàèìòùãõâêîôûç', 'aeiouaeiouaoaeiouc'), '%')) OR " +
+            "TRANSLATE(LOWER(v.logradouroEntrega), 'áéíóúàèìòùãõâêîôûç', 'aeiouaeiouaoaeiouc') LIKE LOWER(CONCAT('%', TRANSLATE(:filter, 'áéíóúàèìòùãõâêîôûç', 'aeiouaeiouaoaeiouc'), '%'))")
     Page<Cliente> findAllByFilter(@Param("filter") String filter, Pageable pageable);
-
 }
