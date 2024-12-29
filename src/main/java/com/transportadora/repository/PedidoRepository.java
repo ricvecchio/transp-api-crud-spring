@@ -17,8 +17,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     Page<Pedido> findAllByOrderByIdPedidoDesc(Pageable pageable);
 
     @Query("SELECT p FROM Pedido p WHERE " +
-            "(LOWER(p.nome) LIKE :clienteFiltro OR " +
-            "LOWER(p.razaoSocial) LIKE :clienteFiltro OR " +
+            "(LOWER(CAST(FUNCTION('unaccent', p.nome) AS string)) LIKE LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)) OR " +
+            "LOWER(CAST(FUNCTION('unaccent', p.razaoSocial) AS string)) LIKE LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)) OR " +
             "CAST(p.idCliente AS string) LIKE :clienteFiltro) " +
             "AND p.dataAtualizacaoPedido BETWEEN :dataInicial AND :dataFinal " +
             "AND p.status = :statusFiltro " +
@@ -32,8 +32,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     );
 
     @Query("SELECT p FROM Pedido p WHERE " +
-            "(LOWER(p.nome) LIKE :clienteFiltro OR " +
-            "LOWER(p.razaoSocial) LIKE :clienteFiltro OR " +
+            "(LOWER(CAST(FUNCTION('unaccent', p.nome) AS string)) LIKE LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)) OR " +
+            "LOWER(CAST(FUNCTION('unaccent', p.razaoSocial) AS string)) LIKE LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)) OR " +
             "CAST(p.idCliente AS string) LIKE :clienteFiltro) " +
             "AND p.dataAtualizacaoPedido >= :dataInicial " +
             "AND p.status = :statusFiltro " +
@@ -46,8 +46,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     );
 
     @Query("SELECT p FROM Pedido p WHERE " +
-            "(LOWER(p.nome) LIKE :clienteFiltro OR " +
-            "LOWER(p.razaoSocial) LIKE :clienteFiltro OR " +
+            "(LOWER(CAST(FUNCTION('unaccent', p.nome) AS string)) LIKE LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)) OR " +
+            "LOWER(CAST(FUNCTION('unaccent', p.razaoSocial) AS string)) LIKE LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)) OR " +
             "CAST(p.idCliente AS string) LIKE :clienteFiltro) " +
             "AND p.dataAtualizacaoPedido <= :dataFinal " +
             "AND p.status = :statusFiltro " +
@@ -60,8 +60,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     );
 
     @Query("SELECT p FROM Pedido p WHERE " +
-            "(LOWER(p.nome) LIKE :clienteFiltro OR " +
-            "LOWER(p.razaoSocial) LIKE :clienteFiltro OR " +
+            "(LOWER(CAST(FUNCTION('unaccent', p.nome) AS string)) LIKE LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)) OR " +
+            "LOWER(CAST(FUNCTION('unaccent', p.razaoSocial) AS string)) LIKE LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)) OR " +
             "CAST(p.idCliente AS string) LIKE :clienteFiltro) " +
             "AND p.status = :statusFiltro " +
             "ORDER BY p.idPedido DESC")
