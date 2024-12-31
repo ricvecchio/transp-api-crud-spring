@@ -2,7 +2,6 @@ package com.transportadora.controller;
 
 import com.transportadora.dto.PedidoDTO;
 import com.transportadora.dto.PedidoPaginacaoDTO;
-import com.transportadora.enums.Status;
 import com.transportadora.service.PedidoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;

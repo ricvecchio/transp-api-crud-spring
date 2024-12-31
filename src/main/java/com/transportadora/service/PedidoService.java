@@ -6,7 +6,6 @@ import com.transportadora.dto.mapper.PedidoMapper;
 import com.transportadora.exception.RecordNotFoundException;
 import com.transportadora.model.Pedido;
 import com.transportadora.repository.PedidoRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -17,7 +16,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 

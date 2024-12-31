@@ -1,8 +1,6 @@
 package com.transportadora.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.transportadora.enums.Status;
-import com.transportadora.enums.validation.ValueOfEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
@@ -46,6 +44,6 @@ public record PedidoDTO(
         String precoLv15,
         String ajudante,
         String observacao,
-        @NotNull @Length(max = 10) @ValueOfEnum(enumClass = Status.class) String status,
+        String status,
         LocalDateTime dataAtualizacaoPedido) {
 }

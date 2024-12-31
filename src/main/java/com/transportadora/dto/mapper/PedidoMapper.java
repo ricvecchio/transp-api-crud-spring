@@ -1,7 +1,6 @@
 package com.transportadora.dto.mapper;
 
 import com.transportadora.dto.PedidoDTO;
-import com.transportadora.enums.Status;
 import com.transportadora.model.Pedido;
 import org.springframework.stereotype.Component;
 

@@ -1,8 +1,6 @@
 package com.transportadora.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.transportadora.enums.Status;
-import com.transportadora.enums.validation.ValueOfEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
