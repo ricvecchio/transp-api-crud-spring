@@ -18,6 +18,7 @@ import java.util.List;
 
 @Validated
 @RestController
+@CrossOrigin(origins = "https://saotomecatime.onrender.com")
 @RequestMapping("/api/pedidos")
 public class PedidoController {
 
