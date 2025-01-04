@@ -45,7 +45,17 @@
 			<version>42.2.5</version>
 		</dependency>
 	</dependencies>
-
+	<profiles>
+		<profile>
+			<id>production</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<skipTests>true</skipTests>
+			</properties>
+		</profile>
+	</profiles>
 	<build>
 		<plugins>
 			<plugin>
