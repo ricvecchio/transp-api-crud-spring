@@ -16,7 +16,7 @@ import java.util.List;
 
 @Validated
 @RestController
-@CrossOrigin(origins = "/saotomecatime.onrender.com")
+@CrossOrigin(origins = "https://saotomecatime.onrender.com")
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
