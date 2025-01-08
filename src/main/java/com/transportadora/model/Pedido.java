@@ -12,11 +12,10 @@ import java.time.LocalDateTime;
 @Table(name = "Pedidos")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Pedido {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_pedido")
     private Long idPedido;
-
     @NotNull
     @NotBlank
     @Length(min = 5, max = 100)
