@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/usuario")
 @CrossOrigin(origins = "https://saotomecatime.onrender.com")
+@RequestMapping(value = "/api/usuario")
 public class UsuarioController {
+
 
     @Autowired
     private UsuarioService usuarioService;

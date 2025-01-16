@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
 @CrossOrigin(origins = "https://saotomecatime.onrender.com")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
