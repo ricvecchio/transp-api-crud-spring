@@ -29,10 +29,9 @@ public class UserController {
         return createRoleUserService.execute(createUserRoleDTO);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/novoUsuario")
-    public String novoUsuario() {
-        return "Esse endpoint /novoUsuario tem hasRole('ADMIN').";
+    @PostMapping("/login")
+    public String login() {
+        return "Endpoint /login é público.";
     }
 
 }
