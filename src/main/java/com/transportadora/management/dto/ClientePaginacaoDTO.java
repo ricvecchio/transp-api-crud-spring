@@ -1,4 +1,4 @@
-package com.transportadora.dto;
+package com.transportadora.management.dto;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package com.transportadora.repository;
+package com.transportadora.management.repository;
 
-import com.transportadora.model.Cliente;
+import com.transportadora.management.model.Cliente;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package com.transportadora.model;
+package com.transportadora.management.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

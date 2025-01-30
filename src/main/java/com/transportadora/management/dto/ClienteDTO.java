@@ -1,4 +1,4 @@
-package com.transportadora.dto;
+package com.transportadora.management.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;

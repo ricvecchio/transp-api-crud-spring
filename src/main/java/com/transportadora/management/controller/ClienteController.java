@@ -1,14 +1,15 @@
-package com.transportadora.controller;
+package com.transportadora.management.controller;
 
-import com.transportadora.dto.ClienteDTO;
-import com.transportadora.dto.ClientePaginacaoDTO;
-import com.transportadora.service.ClienteService;
+import com.transportadora.management.dto.ClienteDTO;
+import com.transportadora.management.dto.ClientePaginacaoDTO;
+import com.transportadora.management.service.ClienteService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

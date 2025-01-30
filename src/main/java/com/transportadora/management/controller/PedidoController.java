@@ -1,8 +1,8 @@
-package com.transportadora.controller;
+package com.transportadora.management.controller;
 
-import com.transportadora.dto.PedidoDTO;
-import com.transportadora.dto.PedidoPaginacaoDTO;
-import com.transportadora.service.PedidoService;
+import com.transportadora.management.dto.PedidoDTO;
+import com.transportadora.management.dto.PedidoPaginacaoDTO;
+import com.transportadora.management.service.PedidoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,5 +67,11 @@ public class PedidoController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable @NotNull @Positive Long idPedido) {
         pedidoService.cancel(idPedido);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/metricas")
+    public String metricas() {
+        return "Esse endpoint /metricas tem hasRole('ADMIN').";
     }
 }

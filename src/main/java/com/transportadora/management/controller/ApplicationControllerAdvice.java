@@ -1,6 +1,6 @@
-package com.transportadora.controller;
+package com.transportadora.management.controller;
 
-import com.transportadora.exception.RecordNotFoundException;
+import com.transportadora.management.exception.RecordNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;

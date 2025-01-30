@@ -1,4 +1,4 @@
-package com.transportadora.exception;
+package com.transportadora.management.exception;
 
 public class RecordNotFoundException extends RuntimeException {
 

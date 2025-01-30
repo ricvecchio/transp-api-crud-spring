@@ -1,11 +1,11 @@
-package com.transportadora.service;
+package com.transportadora.management.service;
 
-import com.transportadora.dto.ClienteDTO;
-import com.transportadora.dto.ClientePaginacaoDTO;
-import com.transportadora.dto.mapper.ClienteMapper;
-import com.transportadora.exception.RecordNotFoundException;
-import com.transportadora.model.Cliente;
-import com.transportadora.repository.ClienteRepository;
+import com.transportadora.management.dto.ClienteDTO;
+import com.transportadora.management.dto.ClientePaginacaoDTO;
+import com.transportadora.management.dto.mapper.ClienteMapper;
+import com.transportadora.management.exception.RecordNotFoundException;
+import com.transportadora.management.repository.ClienteRepository;
+import com.transportadora.management.model.Cliente;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;

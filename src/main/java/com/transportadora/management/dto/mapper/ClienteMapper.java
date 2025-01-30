@@ -1,7 +1,7 @@
-package com.transportadora.dto.mapper;
+package com.transportadora.management.dto.mapper;
 
-import com.transportadora.dto.ClienteDTO;
-import com.transportadora.model.Cliente;
+import com.transportadora.management.dto.ClienteDTO;
+import com.transportadora.management.model.Cliente;
 import org.springframework.stereotype.Component;
 
 @Component
