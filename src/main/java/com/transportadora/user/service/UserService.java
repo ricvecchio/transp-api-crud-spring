@@ -1,11 +1,15 @@
 package com.transportadora.user.service;
 
+import com.transportadora.management.dto.ClienteDTO;
+import com.transportadora.management.exception.RecordNotFoundException;
+import com.transportadora.management.model.Cliente;
 import com.transportadora.user.dto.UserDTO;
 import com.transportadora.user.dto.UserPaginacaoDTO;
-import com.transportadora.user.entities.Role;
 import com.transportadora.user.entities.User;
 import com.transportadora.user.repository.UserRepository;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.data.domain.Page;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Validated
@@ -33,12 +38,12 @@ public class UserService {
 
         List<UserDTO> users = pageUser.getContent().stream().map(user ->
                 new UserDTO(
-                        user.getId(),
+                        user.getIdUser(),
                         user.getName(),
                         user.getEmail(),
                         user.getUsername(),
                         user.getPassword(),
-                        user.getRoles().stream().map(Role::getName).collect(Collectors.joining(", "))
+                        user.getPermission()
                 )
         ).collect(Collectors.toList());
         return new UserPaginacaoDTO(users, pageUser.getTotalElements(), pageUser.getTotalPages());
@@ -54,15 +59,19 @@ public class UserService {
 //        }
 //    }
 
-//    public ClienteDTO update(@NotNull @Positive Long idCliente, @Valid ClienteDTO clienteDTO) {
-//        return clienteRepository.findById(idCliente)
-//                .map(recordFound -> {
-//                    recordFound.setNome(clienteDTO.nome());
-//                    recordFound.setCpfCnpj(clienteDTO.cpfCnpj());
-//                    recordFound.setPrecoLv10(clienteDTO.precoLv10());
-//                    return clienteMapper.toDTO(clienteRepository.save(recordFound));
-//                }).orElseThrow(() -> new RecordNotFoundException(idCliente));
-//    }
+    public UserDTO update(@NotNull String idUser, @Valid UserDTO userDTO) {
+        System.out.println("AQUI - update Service idUser: " + idUser);
+        return userRepository.findById(UUID.fromString(idUser))
+                .map(recordFound -> {
+                    recordFound.setPermission(userDTO.permission());
+                    User updatedUser = userRepository.save(recordFound);
+                    return convertToDTO(updatedUser);
+                }).orElseThrow(() -> new RuntimeException("Registro não encontrado com o id: " + idUser));
+    }
+
+    private UserDTO convertToDTO(User user) {
+        return new UserDTO(user.getIdUser(), user.getUsername(), user.getEmail(), user.getUsername(), user.getPassword(), user.getPermission());
+    }
 
 //    public void delete(@NotNull @Positive Long idCliente) {
 //        clienteRepository.delete(clienteRepository.findById(idCliente)

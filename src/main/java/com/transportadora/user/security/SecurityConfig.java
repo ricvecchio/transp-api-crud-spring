@@ -32,12 +32,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/users/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/users/list").hasRole("ADMIN")
                         .requestMatchers("/api/clientes/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/api/pedidos/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/users/list").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+
+        System.out.println("AQUI - SecurityFilterChain http: " + http); // EXCLUIR
 
         return http.build();
     }

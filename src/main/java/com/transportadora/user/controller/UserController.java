@@ -1,16 +1,19 @@
 package com.transportadora.user.controller;
 
+import com.transportadora.management.dto.PedidoDTO;
 import com.transportadora.user.dto.*;
 import com.transportadora.user.entities.User;
 import com.transportadora.user.repository.UserRepository;
 import com.transportadora.user.security.TokenService;
-import com.transportadora.user.service.CreateRoleUserService;
 import com.transportadora.user.service.UserService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,14 +34,14 @@ public class UserController {
     private final TokenService tokenService;
     private final UserService userService;
 
-    @Autowired
-    CreateRoleUserService createRoleUserService;
+//    @Autowired
+//    CreateRoleUserService createRoleUserService;
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/role")
-    public User role(@RequestBody CreateUserRoleDTO createUserRoleDTO) {
-        return createRoleUserService.execute(createUserRoleDTO);
-    }
+//    @PreAuthorize("hasRole('ADMIN')")
+//    @PostMapping("/role")
+//    public User role(@RequestBody CreateUserRoleDTO createUserRoleDTO) {
+//        return createRoleUserService.execute(createUserRoleDTO);
+//    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
@@ -48,6 +51,18 @@ public class UserController {
             @RequestParam(defaultValue = "") String filter) {
         return userService.list(page, pageSize, filter);
     }
+
+    @PutMapping("/{idUser}")
+    public UserDTO update(@PathVariable @NotNull String idUser, @RequestBody @Valid UserDTO user) {
+        System.out.println("Entrou aqui PutMapping update idUser: " + idUser);
+        return userService.update(idUser, user);
+    }
+
+//    @DeleteMapping("/{idPedido}")
+//    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+//    public void delete(@PathVariable @NotNull @Positive Long idPedido) {
+//        pedidoService.cancel(idPedido);
+//    }
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body) {

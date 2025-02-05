@@ -18,6 +18,8 @@ public class TokenService {
     private String secret;
 
     public String generateToken(User user) {
+        System.out.println("AQUI - generateToken"); // EXCLUIR
+
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
@@ -32,6 +34,7 @@ public class TokenService {
     }
 
     public String validateToken(String token) {
+        System.out.println("AQUI - validateToken"); // EXCLUIR
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
@@ -45,6 +48,8 @@ public class TokenService {
     }
 
     private Instant generateExpirationDate() {
+        System.out.println("AQUI - generateExpirationDate"); // EXCLUIR
+
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
 }

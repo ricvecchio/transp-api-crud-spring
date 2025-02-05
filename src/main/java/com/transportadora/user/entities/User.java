@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -17,13 +16,15 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID idUser;
     private String name;
     private String email;
     private String username;
     private String password;
+    private String permission;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Role> roles;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "role_id")
+//    private Role role;
 
 }

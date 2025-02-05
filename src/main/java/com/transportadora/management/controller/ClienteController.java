@@ -32,7 +32,6 @@ public class ClienteController {
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
             @RequestParam(defaultValue = "") String filter) {
-        System.out.println("Entrou aqui ClientePaginacaoDTO list"); //EXCLUIR
         return clienteService.list(page, pageSize, filter);
     }
 
@@ -43,14 +42,12 @@ public class ClienteController {
 
     @GetMapping("/trecho/{trechoBusca}")
     public List<ClienteDTO> buscarTrechoNome(@PathVariable String trechoBusca) {
-        System.out.println("Trecho da Busca: " + trechoBusca);
         return clienteService.buscarTrechoNome(trechoBusca);
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public ClienteDTO save(@RequestBody @Valid @NotNull ClienteDTO cliente) {
-        System.out.println("Entrou aqui ClienteDTO save - @PreAuthorize ADMIN"); //EXCLUIR
         return clienteService.create(cliente);
     }
 

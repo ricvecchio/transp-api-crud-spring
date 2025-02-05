@@ -13,23 +13,20 @@ import java.util.stream.Collectors;
 
 public class UserPrincipal implements UserDetails {
 
-    private final UUID id;
+    private final UUID idUser;
     private final String name;
     private final String username;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public UserPrincipal(User user) {
-        this.id = user.getId();
+        this.idUser = user.getIdUser();
         this.name = user.getName();
         this.username = user.getUsername();
         this.password = user.getPassword();
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
-        authorities = user.getRoles().stream().map(role -> {
-            return new SimpleGrantedAuthority("ROLE_".concat(role.getName()));
-        }).collect(Collectors.toList());
+        System.out.println("AQUI - UserPrincipal authorities: " + authorities); // EXCLUIR
 
         this.authorities = authorities;
     }
@@ -38,8 +35,8 @@ public class UserPrincipal implements UserDetails {
         return new UserPrincipal(user);
     }
 
-    public UUID getId() {
-        return id;
+    public UUID getIdUser() {
+        return idUser;
     }
 
     public String getName() {

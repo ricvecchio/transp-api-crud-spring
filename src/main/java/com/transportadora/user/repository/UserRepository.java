@@ -21,6 +21,4 @@ public interface UserRepository extends JpaRepository<User, UUID> {
             "LOWER(CAST(FUNCTION('unaccent', u.username) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :filter) AS string)), '%'))")
     Page<User> findAllByFilter(@Param("filter") String filter, Pageable pageable);
 
-    @Query("SELECT u from User u JOIN FETCH u.roles where username = :username ")
-    User findByUsernameFetchRoles(@Param("username") String username);
 }
