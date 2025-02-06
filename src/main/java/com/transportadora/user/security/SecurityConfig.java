@@ -39,8 +39,6 @@ public class SecurityConfig {
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 
-        System.out.println("AQUI - SecurityFilterChain http: " + http); // EXCLUIR
-
         return http.build();
     }
 

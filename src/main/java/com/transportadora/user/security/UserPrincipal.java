@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class UserPrincipal implements UserDetails {
 
@@ -26,7 +25,6 @@ public class UserPrincipal implements UserDetails {
         this.password = user.getPassword();
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        System.out.println("AQUI - UserPrincipal authorities: " + authorities); // EXCLUIR
 
         this.authorities = authorities;
     }

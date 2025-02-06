@@ -23,8 +23,4 @@ public class User {
     private String password;
     private String permission;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "role_id")
-//    private Role role;
-
 }

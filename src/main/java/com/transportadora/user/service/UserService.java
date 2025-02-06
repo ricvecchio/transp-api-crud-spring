@@ -1,8 +1,5 @@
 package com.transportadora.user.service;
 
-import com.transportadora.management.dto.ClienteDTO;
-import com.transportadora.management.exception.RecordNotFoundException;
-import com.transportadora.management.model.Cliente;
 import com.transportadora.user.dto.UserDTO;
 import com.transportadora.user.dto.UserPaginacaoDTO;
 import com.transportadora.user.entities.User;
@@ -49,34 +46,23 @@ public class UserService {
         return new UserPaginacaoDTO(users, pageUser.getTotalElements(), pageUser.getTotalPages());
     }
 
-//    public List<ClienteDTO> buscarTrechoNome(String trechoBusca) {
-//        List<Cliente> clientesEncontrados = clienteRepository.clientesPorTrecho(trechoBusca);
-//
-//        if (clientesEncontrados.isEmpty() == true) {
-//            return null;
-//        } else {
-//            return converteDadosCliente(clientesEncontrados);
-//        }
-//    }
-
     public UserDTO update(@NotNull String idUser, @Valid UserDTO userDTO) {
-        System.out.println("AQUI - update Service idUser: " + idUser);
         return userRepository.findById(UUID.fromString(idUser))
                 .map(recordFound -> {
                     recordFound.setPermission(userDTO.permission());
                     User updatedUser = userRepository.save(recordFound);
                     return convertToDTO(updatedUser);
-                }).orElseThrow(() -> new RuntimeException("Registro não encontrado com o id: " + idUser));
+                }).orElseThrow(() -> new RuntimeException("Registro não encontrado com o idUser: " + idUser));
     }
 
     private UserDTO convertToDTO(User user) {
         return new UserDTO(user.getIdUser(), user.getUsername(), user.getEmail(), user.getUsername(), user.getPassword(), user.getPermission());
     }
 
-//    public void delete(@NotNull @Positive Long idCliente) {
-//        clienteRepository.delete(clienteRepository.findById(idCliente)
-//                .orElseThrow(() -> new RecordNotFoundException(idCliente)));
-//    }
+    public void delete(@NotNull String idUser) {
+        userRepository.delete(userRepository.findById(UUID.fromString(idUser))
+                .orElseThrow(() -> new RuntimeException("Registro não encontrado com o idUser: " + idUser)));
+    }
 
 }
 
