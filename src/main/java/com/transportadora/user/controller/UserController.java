@@ -19,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Validated
 @RestController
@@ -27,7 +28,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
     private final UserService userService;
@@ -39,6 +40,11 @@ public class UserController {
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
             @RequestParam(defaultValue = "") String filter) {
         return userService.list(page, pageSize, filter);
+    }
+
+    @GetMapping("/{username}")
+    public Optional<User> findByUsername(@PathVariable @NotNull String username) {
+        return userRepository.findByUsername(username);
     }
 
     @PutMapping("/{idUser}")
@@ -54,7 +60,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body) {
-        User user = this.repository.findByUsername(body.username()).orElseThrow(() -> new RuntimeException("Usuário não encotrado!"));
+        User user = this.userRepository.findByUsername(body.username()).orElseThrow(() -> new RuntimeException("Usuário não encotrado!"));
         if (passwordEncoder.matches(body.password(), user.getPassword())) {
             String token = this.tokenService.generateToken(user);
             return ResponseEntity.ok(new ResponseDTO(user.getUsername(), token));
@@ -64,7 +70,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
-        Optional<User> user = this.repository.findByUsername(body.username());
+        Optional<User> user = this.userRepository.findByUsername(body.username());
 
         if (user.isEmpty()) {
             User newUser = new User();
@@ -72,7 +78,7 @@ public class UserController {
             newUser.setEmail(body.email());
             newUser.setUsername(body.username());
             newUser.setPassword(passwordEncoder.encode(body.password()));
-            this.repository.save(newUser);
+            this.userRepository.save(newUser);
 
             String token = this.tokenService.generateToken(newUser);
             return ResponseEntity.ok(new ResponseDTO(newUser.getUsername(), token));
