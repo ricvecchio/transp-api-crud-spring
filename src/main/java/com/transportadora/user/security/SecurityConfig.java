@@ -32,6 +32,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/users/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users/recoverPassword").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users/resetPassword").permitAll()
                         .requestMatchers(HttpMethod.GET, "/users/list").hasRole("ADMIN")
                         .requestMatchers("/api/clientes/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/api/pedidos/**").hasAnyRole("USER", "ADMIN")

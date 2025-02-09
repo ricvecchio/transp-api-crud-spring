@@ -4,6 +4,7 @@ import com.transportadora.user.dto.*;
 import com.transportadora.user.entities.User;
 import com.transportadora.user.repository.UserRepository;
 import com.transportadora.user.security.TokenService;
+import com.transportadora.user.service.PasswordRecoveryService;
 import com.transportadora.user.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -18,8 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 @Validated
 @RestController
@@ -32,6 +34,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
     private final UserService userService;
+    private final PasswordRecoveryService passwordRecoveryService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
@@ -66,6 +69,19 @@ public class UserController {
             return ResponseEntity.ok(new ResponseDTO(user.getUsername(), token));
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping("/recoverPassword")
+    public ResponseEntity<Map<String, String>> recoverPassword(@RequestBody RecoveryPasswordDTO body) {
+        passwordRecoveryService.sendRecoveryEmail(body.email(), body.username());
+        return ResponseEntity.ok(Collections.singletonMap("message", "E-mail de recuperação enviado!"));
+
+    }
+
+    @PostMapping("/resetPassword")
+    public ResponseEntity<Map<String, String>> resetPassword(@RequestBody ResetPasswordDTO body) {
+        passwordRecoveryService.resetPassword(body.token(), body.newPassword());
+        return ResponseEntity.ok(Collections.singletonMap("message", "Senha redefinida com sucesso!"));
     }
 
     @PostMapping("/register")
