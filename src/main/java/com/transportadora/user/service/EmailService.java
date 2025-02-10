@@ -20,10 +20,6 @@ public class EmailService {
     }
 
     public String sendEmail(String email, String subject, String body) {
-        // Simulação do envio de e-mail (substituir por serviço de e-mail real) // EXCLUIR
-        System.out.println("Enviando e-mail para: " + email); // EXCLUIR
-        System.out.println("Assunto: " + subject); // EXCLUIR
-        System.out.println("Mensagem: " + body); // EXCLUIR
 
         try {
             SimpleMailMessage message = new SimpleMailMessage();
@@ -33,7 +29,7 @@ public class EmailService {
             message.setText(body);
             javaMailSender.send(message);
             return "E-mail enviado!";
-        }catch (Exception e) {
+        } catch (Exception e) {
             return "Erro ao tentar enviar o e-mail " + e.getLocalizedMessage();
         }
     }

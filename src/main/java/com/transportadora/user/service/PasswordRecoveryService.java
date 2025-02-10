@@ -17,9 +17,7 @@ public class PasswordRecoveryService {
     private final PasswordEncoder passwordEncoder;
 
     public void sendRecoveryEmail(String email, String username) {
-//        User user = userRepository.findByUsername(username)
         User user = userRepository.findByEmailAndUsername(email, username)
-
                 .orElseThrow(() -> new RuntimeException("Usuário ou e-mail não encontrado!"));
 
         String token = tokenService.generateToken(user);
