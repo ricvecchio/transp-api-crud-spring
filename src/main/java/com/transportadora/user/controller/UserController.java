@@ -36,7 +36,7 @@ public class UserController {
     private final UserService userService;
     private final PasswordRecoveryService passwordRecoveryService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
     public UserPaginacaoDTO list(
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
