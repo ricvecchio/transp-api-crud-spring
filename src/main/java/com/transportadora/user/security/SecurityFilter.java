@@ -28,6 +28,20 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         var login = tokenService.validateToken(token);
 
+        //EXCLUIR
+        if (token == null) {
+            System.out.println("EXCLUIR: Token não encontrado na requisição!");
+        } else {
+            System.out.println("EXCLUIR: Token encontrado: " + token);
+        }
+
+        if (login == null) {
+            System.out.println("EXCLUIR: Token inválido ou expirado!");
+        } else {
+            System.out.println("EXCLUIR: Token validado para o usuário: " + login);
+        }
+        //
+
         if (login != null) {
             User user = userRepository.findByUsername(login).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
             var authorities = new ArrayList<SimpleGrantedAuthority>();
@@ -45,6 +59,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     private String recoverToken(HttpServletRequest request) {
         var authHeader = request.getHeader("Authorization");
 
+        System.out.println("EXCLUIR: Token recebido: " + authHeader);
         if (authHeader == null) return null;
         return authHeader.replace("Bearer ", "");
     }
