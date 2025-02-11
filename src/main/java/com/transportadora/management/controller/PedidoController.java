@@ -69,7 +69,6 @@ public class PedidoController {
         pedidoService.cancel(idPedido);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/metricas")
     public String metricas() {
         return "Esse endpoint /metricas tem hasRole('ADMIN').";
