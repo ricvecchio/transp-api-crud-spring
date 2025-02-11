@@ -34,6 +34,8 @@ public class SecurityFilter extends OncePerRequestFilter {
             if (user.getPermission() != null) {
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getPermission()));
             }
+            System.out.println("EXCLUIR: User: " + user.getUsername() + " has roles: " + authorities); // EXCLUIR
+
             var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
