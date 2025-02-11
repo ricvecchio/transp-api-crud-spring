@@ -41,6 +41,7 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         } catch (JWTVerificationException exception) {
+            System.out.println("EXCLUIR: Token validation failed: " + exception.getMessage()); // EXCLUIR
             return null;
         }
     }
