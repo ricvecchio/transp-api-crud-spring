@@ -10,8 +10,10 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://saotomecatime.onrender.com")
-                .allowedMethods("GET", "POST", "DELETE", "PUT");
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "DELETE", "PUT")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 
 }
