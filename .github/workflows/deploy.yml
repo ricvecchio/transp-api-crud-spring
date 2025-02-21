@@ -40,7 +40,17 @@ jobs:
           VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
           ssh $VPS_USER@$VPS_HOST << 'EOF'
-          sudo systemctl stop transp-api-crud-spring.service
-          sudo mv /home/$VPS_USER/transp-api-crud-spring-0.0.1-SNAPSHOT.jar /opt/minha-api/transp-api-crud-spring-0.0.1-SNAPSHOT.jar
+          sudo mkdir -p /opt/transp-api-crud-spring
+
+          # Parar o serviço apenas se ele existir
+          if systemctl list-units --full -all | grep -q "transp-api-crud-spring.service"; then
+            sudo systemctl stop transp-api-crud-spring.service
+          fi
+
+          # Mover o JAR corretamente
+          sudo mv /home/transp-api-crud-spring-0.0.1-SNAPSHOT.jar /opt/transp-api-crud-spring/transp-api-crud-spring-0.0.1-SNAPSHOT.jar
+
+          # Recarregar systemd e reiniciar serviço
+          sudo systemctl daemon-reload
           sudo systemctl start transp-api-crud-spring.service
           EOF
