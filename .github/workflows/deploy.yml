@@ -42,15 +42,26 @@ jobs:
           ssh $VPS_USER@$VPS_HOST << 'EOF'
           sudo mkdir -p /opt/transp-api-crud-spring
 
-          # Parar o serviço apenas se ele existir
-          if systemctl list-units --full -all | grep -q "transp-api-crud-spring.service"; then
-            sudo systemctl stop transp-api-crud-spring.service
-          fi
+          # Criar o arquivo do serviço caso não exista
+          echo "[Unit]
+          Description=Spring Boot API
+          After=network.target
 
-          # Mover o JAR corretamente
-          sudo mv /home/transp-api-crud-spring-0.0.1-SNAPSHOT.jar /opt/transp-api-crud-spring/transp-api-crud-spring-0.0.1-SNAPSHOT.jar
+          [Service]
+          User=root
+          WorkingDirectory=/opt/transp-api-crud-spring
+          ExecStart=/usr/bin/java -jar /opt/transp-api-crud-spring/transp-api-crud-spring-0.0.1-SNAPSHOT.jar
+          SuccessExitStatus=143
+          Restart=always
+          RestartSec=5
+          StandardOutput=journal
+          StandardError=journal
 
-          # Recarregar systemd e reiniciar serviço
+          [Install]
+          WantedBy=multi-user.target" | sudo tee /etc/systemd/system/transp-api-crud-spring.service
+
+          # Parar e reiniciar o serviço corretamente
           sudo systemctl daemon-reload
-          sudo systemctl start transp-api-crud-spring.service
+          sudo systemctl enable transp-api-crud-spring.service
+          sudo systemctl restart transp-api-crud-spring.service
           EOF
