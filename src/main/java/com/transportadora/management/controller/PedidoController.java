@@ -19,7 +19,7 @@ import java.util.List;
 
 @Validated
 @RestController
-@CrossOrigin(origins = "http://saotomecatimesaotomecatime.com")
+@CrossOrigin(origins = "https://saotomecatimesaotomecatime.com")
 @RequestMapping("/api/pedidos")
 public class PedidoController {
 
