@@ -31,7 +31,7 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_ed25519
-          scp .\target\transp-api-crud-spring-0.0.1-SNAPSHOT.jar root@82.29.62.50:/home
+          scp ./target/transp-api-crud-spring-0.0.1-SNAPSHOT.jar root@82.29.62.50:/home
 
       - name: "[5] Reiniciar serviço na VPS"
         env:
