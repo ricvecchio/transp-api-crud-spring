@@ -26,7 +26,7 @@ import java.util.Optional;
 @Validated
 @RestController
 @CrossOrigin(origins = "http://saotomecatimesaotomecatime.com")
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
 
