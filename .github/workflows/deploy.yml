@@ -41,9 +41,21 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
           ssh $VPS_USER@$VPS_HOST << 'EOF'
+          # Criar diretório se não existir
           sudo mkdir -p /opt/transp-api-crud-spring
+          sudo chown -R $USER:$USER /opt/transp-api-crud-spring
 
-          # Criar o arquivo do serviço caso não exista
+          # Mover o JAR para o diretório correto
+          mv /home/transp-api-crud-spring-0.0.1-SNAPSHOT.jar /opt/transp-api-crud-spring/
+
+          # Instalar Java se não estiver instalado
+          if ! command -v java &> /dev/null
+          then
+              sudo apt update
+              sudo apt install -y openjdk-21-jdk
+          fi
+
+          # Criar o serviço systemd caso não exista
           echo "[Unit]
           Description=Spring Boot API
           After=network.target
@@ -62,7 +74,7 @@ jobs:
           [Install]
           WantedBy=multi-user.target" | sudo tee /etc/systemd/system/transp-api-crud-spring.service
 
-          # Parar e reiniciar o serviço corretamente
+          # Aplicar configurações do serviço
           sudo systemctl daemon-reload
           sudo systemctl enable transp-api-crud-spring.service
           sudo systemctl restart transp-api-crud-spring.service
