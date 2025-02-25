@@ -38,6 +38,7 @@ jobs:
         env:
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
           ssh $VPS_USER@$VPS_HOST << 'EOF'
           sudo mkdir -p /opt/transp-api-crud-spring
@@ -50,7 +51,8 @@ jobs:
           [Service]
           User=root
           WorkingDirectory=/opt/transp-api-crud-spring
-          ExecStart=/usr/bin/java -jar /opt/transp-api-crud-spring/transp-api-crud-spring-0.0.1-SNAPSHOT.jar --server.ssl.key-store=file:/home/keystore.p12 --server.ssl.key-store-password=$KEYSTORE_PASSWORD
+          Environment=KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD
+          ExecStart=/usr/bin/java -jar /opt/transp-api-crud-spring/transp-api-crud-spring-0.0.1-SNAPSHOT.jar --server.ssl.key-store=file:/opt/transp-api-crud-spring/keystore.p12 --server.ssl.key-store-password=$KEYSTORE_PASSWORD
           SuccessExitStatus=143
           Restart=always
           RestartSec=5
