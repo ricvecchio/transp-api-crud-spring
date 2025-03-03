@@ -59,8 +59,8 @@ jobs:
           [Service]
           User=root
           WorkingDirectory=/opt/transp-api-crud-spring
-          Environment=KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD
-          ExecStart=/usr/bin/java -jar /opt/transp-api-crud-spring/transp-api-crud-spring-0.0.1-SNAPSHOT.jar --server.ssl.key-store=file:/opt/transp-api-crud-spring/keystore.p12 --server.ssl.key-store-password=$KEYSTORE_PASSWORD
+          Environment="KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}"
+          ExecStart=/usr/bin/java -jar /opt/transp-api-crud-spring/transp-api-crud-spring-0.0.1-SNAPSHOT.jar --server.ssl.key-store=file:/opt/transp-api-crud-spring/keystore.p12 --server.ssl.key-store-password=${{ secrets.KEYSTORE_PASSWORD }}
           SuccessExitStatus=143
           Restart=always
           RestartSec=5
