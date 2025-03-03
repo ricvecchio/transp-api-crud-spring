@@ -61,13 +61,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequestDTO body) {
-        User user = this.userRepository.findByUsername(body.username()).orElseThrow(() -> new RuntimeException("Usuário não encotrado!"));
-        if (passwordEncoder.matches(body.password(), user.getPassword())) {
-            String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseDTO(user.getUsername(), token));
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO body) {
+        Optional<User> optionalUser = userRepository.findByUsername(body.username());
+
+        if (optionalUser.isEmpty() || !passwordEncoder.matches(body.password(), optionalUser.get().getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha inválidos.");
         }
-        return ResponseEntity.badRequest().build();
+
+        User user = optionalUser.get();
+        String token = tokenService.generateToken(user);
+        return ResponseEntity.ok(new ResponseDTO(user.getUsername(), token));
     }
 
     @PostMapping("/recoverPassword")
