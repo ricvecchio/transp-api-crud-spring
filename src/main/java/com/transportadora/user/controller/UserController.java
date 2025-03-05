@@ -64,9 +64,14 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO body) {
         Optional<User> user = this.userRepository.findByUsername(body.username());
 
-        if (user.isEmpty() || !passwordEncoder.matches(body.password(), user.get().getPassword())) {
+        if (user.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Username não cadastrado."));
+        }
+
+        if (!passwordEncoder.matches(body.password(), user.get().getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("message", "Usuário ou senha inválidos!"));
+                    .body(Map.of("message", "Senha incorreta."));
         }
 
         String token = this.tokenService.generateToken(user.get());
