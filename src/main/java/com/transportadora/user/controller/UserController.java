@@ -62,15 +62,15 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO body) {
-        Optional<User> optionalUser = userRepository.findByUsername(body.username());
+        Optional<User> user = this.userRepository.findByUsername(body.username());
 
-        if (optionalUser.isEmpty() || !passwordEncoder.matches(body.password(), optionalUser.get().getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha inválidos.");
+        if (user.isEmpty() || !passwordEncoder.matches(body.password(), user.get().getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", "Usuário ou senha inválidos!"));
         }
 
-        User user = optionalUser.get();
-        String token = tokenService.generateToken(user);
-        return ResponseEntity.ok(new ResponseDTO(user.getUsername(), token));
+        String token = this.tokenService.generateToken(user.get());
+        return ResponseEntity.ok(new ResponseDTO(user.get().getUsername(), token));
     }
 
     @PostMapping("/recoverPassword")
@@ -90,18 +90,20 @@ public class UserController {
     public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
         Optional<User> user = this.userRepository.findByUsername(body.username());
 
-        if (user.isEmpty()) {
-            User newUser = new User();
-            newUser.setName(body.name());
-            newUser.setEmail(body.email());
-            newUser.setUsername(body.username());
-            newUser.setPassword(passwordEncoder.encode(body.password()));
-            this.userRepository.save(newUser);
-
-            String token = this.tokenService.generateToken(newUser);
-            return ResponseEntity.ok(new ResponseDTO(newUser.getUsername(), token));
+        if (user.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(Map.of("message", "Username já cadastrado!"));
         }
-        return ResponseEntity.badRequest().build();
+
+        User newUser = new User();
+        newUser.setName(body.name());
+        newUser.setEmail(body.email());
+        newUser.setUsername(body.username());
+        newUser.setPassword(passwordEncoder.encode(body.password()));
+        this.userRepository.save(newUser);
+
+        String token = this.tokenService.generateToken(newUser);
+        return ResponseEntity.ok(new ResponseDTO(newUser.getUsername(), token));
     }
 
 }
