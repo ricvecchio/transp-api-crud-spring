@@ -14,11 +14,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
 @Validated
 @RestController
 @CrossOrigin(origins = "https://saotomecatimesaotomecatime.com")
 @RequestMapping("/api/clientes")
 public class ClienteController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ClienteController.class);
 
     private final ClienteService clienteService;
 
@@ -31,7 +38,18 @@ public class ClienteController {
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
             @RequestParam(defaultValue = "") String filter) {
-        return clienteService.list(page, pageSize, filter);
+//        return clienteService.list(page, pageSize, filter);
+
+        logger.info("Recebida requisição GET /clientes com page={}, pageSize={}, filter={}", page, pageSize, filter);
+
+        try {
+            ClientePaginacaoDTO response = clienteService.list(page, pageSize, filter);
+            logger.info("Requisição processada com sucesso.");
+            return response;
+        } catch (Exception e) {
+            logger.error("Erro ao processar a requisição GET /clientes", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao buscar clientes");
+        }
     }
 
     @GetMapping("/{idCliente}")
