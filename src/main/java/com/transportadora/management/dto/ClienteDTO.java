@@ -15,6 +15,7 @@ public record ClienteDTO(
         String telefone,
         String celular,
         String email,
+        String contatosAdicionais,
         String cep,
         String logradouro,
         String numero,

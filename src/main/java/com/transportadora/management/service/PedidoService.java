@@ -107,6 +107,7 @@ public class PedidoService {
                     recordFound.setTelefone(pedidoDTO.telefone());
                     recordFound.setCelular(pedidoDTO.celular());
                     recordFound.setEmail(pedidoDTO.email());
+                    recordFound.setContatosAdicionais(pedidoDTO.contatosAdicionais());
                     recordFound.setCep(pedidoDTO.cep());
                     recordFound.setLogradouro(pedidoDTO.logradouro());
                     recordFound.setNumero(pedidoDTO.numero());

@@ -20,6 +20,7 @@ public class ClienteMapper {
                 cliente.getTelefone(),
                 cliente.getCelular(),
                 cliente.getEmail(),
+                cliente.getContatosAdicionais(),
                 cliente.getCep(),
                 cliente.getLogradouro(),
                 cliente.getNumero(),
@@ -65,6 +66,7 @@ public class ClienteMapper {
         cliente.setTelefone(clienteDTO.telefone());
         cliente.setCelular(clienteDTO.celular());
         cliente.setEmail(clienteDTO.email());
+        cliente.setContatosAdicionais(clienteDTO.contatosAdicionais());
         cliente.setCep(clienteDTO.cep());
         cliente.setLogradouro(clienteDTO.logradouro());
         cliente.setNumero(clienteDTO.numero());

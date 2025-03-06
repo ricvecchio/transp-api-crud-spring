@@ -16,6 +16,7 @@ public record PedidoDTO(
         String telefone,
         String celular,
         String email,
+        String contatosAdicionais,
         String cep,
         String logradouro,
         String numero,

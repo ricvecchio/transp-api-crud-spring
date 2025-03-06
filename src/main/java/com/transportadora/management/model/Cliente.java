@@ -38,6 +38,9 @@ public class Cliente {
     private String email;
 
     @Column(nullable = false)
+    private String contatosAdicionais;
+
+    @Column(nullable = false)
     private String cep;
 
     @Column(nullable = false)
@@ -172,6 +175,14 @@ public class Cliente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getContatosAdicionais() {
+        return contatosAdicionais;
+    }
+
+    public void setContatosAdicionais(String contatosAdicionais) {
+        this.contatosAdicionais = contatosAdicionais;
     }
 
     public String getCep() {

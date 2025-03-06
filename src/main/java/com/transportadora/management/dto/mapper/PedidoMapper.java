@@ -20,6 +20,7 @@ public class PedidoMapper {
                 pedido.getTelefone(),
                 pedido.getCelular(),
                 pedido.getEmail(),
+                pedido.getContatosAdicionais(),
                 pedido.getCep(),
                 pedido.getLogradouro(),
                 pedido.getNumero(),
@@ -69,6 +70,7 @@ public class PedidoMapper {
         pedido.setTelefone(pedidoDTO.telefone());
         pedido.setCelular(pedidoDTO.celular());
         pedido.setEmail(pedidoDTO.email());
+        pedido.setContatosAdicionais(pedidoDTO.contatosAdicionais());
         pedido.setCep(pedidoDTO.cep());
         pedido.setLogradouro(pedidoDTO.logradouro());
         pedido.setNumero(pedidoDTO.numero());

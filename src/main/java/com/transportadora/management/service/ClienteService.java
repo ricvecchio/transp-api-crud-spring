@@ -75,6 +75,7 @@ public class ClienteService {
                     recordFound.setTelefone(clienteDTO.telefone());
                     recordFound.setCelular(clienteDTO.celular());
                     recordFound.setEmail(clienteDTO.email());
+                    recordFound.setContatosAdicionais(clienteDTO.contatosAdicionais());
                     recordFound.setCep(clienteDTO.cep());
                     recordFound.setLogradouro(clienteDTO.logradouro());
                     recordFound.setNumero(clienteDTO.numero());
@@ -121,6 +122,7 @@ public class ClienteService {
                         c.getTelefone(),
                         c.getCelular(),
                         c.getEmail(),
+                        c.getContatosAdicionais(),
                         c.getCep(),
                         c.getLogradouro(),
                         c.getNumero(),
