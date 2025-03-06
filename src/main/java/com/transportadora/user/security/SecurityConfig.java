@@ -35,10 +35,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users/recoverPassword").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/resetPassword").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users/list").hasRole("ADMIN")
-                        .requestMatchers("/api/clientes").hasAnyRole("USER")
-                        .requestMatchers("/api/clientes").hasAnyRole("ADMIN")
-                        .requestMatchers("/api/pedidos").hasAnyRole("USER")
-                        .requestMatchers("/api/pedidos").hasAnyRole("ADMIN")
+                        .requestMatchers("/api/clientes").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/pedidos").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
