@@ -45,9 +45,6 @@ public class ClienteService {
 
         List<ClienteDTO> clientes = pageCliente.get().map(clienteMapper::toDTO).collect(Collectors.toList());
 
-        System.out.println("ENTROU ClientePaginacaoDTO pageCliente: " + pageCliente);
-        System.out.println("ENTROU ClientePaginacaoDTO clientes: " + clientes);
-
         return new ClientePaginacaoDTO(clientes, pageCliente.getTotalElements(), pageCliente.getTotalPages());
     }
 

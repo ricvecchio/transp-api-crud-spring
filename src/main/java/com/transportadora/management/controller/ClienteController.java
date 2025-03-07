@@ -31,7 +31,6 @@ public class ClienteController {
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
             @RequestParam(defaultValue = "") String filter) {
-        System.out.println("ENTROU ClientePaginacaoDTO filter: " + filter);
         return clienteService.list(page, pageSize, filter);
     }
 
