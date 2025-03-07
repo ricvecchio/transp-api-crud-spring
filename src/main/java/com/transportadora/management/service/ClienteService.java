@@ -14,23 +14,15 @@ import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-
 @Validated
 @Service
 public class ClienteService {
-    private static final Logger logger = LoggerFactory.getLogger(ClienteService.class);
 
     private final ClienteRepository clienteRepository;
 
@@ -41,43 +33,23 @@ public class ClienteService {
         this.clienteMapper = clienteMapper;
     }
 
-    //    public ClientePaginacaoDTO list(@PositiveOrZero int page, @Positive @Max(100) int tamPagina, String filter) {
-//        Pageable pageable = PageRequest.of(page, tamPagina);
-//        Page<Cliente> pageCliente;
-//
-//        if (filter.isBlank()) {
-//            pageCliente = clienteRepository.findAllByOrderByIdClienteDesc(pageable);
-//        } else {
-//            pageCliente = clienteRepository.findAllByFilter(filter, pageable);
-//        }
-//
-//        List<ClienteDTO> clientes = pageCliente.get().map(clienteMapper::toDTO).collect(Collectors.toList());
-//
-//        return new ClientePaginacaoDTO(clientes, pageCliente.getTotalElements(), pageCliente.getTotalPages());
-//    }
     public ClientePaginacaoDTO list(@PositiveOrZero int page, @Positive @Max(100) int tamPagina, String filter) {
         Pageable pageable = PageRequest.of(page, tamPagina);
         Page<Cliente> pageCliente;
 
-        try {
-            logger.info("Buscando clientes no banco de dados com page={}, tamPagina={}, filter={}", page, tamPagina, filter);
-
-            if (filter.isBlank()) {
-                pageCliente = clienteRepository.findAllByOrderByIdClienteDesc(pageable);
-            } else {
-                pageCliente = clienteRepository.findAllByFilter(filter, pageable);
-            }
-
-            List<ClienteDTO> clientes = pageCliente.get().map(clienteMapper::toDTO).collect(Collectors.toList());
-
-            logger.info("Busca no banco concluída com sucesso: total de registros={} páginas={}", pageCliente.getTotalElements(), pageCliente.getTotalPages());
-            return new ClientePaginacaoDTO(clientes, pageCliente.getTotalElements(), pageCliente.getTotalPages());
-        } catch (Exception e) {
-            logger.error("Erro ao buscar clientes no banco de dados", e);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao buscar clientes no banco de dados");
+        if (filter.isBlank()) {
+            pageCliente = clienteRepository.findAllByOrderByIdClienteDesc(pageable);
+        } else {
+            pageCliente = clienteRepository.findAllByFilter(filter, pageable);
         }
-    }
 
+        List<ClienteDTO> clientes = pageCliente.get().map(clienteMapper::toDTO).collect(Collectors.toList());
+
+        System.out.println("ENTROU ClientePaginacaoDTO pageCliente: " + pageCliente);
+        System.out.println("ENTROU ClientePaginacaoDTO clientes: " + clientes);
+
+        return new ClientePaginacaoDTO(clientes, pageCliente.getTotalElements(), pageCliente.getTotalPages());
+    }
 
     public ClienteDTO findById(Long idCliente) {
         return clienteRepository.findById(idCliente).map(clienteMapper::toDTO).orElse(null);
