@@ -75,7 +75,7 @@ public class UserController {
         }
 
         String token = this.tokenService.generateToken(user.get());
-        return ResponseEntity.ok(new ResponseDTO(user.get().getUsername(), user.get().getPermission(), token));
+        return ResponseEntity.ok(new ResponseDTO(user.get().getUsername(), token, user.get().getPermission()));
 
     }
 
