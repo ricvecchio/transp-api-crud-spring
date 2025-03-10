@@ -75,7 +75,8 @@ public class UserController {
         }
 
         String token = this.tokenService.generateToken(user.get());
-        return ResponseEntity.ok(new ResponseDTO(user.get().getUsername(), token));
+        return ResponseEntity.ok(new ResponseDTO(user.get().getUsername(), user.get().getPermission(), token));
+
     }
 
     @PostMapping("/recoverPassword")
@@ -107,8 +108,7 @@ public class UserController {
         newUser.setPassword(passwordEncoder.encode(body.password()));
         this.userRepository.save(newUser);
 
-        String token = this.tokenService.generateToken(newUser);
-        return ResponseEntity.ok(new ResponseDTO(newUser.getUsername(), token));
+        return ResponseEntity.ok(Collections.singletonMap("message", "Usuário cadastrado com sucesso!"));
     }
 
 }
