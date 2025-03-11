@@ -31,7 +31,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    @Cacheable("users")
+//    @Cacheable(value = "users")
     public UserPaginacaoDTO list(@PositiveOrZero int page, @Positive @Max(100) int pageSize, String filter) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<User> pageUser = userRepository.findAllByFilter(filter, pageable);
@@ -49,7 +49,7 @@ public class UserService {
         return new UserPaginacaoDTO(users, pageUser.getTotalElements(), pageUser.getTotalPages());
     }
 
-    @CacheEvict("users")
+//    @CacheEvict(value = "users", allEntries = true)
     public UserDTO update(@NotNull String idUser, @Valid UserDTO userDTO) {
         return userRepository.findById(UUID.fromString(idUser))
                 .map(recordFound -> {
@@ -63,7 +63,7 @@ public class UserService {
         return new UserDTO(user.getIdUser(), user.getUsername(), user.getEmail(), user.getUsername(), user.getPassword(), user.getPermission());
     }
 
-    @CacheEvict("users")
+//    @CacheEvict(value = "users", allEntries = true)
     public void delete(@NotNull String idUser) {
         userRepository.delete(userRepository.findById(UUID.fromString(idUser))
                 .orElseThrow(() -> new RuntimeException("Registro não encontrado com o idUser: " + idUser)));

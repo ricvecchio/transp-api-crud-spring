@@ -34,7 +34,7 @@ public class ClienteService {
         this.clienteMapper = clienteMapper;
     }
 
-    @Cacheable("Clientes")
+//    @Cacheable("Clientes")
     public ClientePaginacaoDTO list(@PositiveOrZero int page, @Positive @Max(100) int tamPagina, String filter) {
         Pageable pageable = PageRequest.of(page, tamPagina);
         Page<Cliente> pageCliente;
@@ -68,7 +68,7 @@ public class ClienteService {
         return clienteMapper.toDTO(clienteRepository.save(clienteMapper.toEntity(clienteDTO)));
     }
 
-    @CacheEvict("Clientes")
+//    @CacheEvict("Clientes")
     public ClienteDTO update(@NotNull @Positive Long idCliente, @Valid ClienteDTO clienteDTO) {
         return clienteRepository.findById(idCliente)
                 .map(recordFound -> {
@@ -110,7 +110,7 @@ public class ClienteService {
                 }).orElseThrow(() -> new RecordNotFoundException(idCliente));
     }
 
-    @CacheEvict("Clientes")
+//    @CacheEvict("Clientes")
     public void delete(@NotNull @Positive Long idCliente) {
         clienteRepository.delete(clienteRepository.findById(idCliente)
                 .orElseThrow(() -> new RecordNotFoundException(idCliente)));

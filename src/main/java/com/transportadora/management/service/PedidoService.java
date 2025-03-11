@@ -37,7 +37,7 @@ public class PedidoService {
         this.pedidoMapper = pedidoMapper;
     }
 
-    @Cacheable("Pedidos")
+//    @Cacheable("Pedidos")
     public PedidoPaginacaoDTO list(int page, int tamPagina, String clienteFiltro, LocalDate dataInicial, LocalDate dataFinal, String statusFiltro) {
         Pageable pageable = PageRequest.of(page, tamPagina);
         Page<Pedido> pagePedido;
@@ -100,7 +100,7 @@ public class PedidoService {
         return pedidoMapper.toDTO(pedidoRepository.save(pedidoMapper.toEntity(pedidoDTO)));
     }
 
-    @CacheEvict("Pedidos")
+//    @CacheEvict("Pedidos")
     public PedidoDTO update(@NotNull @Positive Long idPedido, @Valid PedidoDTO pedidoDTO) {
         return pedidoRepository.findById(idPedido)
                 .map(recordFound -> {
@@ -146,7 +146,7 @@ public class PedidoService {
                 }).orElseThrow(() -> new RecordNotFoundException(idPedido));
     }
 
-    @CacheEvict("Pedidos")
+//    @CacheEvict("Pedidos")
     public void cancel(@NotNull @Positive Long idPedido) {
         Pedido pedido = pedidoRepository.findById(idPedido)
                 .orElseThrow(() -> new RecordNotFoundException(idPedido));
