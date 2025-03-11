@@ -9,6 +9,8 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +31,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Cacheable("users")
     public UserPaginacaoDTO list(@PositiveOrZero int page, @Positive @Max(100) int pageSize, String filter) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<User> pageUser = userRepository.findAllByFilter(filter, pageable);
@@ -46,6 +49,7 @@ public class UserService {
         return new UserPaginacaoDTO(users, pageUser.getTotalElements(), pageUser.getTotalPages());
     }
 
+    @CacheEvict("users")
     public UserDTO update(@NotNull String idUser, @Valid UserDTO userDTO) {
         return userRepository.findById(UUID.fromString(idUser))
                 .map(recordFound -> {
@@ -59,6 +63,7 @@ public class UserService {
         return new UserDTO(user.getIdUser(), user.getUsername(), user.getEmail(), user.getUsername(), user.getPassword(), user.getPermission());
     }
 
+    @CacheEvict("users")
     public void delete(@NotNull String idUser) {
         userRepository.delete(userRepository.findById(UUID.fromString(idUser))
                 .orElseThrow(() -> new RuntimeException("Registro não encontrado com o idUser: " + idUser)));
