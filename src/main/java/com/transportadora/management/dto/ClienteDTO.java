@@ -24,6 +24,7 @@ public record ClienteDTO(
         String cidade,
         String estado,
         String tipoPgto,
+        String infoPagamento,
         String cepEntrega,
         String logradouroEntrega,
         String numeroEntrega,

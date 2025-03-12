@@ -65,6 +65,9 @@ public class Cliente {
     private String tipoPgto;
 
     @Column(nullable = false)
+    private String infoPagamento;
+
+    @Column(nullable = false)
     private String cepEntrega;
 
     @Column(nullable = false)
@@ -120,6 +123,9 @@ public class Cliente {
 
     @Column(nullable = false)
     private LocalDateTime dataAtualizacaoCliente;
+
+    public Cliente() {
+    }
 
     public Long getIdCliente() {
         return idCliente;
@@ -247,6 +253,14 @@ public class Cliente {
 
     public void setTipoPgto(String tipoPgto) {
         this.tipoPgto = tipoPgto;
+    }
+
+    public String getInfoPagamento() {
+        return infoPagamento;
+    }
+
+    public void setInfoPagamento(String infoPagamento) {
+        this.infoPagamento = infoPagamento;
     }
 
     public String getCepEntrega() {

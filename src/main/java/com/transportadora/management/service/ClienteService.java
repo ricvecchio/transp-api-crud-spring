@@ -87,6 +87,7 @@ public class ClienteService {
                     recordFound.setCidade(clienteDTO.cidade());
                     recordFound.setEstado(clienteDTO.estado());
                     recordFound.setTipoPgto(clienteDTO.tipoPgto());
+                    recordFound.setInfoPagamento(clienteDTO.infoPagamento());
                     recordFound.setCepEntrega(clienteDTO.cepEntrega());
                     recordFound.setLogradouroEntrega(clienteDTO.logradouroEntrega());
                     recordFound.setNumeroEntrega(clienteDTO.numeroEntrega());
@@ -135,6 +136,7 @@ public class ClienteService {
                         c.getCidade(),
                         c.getEstado(),
                         c.getTipoPgto(),
+                        c.getInfoPagamento(),
                         c.getCepEntrega(),
                         c.getLogradouroEntrega(),
                         c.getNumeroEntrega(),

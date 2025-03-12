@@ -29,6 +29,7 @@ public class ClienteMapper {
                 cliente.getCidade(),
                 cliente.getEstado(),
                 cliente.getTipoPgto(),
+                cliente.getInfoPagamento(),
                 cliente.getCepEntrega(),
                 cliente.getLogradouroEntrega(),
                 cliente.getNumeroEntrega(),
@@ -75,6 +76,7 @@ public class ClienteMapper {
         cliente.setCidade(clienteDTO.cidade());
         cliente.setEstado(clienteDTO.estado());
         cliente.setTipoPgto(clienteDTO.tipoPgto());
+        cliente.setInfoPagamento(clienteDTO.infoPagamento());
         cliente.setCepEntrega(clienteDTO.cepEntrega());
         cliente.setLogradouroEntrega(clienteDTO.logradouroEntrega());
         cliente.setNumeroEntrega(clienteDTO.numeroEntrega());

@@ -29,6 +29,7 @@ public class PedidoMapper {
                 pedido.getCidade(),
                 pedido.getEstado(),
                 pedido.getTipoPgto(),
+                pedido.getInfoPagamento(),
                 pedido.getCepEntrega(),
                 pedido.getLogradouroEntrega(),
                 pedido.getNumeroEntrega(),
@@ -79,6 +80,7 @@ public class PedidoMapper {
         pedido.setCidade(pedidoDTO.cidade());
         pedido.setEstado(pedidoDTO.estado());
         pedido.setTipoPgto(pedidoDTO.tipoPgto());
+        pedido.setInfoPagamento(pedidoDTO.infoPagamento());
         pedido.setCepEntrega(pedidoDTO.cepEntrega());
         pedido.setLogradouroEntrega(pedidoDTO.logradouroEntrega());
         pedido.setNumeroEntrega(pedidoDTO.numeroEntrega());

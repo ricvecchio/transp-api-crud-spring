@@ -120,6 +120,7 @@ public class PedidoService {
                     recordFound.setCidade(pedidoDTO.cidade());
                     recordFound.setEstado(pedidoDTO.estado());
                     recordFound.setTipoPgto(pedidoDTO.tipoPgto());
+                    recordFound.setInfoPagamento(pedidoDTO.infoPagamento());
                     recordFound.setCepEntrega(pedidoDTO.cepEntrega());
                     recordFound.setLogradouroEntrega(pedidoDTO.logradouroEntrega());
                     recordFound.setNumeroEntrega(pedidoDTO.numeroEntrega());

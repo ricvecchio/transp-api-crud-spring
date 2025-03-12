@@ -68,6 +68,9 @@ public class Pedido {
     private String tipoPgto;
 
     @Column(nullable = false)
+    private String infoPagamento;
+
+    @Column(nullable = false)
     private String cepEntrega;
 
     @Column(nullable = false)
@@ -268,6 +271,14 @@ public class Pedido {
 
     public void setTipoPgto(String tipoPgto) {
         this.tipoPgto = tipoPgto;
+    }
+
+    public String getInfoPagamento() {
+        return infoPagamento;
+    }
+
+    public void setInfoPagamento(String infoPagamento) {
+        this.infoPagamento = infoPagamento;
     }
 
     public String getCepEntrega() {
