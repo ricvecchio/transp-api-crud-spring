@@ -37,7 +37,7 @@ public class PedidoService {
         this.pedidoMapper = pedidoMapper;
     }
 
-//    @Cacheable("Pedidos")
+    @Cacheable(value = "Pedidos")
     public PedidoPaginacaoDTO list(int page, int tamPagina, String clienteFiltro, LocalDate dataInicial, LocalDate dataFinal, String statusFiltro) {
         Pageable pageable = PageRequest.of(page, tamPagina);
         Page<Pedido> pagePedido;
@@ -85,22 +85,25 @@ public class PedidoService {
         return new PedidoPaginacaoDTO(pedidos, pagePedido.getTotalElements(), pagePedido.getTotalPages());
     }
 
+    @Cacheable(value = "Pedidos")
     public PedidoDTO findById(@NotNull @Positive Long idPedido) {
         return pedidoRepository.findById(idPedido).map(pedidoMapper::toDTO)
                 .orElseThrow(() -> new RecordNotFoundException(idPedido));
     }
 
+    @Cacheable(value = "Pedidos")
     public List<PedidoDTO> findLastPedidosByCliente(@NotNull @Positive Long idCliente, int limite) {
         Pageable pageable = PageRequest.of(0, limite, Sort.by(Sort.Direction.DESC, "dataAtualizacaoPedido"));
         List<Pedido> pedidos = pedidoRepository.findTopByIdClienteOrderByDataAtualizacaoPedidoDesc(idCliente, pageable);
         return pedidos.stream().map(pedidoMapper::toDTO).collect(Collectors.toList());
     }
 
+    @CacheEvict(value = "Pedidos", allEntries = true)
     public PedidoDTO create(@Valid @NotNull PedidoDTO pedidoDTO) {
         return pedidoMapper.toDTO(pedidoRepository.save(pedidoMapper.toEntity(pedidoDTO)));
     }
 
-//    @CacheEvict("Pedidos")
+    @CacheEvict(value = "Pedidos", allEntries = true)
     public PedidoDTO update(@NotNull @Positive Long idPedido, @Valid PedidoDTO pedidoDTO) {
         return pedidoRepository.findById(idPedido)
                 .map(recordFound -> {
@@ -147,7 +150,7 @@ public class PedidoService {
                 }).orElseThrow(() -> new RecordNotFoundException(idPedido));
     }
 
-//    @CacheEvict("Pedidos")
+    @CacheEvict(value = "Pedidos", allEntries = true)
     public void cancel(@NotNull @Positive Long idPedido) {
         Pedido pedido = pedidoRepository.findById(idPedido)
                 .orElseThrow(() -> new RecordNotFoundException(idPedido));
