@@ -2,8 +2,6 @@ package com.transportadora.user.controller;
 
 import com.transportadora.user.dto.*;
 import com.transportadora.user.entities.User;
-import com.transportadora.user.repository.UserRepository;
-import com.transportadora.user.security.TokenService;
 import com.transportadora.user.service.PasswordRecoveryService;
 import com.transportadora.user.service.UserService;
 import jakarta.validation.Valid;
@@ -14,8 +12,6 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,9 +26,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final TokenService tokenService;
     private final UserService userService;
     private final PasswordRecoveryService passwordRecoveryService;
 
@@ -46,7 +39,7 @@ public class UserController {
 
     @GetMapping("/{username}")
     public Optional<User> findByUsername(@PathVariable @NotNull String username) {
-        return userRepository.findByUsername(username);
+        return userService.findByUsername(username);
     }
 
     @PutMapping("/{idUser}")
@@ -62,21 +55,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO body) {
-        Optional<User> user = this.userRepository.findByUsername(body.username());
-
-        if (user.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("message", "Username não cadastrado."));
-        }
-
-        if (!passwordEncoder.matches(body.password(), user.get().getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("message", "Senha incorreta."));
-        }
-
-        String token = this.tokenService.generateToken(user.get());
-        return ResponseEntity.ok(new ResponseDTO(user.get().getUsername(), token, user.get().getPermission()));
-
+        return userService.login(body);
     }
 
     @PostMapping("/recoverPassword")
@@ -94,21 +73,13 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
-        Optional<User> user = this.userRepository.findByUsername(body.username());
-
-        if (user.isPresent()) {
+        try {
+            userService.register(body);
+            return ResponseEntity.ok(Collections.singletonMap("message", "Usuário cadastrado com sucesso!"));
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(Map.of("message", "Username já cadastrado!"));
         }
-
-        User newUser = new User();
-        newUser.setName(body.name());
-        newUser.setEmail(body.email());
-        newUser.setUsername(body.username());
-        newUser.setPassword(passwordEncoder.encode(body.password()));
-        this.userRepository.save(newUser);
-
-        return ResponseEntity.ok(Collections.singletonMap("message", "Usuário cadastrado com sucesso!"));
     }
 
 }
