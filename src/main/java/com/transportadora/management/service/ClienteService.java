@@ -34,7 +34,7 @@ public class ClienteService {
         this.clienteMapper = clienteMapper;
     }
 
-//    @Cacheable("Clientes")
+    @Cacheable(value = "Clientes")
     public ClientePaginacaoDTO list(@PositiveOrZero int page, @Positive @Max(100) int tamPagina, String filter) {
         Pageable pageable = PageRequest.of(page, tamPagina);
         Page<Cliente> pageCliente;
@@ -50,10 +50,12 @@ public class ClienteService {
         return new ClientePaginacaoDTO(clientes, pageCliente.getTotalElements(), pageCliente.getTotalPages());
     }
 
+    @Cacheable(value = "Clientes")
     public ClienteDTO findById(Long idCliente) {
         return clienteRepository.findById(idCliente).map(clienteMapper::toDTO).orElse(null);
     }
 
+    @Cacheable(value = "Clientes")
     public List<ClienteDTO> buscarTrechoNome(String trechoBusca) {
         List<Cliente> clientesEncontrados = clienteRepository.clientesPorTrecho(trechoBusca);
 
@@ -64,11 +66,12 @@ public class ClienteService {
         }
     }
 
+    @CacheEvict(value = "Clientes", allEntries = true)
     public ClienteDTO create(@Valid @NotNull ClienteDTO clienteDTO) {
         return clienteMapper.toDTO(clienteRepository.save(clienteMapper.toEntity(clienteDTO)));
     }
 
-//    @CacheEvict("Clientes")
+    @CacheEvict(value = "Clientes", allEntries = true)
     public ClienteDTO update(@NotNull @Positive Long idCliente, @Valid ClienteDTO clienteDTO) {
         return clienteRepository.findById(idCliente)
                 .map(recordFound -> {
@@ -111,7 +114,7 @@ public class ClienteService {
                 }).orElseThrow(() -> new RecordNotFoundException(idCliente));
     }
 
-//    @CacheEvict("Clientes")
+    @CacheEvict(value = "Clientes", allEntries = true)
     public void delete(@NotNull @Positive Long idCliente) {
         clienteRepository.delete(clienteRepository.findById(idCliente)
                 .orElseThrow(() -> new RecordNotFoundException(idCliente)));
