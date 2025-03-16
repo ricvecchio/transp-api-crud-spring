@@ -68,8 +68,4 @@ public class PedidoController {
         pedidoService.cancel(idPedido);
     }
 
-    @GetMapping("/metricas")
-    public String metricas() {
-        return "Esse endpoint /metricas tem hasRole('ADMIN').";
-    }
 }
