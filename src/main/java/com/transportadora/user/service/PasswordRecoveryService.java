@@ -23,9 +23,10 @@ public class PasswordRecoveryService {
                 .orElseThrow(() -> new RuntimeException("Usuário ou e-mail não encontrado!"));
 
         String token = tokenService.generateToken(user);
+        String recoveryLink = "https://saotomecatimesaotomecatime.com/home/recuperar-senha?token=" + token;
 
         emailService.sendEmail(user.getEmail(), "Recuperação de Senha",
-                "Use este token para redefinir sua senha: " + token);
+                "Clique no link para redefinir sua senha:\nLink: " + recoveryLink);
     }
 
     @Cacheable(value = "users")
