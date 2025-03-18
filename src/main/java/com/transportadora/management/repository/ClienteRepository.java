@@ -14,6 +14,7 @@ import java.util.List;
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     @Query("SELECT c FROM Cliente c WHERE " +
+            "CAST(c.idCliente AS string) LIKE CONCAT('%', :filter, '%') OR " +
             "(LOWER(CAST(FUNCTION('unaccent', c.nome) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :filter) AS string)), '%') OR " +
             "LOWER(CAST(FUNCTION('unaccent', c.razaoSocial) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :filter) AS string)), '%') OR " +
             "LOWER(CAST(FUNCTION('unaccent', c.logradouroEntrega) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :filter) AS string)), '%') OR " +
@@ -23,6 +24,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     Page<Cliente> findAllByOrderByIdClienteDesc(Pageable pageable);
 
     @Query("SELECT c FROM Cliente c WHERE " +
+            "CAST(c.idCliente AS string) LIKE CONCAT('%', :filter, '%') OR " +
             "(LOWER(CAST(FUNCTION('unaccent', c.nome) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :filter) AS string)), '%') OR " +
             "LOWER(CAST(FUNCTION('unaccent', c.razaoSocial) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :filter) AS string)), '%') OR " +
             "LOWER(CAST(FUNCTION('unaccent', c.logradouroEntrega) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :filter) AS string)), '%') OR " +
