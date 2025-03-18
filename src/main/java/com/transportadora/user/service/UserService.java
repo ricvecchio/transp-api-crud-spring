@@ -59,7 +59,6 @@ public class UserService {
         return new UserPaginacaoDTO(users, pageUser.getTotalElements(), pageUser.getTotalPages());
     }
 
-    @Cacheable(value = "users")
     public Optional<User> findByUsername(@PathVariable @NotNull String username) {
         return userRepository.findByUsername(username);
     }
@@ -84,7 +83,6 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Registro não encontrado com o idUser: " + idUser)));
     }
 
-    @Cacheable(value = "users")
     public ResponseEntity<?> login(LoginRequestDTO body) {
         Optional<User> user = userRepository.findByUsername(body.username());
 

@@ -85,7 +85,6 @@ public class PedidoService {
         return new PedidoPaginacaoDTO(pedidos, pagePedido.getTotalElements(), pagePedido.getTotalPages());
     }
 
-    @Cacheable(value = "Pedidos")
     public PedidoDTO findById(@NotNull @Positive Long idPedido) {
         return pedidoRepository.findById(idPedido).map(pedidoMapper::toDTO)
                 .orElseThrow(() -> new RecordNotFoundException(idPedido));
