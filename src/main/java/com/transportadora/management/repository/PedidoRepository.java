@@ -18,6 +18,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Query("SELECT p FROM Pedido p WHERE " +
             "CAST(p.idPedido AS string) LIKE CONCAT('%', :clienteFiltro, '%') OR " +
+            "CAST(p.idCliente AS string) LIKE CONCAT('%', :clienteFiltro, '%') OR " +
             "(LOWER(CAST(FUNCTION('unaccent', p.nome) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)), '%') OR " +
             "LOWER(CAST(FUNCTION('unaccent', p.razaoSocial) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)), '%') OR " +
             "LOWER(CAST(FUNCTION('unaccent', p.logradouroEntrega) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)), '%') OR " +
@@ -36,6 +37,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Query("SELECT p FROM Pedido p WHERE " +
             "CAST(p.idPedido AS string) LIKE CONCAT('%', :clienteFiltro, '%') OR " +
+            "CAST(p.idCliente AS string) LIKE CONCAT('%', :clienteFiltro, '%') OR " +
             "(LOWER(CAST(FUNCTION('unaccent', p.nome) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)), '%') OR " +
             "LOWER(CAST(FUNCTION('unaccent', p.razaoSocial) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)), '%') OR " +
             "LOWER(CAST(FUNCTION('unaccent', p.logradouroEntrega) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)), '%') OR " +
@@ -53,6 +55,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Query("SELECT p FROM Pedido p WHERE " +
             "CAST(p.idPedido AS string) LIKE CONCAT('%', :clienteFiltro, '%') OR " +
+            "CAST(p.idCliente AS string) LIKE CONCAT('%', :clienteFiltro, '%') OR " +
             "(LOWER(CAST(FUNCTION('unaccent', p.nome) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)), '%') OR " +
             "LOWER(CAST(FUNCTION('unaccent', p.razaoSocial) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)), '%') OR " +
             "LOWER(CAST(FUNCTION('unaccent', p.logradouroEntrega) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)), '%') OR " +
@@ -70,6 +73,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Query("SELECT p FROM Pedido p WHERE " +
             "CAST(p.idPedido AS string) LIKE CONCAT('%', :clienteFiltro, '%') OR " +
+            "CAST(p.idCliente AS string) LIKE CONCAT('%', :clienteFiltro, '%') OR " +
             "(LOWER(CAST(FUNCTION('unaccent', p.nome) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)), '%') OR " +
             "LOWER(CAST(FUNCTION('unaccent', p.razaoSocial) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)), '%') OR " +
             "LOWER(CAST(FUNCTION('unaccent', p.logradouroEntrega) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :clienteFiltro) AS string)), '%') OR " +
