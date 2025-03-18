@@ -50,6 +50,7 @@ public class ClienteService {
         return new ClientePaginacaoDTO(clientes, pageCliente.getTotalElements(), pageCliente.getTotalPages());
     }
 
+    @Cacheable(value = "Clientes")
     public ClienteDTO findById(Long idCliente) {
         return clienteRepository.findById(idCliente).map(clienteMapper::toDTO).orElse(null);
     }
