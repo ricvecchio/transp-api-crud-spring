@@ -51,7 +51,8 @@ public class PedidoMapper {
                 pedido.getAjudante(),
                 pedido.getObservacao(),
                 pedido.getStatus(),
-                pedido.getDataAtualizacaoPedido());
+                pedido.getDataAtualizacaoPedido(),
+                pedido.getImagemPedido());
     }
 
     public Pedido toEntity(PedidoDTO pedidoDTO) {
@@ -103,18 +104,7 @@ public class PedidoMapper {
         pedido.setObservacao(pedidoDTO.observacao());
         pedido.setStatus(pedidoDTO.status());
         pedido.setDataAtualizacaoPedido(pedidoDTO.dataAtualizacaoPedido());
+        pedido.setImagemPedido(pedidoDTO.imagemPedido());
         return pedido;
     }
-
-//    public Status convertStatusValue(String value) {
-//        if (value == null) {
-//            return null;
-//        }
-//        return switch (value) {
-//            case "Emitido" -> Status.EMITIDO;
-//            case "Cancelado" -> Status.CANCELADO;
-//            case "Salvo" -> Status.SALVO;
-//            default -> throw new IllegalArgumentException("Status inválido: " + value);
-//        };
-//    }
 };

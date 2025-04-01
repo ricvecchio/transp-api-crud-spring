@@ -47,5 +47,6 @@ public record PedidoDTO(
         String ajudante,
         String observacao,
         String status,
-        LocalDateTime dataAtualizacaoPedido) {
+        LocalDateTime dataAtualizacaoPedido,
+        String imagemPedido) {
 }

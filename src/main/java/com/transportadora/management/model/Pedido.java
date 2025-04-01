@@ -137,6 +137,9 @@ public class Pedido {
     @Column(nullable = false)
     private LocalDateTime dataAtualizacaoPedido;
 
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String imagemPedido;
+
     public Long getIdPedido() {
         return idPedido;
     }
@@ -455,6 +458,14 @@ public class Pedido {
 
     public void setDataAtualizacaoPedido(LocalDateTime dataAtualizacaoPedido) {
         this.dataAtualizacaoPedido = dataAtualizacaoPedido;
+    }
+
+    public String getImagemPedido() {
+        return imagemPedido;
+    }
+
+    public void setImagemPedido(String imagemPedido) {
+        this.imagemPedido = imagemPedido;
     }
 
 }

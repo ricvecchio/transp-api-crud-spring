@@ -146,6 +146,7 @@ public class PedidoService {
                     recordFound.setObservacao(pedidoDTO.observacao());
                     recordFound.setStatus(pedidoDTO.status());
                     recordFound.setDataAtualizacaoPedido(pedidoDTO.dataAtualizacaoPedido());
+                    recordFound.setImagemPedido(pedidoDTO.imagemPedido());
                     return pedidoMapper.toDTO(pedidoRepository.save(recordFound));
                 }).orElseThrow(() -> new RecordNotFoundException(idPedido));
     }
