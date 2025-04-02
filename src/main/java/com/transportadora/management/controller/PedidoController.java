@@ -31,7 +31,7 @@ public class PedidoController {
     @GetMapping
     public PedidoPaginacaoDTO list(
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
-            @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
+            @RequestParam(defaultValue = "10") @Positive @Max(1000) int pageSize,
             @RequestParam(required = false) String clienteFiltro,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal,
