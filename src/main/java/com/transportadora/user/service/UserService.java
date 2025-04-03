@@ -5,10 +5,7 @@ import com.transportadora.user.entities.User;
 import com.transportadora.user.repository.UserRepository;
 import com.transportadora.user.security.TokenService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -42,7 +39,7 @@ public class UserService {
     }
 
     @Cacheable(value = "users")
-    public UserPaginacaoDTO list(@PositiveOrZero int page, @Positive @Max(100) int pageSize, String filter) {
+    public UserPaginacaoDTO list(int page, int pageSize, String filter) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<User> pageUser = userRepository.findAllByFilter(filter, pageable);
 

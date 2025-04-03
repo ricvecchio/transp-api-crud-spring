@@ -7,10 +7,8 @@ import com.transportadora.management.exception.RecordNotFoundException;
 import com.transportadora.management.model.Cliente;
 import com.transportadora.management.repository.ClienteRepository;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -35,7 +33,7 @@ public class ClienteService {
     }
 
     @Cacheable(value = "Clientes")
-    public ClientePaginacaoDTO list(@PositiveOrZero int page, @Positive @Max(100) int tamPagina, String filter) {
+    public ClientePaginacaoDTO list(int page, int tamPagina, String filter) {
         Pageable pageable = PageRequest.of(page, tamPagina);
         Page<Cliente> pageCliente;
 
