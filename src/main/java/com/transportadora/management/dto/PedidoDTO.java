@@ -47,6 +47,8 @@ public record PedidoDTO(
         String precoLv10,
         String precoLv15,
         String ajudante,
+        String adicional,
+        String precoFinal,
         String observacao,
         String status,
         LocalDateTime dataAtualizacaoPedido,

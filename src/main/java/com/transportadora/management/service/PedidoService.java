@@ -145,6 +145,8 @@ public class PedidoService {
                     recordFound.setPrecoLv10(pedidoDTO.precoLv10());
                     recordFound.setPrecoLv15(pedidoDTO.precoLv15());
                     recordFound.setAjudante(pedidoDTO.ajudante());
+                    recordFound.setAdicional(pedidoDTO.adicional());
+                    recordFound.setPrecoFinal(pedidoDTO.precoFinal());
                     recordFound.setObservacao(pedidoDTO.observacao());
                     recordFound.setStatus(pedidoDTO.status());
                     recordFound.setDataAtualizacaoPedido(pedidoDTO.dataAtualizacaoPedido());

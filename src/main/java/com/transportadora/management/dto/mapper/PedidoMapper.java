@@ -51,6 +51,8 @@ public class PedidoMapper {
                 pedido.getPrecoLv10(),
                 pedido.getPrecoLv15(),
                 pedido.getAjudante(),
+                pedido.getAdicional(),
+                pedido.getPrecoFinal(),
                 pedido.getObservacao(),
                 pedido.getStatus(),
                 pedido.getDataAtualizacaoPedido(),
@@ -105,6 +107,8 @@ public class PedidoMapper {
         pedido.setPrecoLv10(pedidoDTO.precoLv10());
         pedido.setPrecoLv15(pedidoDTO.precoLv15());
         pedido.setAjudante(pedidoDTO.ajudante());
+        pedido.setAdicional(pedidoDTO.adicional());
+        pedido.setPrecoFinal(pedidoDTO.precoFinal());
         pedido.setObservacao(pedidoDTO.observacao());
         pedido.setStatus(pedidoDTO.status());
         pedido.setDataAtualizacaoPedido(pedidoDTO.dataAtualizacaoPedido());

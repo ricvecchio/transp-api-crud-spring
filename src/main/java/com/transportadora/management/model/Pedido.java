@@ -134,6 +134,12 @@ public class Pedido {
     private String ajudante;
 
     @Column(nullable = false)
+    private String adicional;
+
+    @Column(length = 12, nullable = false)
+    private String precoFinal;
+
+    @Column(nullable = false)
     private String observacao;
 
     @NotNull
@@ -456,6 +462,22 @@ public class Pedido {
 
     public void setAjudante(String ajudante) {
         this.ajudante = ajudante;
+    }
+
+    public String getAdicional() {
+        return adicional;
+    }
+
+    public void setAdicional(String adicional) {
+        this.adicional = adicional;
+    }
+
+    public String getPrecoFinal() {
+        return precoFinal;
+    }
+
+    public void setPrecoFinal(String precoFinal) {
+        this.precoFinal = precoFinal;
     }
 
     public String getObservacao() {
