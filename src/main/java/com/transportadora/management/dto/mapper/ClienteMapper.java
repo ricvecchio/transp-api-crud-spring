@@ -41,6 +41,8 @@ public class ClienteMapper {
                 cliente.getCno(),
                 cliente.getIe(),
                 cliente.getMangueira(),
+                cliente.getValorAjudante(),
+                cliente.getValorAdicional(),
                 cliente.getPrecoCx5(),
                 cliente.getPrecoCx10(),
                 cliente.getPrecoCx15(),
@@ -88,6 +90,8 @@ public class ClienteMapper {
         cliente.setCno(clienteDTO.cno());
         cliente.setIe(clienteDTO.ie());
         cliente.setMangueira(clienteDTO.mangueira());
+        cliente.setValorAjudante(clienteDTO.valorAjudante());
+        cliente.setValorAdicional(clienteDTO.valorAdicional());
         cliente.setPrecoCx5(clienteDTO.precoCx5());
         cliente.setPrecoCx10(clienteDTO.precoCx10());
         cliente.setPrecoCx15(clienteDTO.precoCx15());

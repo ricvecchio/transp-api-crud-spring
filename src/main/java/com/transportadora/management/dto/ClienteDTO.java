@@ -36,6 +36,8 @@ public record ClienteDTO(
         String cno,
         String ie,
         String mangueira,
+        String valorAjudante,
+        String valorAdicional,
         String precoCx5,
         String precoCx10,
         String precoCx15,

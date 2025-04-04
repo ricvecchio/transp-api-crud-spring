@@ -41,6 +41,8 @@ public class PedidoMapper {
                 pedido.getCno(),
                 pedido.getIe(),
                 pedido.getMangueira(),
+                pedido.getValorAjudante(),
+                pedido.getValorAdicional(),
                 pedido.getVolume(),
                 pedido.getPrecoCx5(),
                 pedido.getPrecoCx10(),
@@ -93,6 +95,8 @@ public class PedidoMapper {
         pedido.setCno(pedidoDTO.cno());
         pedido.setIe(pedidoDTO.ie());
         pedido.setMangueira(pedidoDTO.mangueira());
+        pedido.setValorAjudante(pedidoDTO.valorAjudante());
+        pedido.setValorAdicional(pedidoDTO.valorAdicional());
         pedido.setVolume(pedidoDTO.volume());
         pedido.setPrecoCx5(pedidoDTO.precoCx5());
         pedido.setPrecoCx10(pedidoDTO.precoCx10());

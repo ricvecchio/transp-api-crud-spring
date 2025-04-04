@@ -149,6 +149,8 @@ public class ClienteService {
                         c.getCno(),
                         c.getIe(),
                         c.getMangueira(),
+                        c.getValorAjudante(),
+                        c.getValorAdicional(),
                         c.getPrecoCx5(),
                         c.getPrecoCx10(),
                         c.getPrecoCx15(),

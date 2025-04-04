@@ -103,6 +103,12 @@ public class Pedido {
     @Column(length = 15, nullable = false)
     private String mangueira;
 
+    @Column(length = 12, nullable = false)
+    private String valorAjudante;
+
+    @Column(length = 12, nullable = false)
+    private String valorAdicional;
+
     @Column(length = 10, nullable = false)
     private String volume;
 
@@ -370,6 +376,22 @@ public class Pedido {
 
     public void setMangueira(String mangueira) {
         this.mangueira = mangueira;
+    }
+
+    public String getValorAjudante() {
+        return valorAjudante;
+    }
+
+    public void setValorAjudante(String valorAjudante) {
+        this.valorAjudante = valorAjudante;
+    }
+
+    public String getValorAdicional() {
+        return valorAdicional;
+    }
+
+    public void setValorAdicional(String valorAdicional) {
+        this.valorAdicional = valorAdicional;
     }
 
     public String getVolume() {

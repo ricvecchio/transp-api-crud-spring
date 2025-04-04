@@ -135,6 +135,8 @@ public class PedidoService {
                     recordFound.setCno(pedidoDTO.cno());
                     recordFound.setIe(pedidoDTO.ie());
                     recordFound.setMangueira(pedidoDTO.mangueira());
+                    recordFound.setValorAjudante(pedidoDTO.valorAjudante());
+                    recordFound.setValorAdicional(pedidoDTO.valorAdicional());
                     recordFound.setVolume(pedidoDTO.volume());
                     recordFound.setPrecoCx5(pedidoDTO.precoCx5());
                     recordFound.setPrecoCx10(pedidoDTO.precoCx10());

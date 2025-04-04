@@ -101,6 +101,12 @@ public class Cliente {
     private String mangueira;
 
     @Column(length = 12, nullable = false)
+    private String valorAjudante;
+
+    @Column(length = 12, nullable = false)
+    private String valorAdicional;
+
+    @Column(length = 12, nullable = false)
     private String precoCx5;
 
     @Column(length = 12, nullable = false)
@@ -349,6 +355,22 @@ public class Cliente {
 
     public void setMangueira(String mangueira) {
         this.mangueira = mangueira;
+    }
+
+    public String getValorAjudante() {
+        return valorAjudante;
+    }
+
+    public void setValorAjudante(String valorAjudante) {
+        this.valorAjudante = valorAjudante;
+    }
+
+    public String getValorAdicional() {
+        return valorAdicional;
+    }
+
+    public void setValorAdicional(String valorAdicional) {
+        this.valorAdicional = valorAdicional;
     }
 
     public String getPrecoCx5() {

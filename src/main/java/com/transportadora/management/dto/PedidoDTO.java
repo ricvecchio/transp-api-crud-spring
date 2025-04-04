@@ -37,6 +37,8 @@ public record PedidoDTO(
         String cno,
         String ie,
         String mangueira,
+        String valorAjudante,
+        String valorAdicional,
         String volume,
         String precoCx5,
         String precoCx10,
