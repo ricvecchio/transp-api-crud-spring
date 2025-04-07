@@ -31,10 +31,10 @@ public class Pedido {
     @Column(nullable = false)
     private Long idCliente;
 
-    @Column(nullable = false)
+    @Column(length = 15, nullable = false)
     private String telefone;
 
-    @Column(nullable = false)
+    @Column(length = 15, nullable = false)
     private String celular;
 
     @Column(nullable = false)
@@ -43,61 +43,61 @@ public class Pedido {
     @Column(nullable = false)
     private String contatosAdicionais;
 
-    @Column(nullable = false)
+    @Column(length = 10, nullable = false)
     private String cep;
 
     @Column(nullable = false)
     private String logradouro;
 
-    @Column(nullable = false)
+    @Column(length = 15, nullable = false)
     private String numero;
 
-    @Column(nullable = false)
+    @Column(length = 50, nullable = false)
     private String complemento;
 
-    @Column(nullable = false)
+    @Column(length = 50, nullable = false)
     private String bairro;
 
-    @Column(nullable = false)
+    @Column(length = 50, nullable = false)
     private String cidade;
 
-    @Column(nullable = false)
+    @Column(length = 05, nullable = false)
     private String estado;
 
-    @Column(nullable = false)
+    @Column(length = 15, nullable = false)
     private String tipoPgto;
 
     @Column(nullable = false)
     private String infoPagamento;
 
-    @Column(nullable = false)
+    @Column(length = 10, nullable = false)
     private String cepEntrega;
 
     @Column(nullable = false)
     private String logradouroEntrega;
 
-    @Column(nullable = false)
+    @Column(length = 15, nullable = false)
     private String numeroEntrega;
 
-    @Column(nullable = false)
+    @Column(length = 50, nullable = false)
     private String complementoEntrega;
 
-    @Column(nullable = false)
+    @Column(length = 50, nullable = false)
     private String bairroEntrega;
 
-    @Column(nullable = false)
+    @Column(length = 50, nullable = false)
     private String cidadeEntrega;
 
-    @Column(nullable = false)
+    @Column(length = 05, nullable = false)
     private String estadoEntrega;
 
-    @Column(nullable = false)
+    @Column(length = 30, nullable = false)
     private String sfobras;
 
-    @Column(nullable = false)
+    @Column(length = 30, nullable = false)
     private String cno;
 
-    @Column(nullable = false)
+    @Column(length = 30, nullable = false)
     private String ie;
 
     @Column(length = 15, nullable = false)
@@ -130,10 +130,10 @@ public class Pedido {
     @Column(length = 12, nullable = false)
     private String precoLv15;
 
-    @Column(nullable = false)
+    @Column(length = 10, nullable = false)
     private String ajudante;
 
-    @Column(nullable = false)
+    @Column(length = 10, nullable = false)
     private String adicional;
 
     @Column(length = 12, nullable = false)
