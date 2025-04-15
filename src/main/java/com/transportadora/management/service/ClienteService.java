@@ -100,6 +100,8 @@ public class ClienteService {
                     recordFound.setCno(clienteDTO.cno());
                     recordFound.setIe(clienteDTO.ie());
                     recordFound.setMangueira(clienteDTO.mangueira());
+                    recordFound.setValorAjudante(clienteDTO.valorAjudante());
+                    recordFound.setValorAdicional(clienteDTO.valorAdicional());
                     recordFound.setPrecoCx5(clienteDTO.precoCx5());
                     recordFound.setPrecoCx10(clienteDTO.precoCx10());
                     recordFound.setPrecoCx15(clienteDTO.precoCx15());
