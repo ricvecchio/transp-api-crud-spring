@@ -1,6 +1,6 @@
 package com.transportadora.management.controller;
 
-import com.transportadora.management.service.MetricasService;
+import com.transportadora.management.service.DashboardService;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -11,21 +11,21 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 @RestController
 @CrossOrigin(origins = "https://saotomecatimesaotomecatime.com")
-@RequestMapping("/api/metricas")
-public class MetricasController {
+@RequestMapping("/api/dashboard")
+public class DashboardController {
 
-    private final MetricasService metricasService;
+    private final DashboardService dashboardService;
 
-    public MetricasController(MetricasService metricasService) {
-        this.metricasService = metricasService;
+    public DashboardController(DashboardService dashboardService) {
+        this.dashboardService = dashboardService;
     }
 
     @GetMapping
-    public ResponseEntity<?> metricas(
+    public ResponseEntity<?> dashboard(
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
             @RequestParam(required = false) String filtro) {
-        return metricasService.metricas(page, pageSize, filtro);
+        return dashboardService.dashboard(page, pageSize, filtro);
     }
 
 
