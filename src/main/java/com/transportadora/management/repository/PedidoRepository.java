@@ -126,4 +126,25 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     List<Pedido> findTopByIdClienteOrderByDataAtualizacaoPedidoDesc(
             @Param("idCliente") Long idCliente,
             Pageable pageable);
+
+    @Query(value = "SELECT id_cliente AS idCliente, preco_total AS precoTotal, mes_total AS mesTotal, ano_total AS anoTotal " +
+            "FROM ( " +
+            "    SELECT " +
+            "        p.id_cliente, " +
+            "        SUM(CAST(REPLACE(REPLACE(REGEXP_REPLACE(p.preco_final, E'[\\\\s\\\\u00A0]', '', 'g'), 'R$', ''), ',', '.') AS DOUBLE PRECISION)) AS preco_total, " +
+            "        EXTRACT(MONTH FROM p.data_atualizacao_pedido) AS mes_total, " +
+            "        EXTRACT(YEAR FROM p.data_atualizacao_pedido) AS ano_total, " +
+            "        ROW_NUMBER() OVER ( " +
+            "            PARTITION BY EXTRACT(MONTH FROM p.data_atualizacao_pedido) " +
+            "            ORDER BY SUM(CAST(REPLACE(REPLACE(REGEXP_REPLACE(p.preco_final, E'[\\\\s\\\\u00A0]', '', 'g'), 'R$', ''), ',', '.') AS DOUBLE PRECISION)) DESC " +
+            "        ) AS ranking " +
+            "    FROM pedidos p " +
+            "    WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
+            "    GROUP BY p.id_cliente, mes_total, ano_total " +
+            ") AS sub " +
+            "WHERE sub.ranking <= 5 " +
+            "ORDER BY sub.ano_total, sub.mes_total, sub.preco_total DESC", nativeQuery = true)
+    List<Object[]> findTop5ClientesPorMesNative();
+
+
 }

@@ -28,7 +28,4 @@ public class DashboardController {
         return dashboardService.dashboard(page, pageSize, filtro);
     }
 
-
-
-
 }
