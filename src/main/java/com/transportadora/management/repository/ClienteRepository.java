@@ -13,6 +13,8 @@ import java.util.List;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
+    boolean existsByCpfCnpj(String cpfCnpj);
+
     @Query("SELECT c FROM Cliente c WHERE " +
             "CAST(c.idCliente AS string) LIKE CONCAT('%', :filter, '%') OR " +
             "(LOWER(CAST(FUNCTION('unaccent', c.nome) AS string)) LIKE CONCAT('%', LOWER(CAST(FUNCTION('unaccent', :filter) AS string)), '%') OR " +

@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Validated
 @Service
 public class ClienteService {
@@ -66,6 +68,12 @@ public class ClienteService {
 
     @CacheEvict(value = "Clientes", allEntries = true)
     public ClienteDTO create(@Valid @NotNull ClienteDTO clienteDTO) {
+        if (clienteDTO.cpfCnpj() != null && !clienteDTO.cpfCnpj().trim().isEmpty()) {
+            boolean exists = clienteRepository.existsByCpfCnpj(clienteDTO.cpfCnpj().trim());
+            if (exists) {
+                throw new DuplicateKeyException("CPF/CNPJ já está cadastrado.");
+            }
+        }
         return clienteMapper.toDTO(clienteRepository.save(clienteMapper.toEntity(clienteDTO)));
     }
 

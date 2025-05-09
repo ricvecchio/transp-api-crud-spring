@@ -8,7 +8,9 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +50,11 @@ public class ClienteController {
     @ResponseStatus(code = HttpStatus.CREATED)
     public ClienteDTO save(@RequestBody @Valid @NotNull ClienteDTO cliente) {
         return clienteService.create(cliente);
+    }
+
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ResponseEntity<String> handleDuplicateKeyException(DuplicateKeyException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT); // Código 409
     }
 
     @PutMapping("/{idCliente}")
