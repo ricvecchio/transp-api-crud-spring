@@ -28,8 +28,16 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         var login = tokenService.validateToken(token);
 
+        System.out.println("🔐 Request URI: " + request.getRequestURI()); //EXCLUIR
+        System.out.println("🔐 Token: " + token); //EXCLUIR
+        System.out.println("🔐 Login extraído do token: " + login); //EXCLUIR
+
         if (login != null) {
             User user = userRepository.findByUsername(login).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
+
+            System.out.println("✅ Usuário encontrado: " + user.getUsername());  //EXCLUIR
+            System.out.println("✅ Permissão do usuário: " + user.getPermission());  //EXCLUIR
+
             var authorities = new ArrayList<SimpleGrantedAuthority>();
             if (user.getPermission() != null) {
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getPermission()));
