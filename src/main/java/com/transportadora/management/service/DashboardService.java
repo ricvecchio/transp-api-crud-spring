@@ -25,6 +25,7 @@ public class DashboardService {
 
     @Cacheable(value = "Pedidos")
     public ResponseEntity<?> dashboard(int page, int pageSize, String filtro) {
+        System.out.println("DashboardService - Entrou aqui"); //EXCLUIR
         // Obter os top 5 clientes por mês
         List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
 

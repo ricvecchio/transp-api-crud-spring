@@ -40,9 +40,9 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             var authorities = new ArrayList<SimpleGrantedAuthority>();
             if (user.getPermission() != null) {
-                var role = "ROLE_" + user.getPermission(); // EXCLUIR
-
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getPermission()));
+
+                var role = "ROLE_" + user.getPermission(); // EXCLUIR
                 System.out.println("[SecurityFilter] GrantedAuthority aplicada: {}" + role); //EXCLUIR
 
             }

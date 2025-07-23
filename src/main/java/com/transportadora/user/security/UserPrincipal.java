@@ -25,9 +25,7 @@ public class UserPrincipal implements UserDetails {
         this.password = user.getPassword();
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        if (user.getPermission() != null) { // NOVO - EXCLUIR
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getPermission())); // NOVO - EXCLUIR
-        } // NOVO - EXCLUIR
+
         this.authorities = authorities;
     }
 
