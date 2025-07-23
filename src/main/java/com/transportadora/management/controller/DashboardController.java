@@ -21,13 +21,12 @@ public class DashboardController {
         this.dashboardService = dashboardService;
     }
 
-
     @GetMapping
     public ResponseEntity<?> dashboard(
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
             @RequestParam(required = false) String filtro) {
-
+        System.out.println("DashboardController: Entrou aqui");  // EXCLUIR
         var auth = SecurityContextHolder.getContext().getAuthentication();  // EXCLUIR
         System.out.println("🔎 Controller: Usuário autenticado: " + auth.getName());  // EXCLUIR
         System.out.println("🔎 Controller: Authorities: " + auth.getAuthorities());  // EXCLUIR
