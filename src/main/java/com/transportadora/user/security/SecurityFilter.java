@@ -65,12 +65,12 @@ public class SecurityFilter extends OncePerRequestFilter {
 //    }
 
     // EXCLUIR METODO ABAIXO E RETORNAR O DE CIMA
-private String recoverToken(HttpServletRequest request) {
-    String authHeader = request.getHeader("Authorization");
-    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-        System.out.println("[SecurityFilter] Authorization header ausente ou malformado.");  // EXCLUIR
-        return null;
+    private String recoverToken(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            System.out.println("[SecurityFilter] Authorization header ausente ou malformado.");  // EXCLUIR
+            return null;
+        }
+        return authHeader.replace("Bearer ", "");
     }
-    return authHeader.replace("Bearer ", "");
-}
 }
