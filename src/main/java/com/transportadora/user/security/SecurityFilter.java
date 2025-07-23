@@ -32,40 +32,25 @@ public class SecurityFilter extends OncePerRequestFilter {
         System.out.println("Token: {}" + token); //EXCLUIR
         System.out.println("Login extraído do token: {}" + login); //EXCLUIR
 
-//        if (login != null) {
-//            User user = userRepository.findByUsername(login).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
-//
-//            System.out.println("Usuário encontrado: {}" + user.getUsername()); //EXCLUIR
-//            System.out.println("Permissão do usuário: {}" + user.getPermission()); //EXCLUIR
-//
-//            var authorities = new ArrayList<SimpleGrantedAuthority>();
-//            if (user.getPermission() != null) {
-//                authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getPermission()));
-//
-//                var role = "ROLE_" + user.getPermission(); // EXCLUIR
-//                System.out.println("[SecurityFilter] GrantedAuthority aplicada: {}" + role); //EXCLUIR
-//
-//            }
-//            var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//            System.out.println("[SecurityFilter] SecurityContext atualizado com autenticação."); // EXCLUIR
-            if (login != null) {
-                User user = userRepository.findByUsername(login)
-                        .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
+        if (login != null) {
+            User user = userRepository.findByUsername(login).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
 
-                var authorities = new ArrayList<SimpleGrantedAuthority>();
-                if (user.getPermission() != null) {
-                    var role = "ROLE_" + user.getPermission().toUpperCase();
-                    authorities.add(new SimpleGrantedAuthority(role));
-                    System.out.println("[SecurityFilter] GrantedAuthority aplicada: " + role); // EXCLUIR
-                }
+            System.out.println("Usuário encontrado: {}" + user.getUsername()); //EXCLUIR
+            System.out.println("Permissão do usuário: {}" + user.getPermission()); //EXCLUIR
 
-                var authentication = new UsernamePasswordAuthenticationToken(login, null, authorities);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+            var authorities = new ArrayList<SimpleGrantedAuthority>();
+            if (user.getPermission() != null) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getPermission()));
 
-                System.out.println("[SecurityFilter] SecurityContext atualizado com autenticação."); // EXCLUIR
+                var role = "ROLE_" + user.getPermission(); // EXCLUIR
+                System.out.println("[SecurityFilter] GrantedAuthority aplicada: {}" + role); //EXCLUIR
+
             }
+            var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            System.out.println("[SecurityFilter] SecurityContext atualizado com autenticação."); // EXCLUIR
+        }
         filterChain.doFilter(request, response);
     }
 
