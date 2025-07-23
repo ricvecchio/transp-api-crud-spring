@@ -35,8 +35,9 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/users/recoverPassword").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/users/resetPassword").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/users/list").hasRole("ADMIN")
+                                .requestMatchers("/api/dashboard**").permitAll() // EXCLUIR
 //                        .requestMatchers(HttpMethod.GET, "/api/dashboard").hasRole("ADMIN")
-                                .requestMatchers("/api/dashboard/**").hasAnyRole("ADMIN", "USER")
+//                                .requestMatchers("/api/dashboard/**").hasAnyRole("ADMIN", "USER")
 //                                .requestMatchers(HttpMethod.GET, "/api/dashboard").permitAll() // EXCLUIR
                                 .requestMatchers("/api/clientes").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/api/pedidos").hasAnyRole("USER", "ADMIN")
