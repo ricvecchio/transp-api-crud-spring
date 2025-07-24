@@ -4,6 +4,7 @@ import com.transportadora.management.dto.DashboardDTO;
 import com.transportadora.management.service.ClienteService;
 import com.transportadora.management.service.DashboardService;
 import com.transportadora.user.dto.UserPaginacaoDTO;
+import com.transportadora.user.service.PasswordRecoveryService;
 import com.transportadora.user.service.UserService;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Positive;
@@ -17,13 +18,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin(origins = "https://saotomecatimesaotomecatime.com")
 @RequestMapping("/api/dashboard")
+@RequiredArgsConstructor
 public class DashboardController {
 
     private final DashboardService dashboardService;
-
-    public DashboardController(DashboardService dashboardService) {
-        this.dashboardService = dashboardService;
-    }
 
 //    @GetMapping
 //    public ResponseEntity<?> dashboard(
@@ -42,6 +40,19 @@ public class DashboardController {
         System.out.println("[DashboardController] Entrou aqui"); //EXCLUIR
 
         return dashboardService.dashboard(page, pageSize, filter);
+    }
+
+    // EXCLUIR ABAIXO
+    private final UserService userService;
+
+    @GetMapping("/list")
+    public UserPaginacaoDTO list(
+            @RequestParam(defaultValue = "0") @PositiveOrZero int page,
+            @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
+            @RequestParam(defaultValue = "") String filter) {
+        System.out.println("[DashboardController] Entrou aqui /list"); //EXCLUIR
+
+        return userService.list(page, pageSize, filter);
     }
 
 }
