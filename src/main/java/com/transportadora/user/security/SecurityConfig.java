@@ -30,16 +30,15 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                                .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/users/recoverPassword").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/users/resetPassword").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/users/list").hasRole("ADMIN")
-                                .requestMatchers("/api/dashboard**").permitAll() // EXCLUIR
-//                        .requestMatchers(HttpMethod.GET, "/api/dashboard").hasRole("ADMIN")
-                                .requestMatchers("/api/clientes").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/api/pedidos").hasAnyRole("USER", "ADMIN")
-                                .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/recoverPassword").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/resetPassword").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/list").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/dashboard").hasRole("ADMIN")
+                        .requestMatchers("/api/clientes").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/pedidos").hasAnyRole("USER", "ADMIN")
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 

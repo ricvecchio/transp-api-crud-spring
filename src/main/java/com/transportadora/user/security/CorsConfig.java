@@ -11,8 +11,7 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         System.out.println("Entrou aqui - CorsConfig - addCorsMappings"); // EXCLUIR
         registry.addMapping("/**")
-//              .allowedOrigins("https://saotomecatimesaotomecatime.com")
-                .allowedOrigins("*") // EXCLUIR (APENAS PARA EXECUTAR LOCAL)
+                .allowedOrigins("https://saotomecatimesaotomecatime.com")
                 .allowedMethods("GET", "POST", "DELETE", "PUT")
                 .allowedHeaders("*");
     }
