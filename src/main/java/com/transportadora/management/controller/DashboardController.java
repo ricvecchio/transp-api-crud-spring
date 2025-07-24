@@ -1,5 +1,6 @@
 package com.transportadora.management.controller;
 
+import com.transportadora.management.dto.DashboardDTO;
 import com.transportadora.management.service.DashboardService;
 import com.transportadora.user.dto.UserPaginacaoDTO;
 import com.transportadora.user.service.UserService;
@@ -20,35 +21,22 @@ public class DashboardController {
 
     private final DashboardService dashboardService;
 
-    //    @GetMapping
+//    @GetMapping
 //    public ResponseEntity<?> dashboard(
 //            @RequestParam(defaultValue = "0") @PositiveOrZero int page,
 //            @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
 //            @RequestParam(required = false) String filtro) {
-//        System.out.println("[DashboardController] Entrou aqui");  // EXCLUIR
 //
 //        return dashboardService.dashboard(page, pageSize, filtro);
 //    }
+
     @GetMapping
-    public ResponseEntity<?> dashboard(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "") String filter) {
-        System.out.println("Entrou no método original");
-        return dashboardService.dashboard(page, pageSize, filter);
-    }
-
-    // EXCLUIR TUDO PARA BAIXO
-    private final UserService userService;
-
-    @GetMapping("/list")
-    public UserPaginacaoDTO list(
+    public DashboardDTO dashboard(
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
-            @RequestParam(defaultValue = "") String filter) {
-        System.out.println("[DashboardController] Entrou aqui /list"); //EXCLUIR
+            @RequestParam(required = false) String filtro) {
 
-        return userService.list(page, pageSize, filter);
+        return dashboardService.dashboard(page, pageSize, filtro);
     }
 
 }
