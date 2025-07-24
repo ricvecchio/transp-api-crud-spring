@@ -1,6 +1,7 @@
 package com.transportadora.management.controller;
 
 import com.transportadora.management.dto.DashboardDTO;
+import com.transportadora.management.service.ClienteService;
 import com.transportadora.management.service.DashboardService;
 import com.transportadora.user.dto.UserPaginacaoDTO;
 import com.transportadora.user.service.UserService;
@@ -16,10 +17,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin(origins = "https://saotomecatimesaotomecatime.com")
 @RequestMapping("/api/dashboard")
-@RequiredArgsConstructor
 public class DashboardController {
 
     private final DashboardService dashboardService;
+
+    public DashboardController(DashboardService dashboardService) {
+        this.dashboardService = dashboardService;
+    }
 
 //    @GetMapping
 //    public ResponseEntity<?> dashboard(
@@ -34,9 +38,10 @@ public class DashboardController {
     public DashboardDTO dashboard(
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
-            @RequestParam(required = false) String filtro) {
+            @RequestParam(defaultValue = "") String filter) {
+        System.out.println("[DashboardController] Entrou aqui"); //EXCLUIR
 
-        return dashboardService.dashboard(page, pageSize, filtro);
+        return dashboardService.dashboard(page, pageSize, filter);
     }
 
 }
