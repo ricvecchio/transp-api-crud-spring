@@ -1,6 +1,5 @@
 package com.transportadora.user.controller;
 
-import com.transportadora.management.service.DashboardService;
 import com.transportadora.user.dto.*;
 import com.transportadora.user.entities.User;
 import com.transportadora.user.service.PasswordRecoveryService;
@@ -13,7 +12,6 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -86,35 +84,4 @@ public class UserController {
 
 }
 
-//@Validated
-//@RestController
-//@CrossOrigin(origins = "https://saotomecatimesaotomecatime.com")
-//@RequestMapping("/api/dashboard")
-//@RequiredArgsConstructor
-//public class UserController {
-//
-//    private final DashboardService dashboardService;
-//
-//    private final UserService userService;
-//
-//    @GetMapping
-//    public ResponseEntity<?> dashboard(
-//            @RequestParam(defaultValue = "0") @PositiveOrZero int page,
-//            @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
-//            @RequestParam(defaultValue = "") String filter) {
-//        System.out.println("UserController: dashboard Entrou aqui");  // EXCLUIR
-//        var auth = SecurityContextHolder.getContext().getAuthentication();  // EXCLUIR
-//        System.out.println("🔎 Controller: Usuário autenticado: " + auth.getName());  // EXCLUIR
-//        System.out.println("🔎 Controller: Authorities: " + auth.getAuthorities());  // EXCLUIR
-//        return dashboardService.dashboard(page, pageSize, filter);
-//    }
-//    @GetMapping("/list")
-//    public UserPaginacaoDTO list(
-//            @RequestParam(defaultValue = "0") @PositiveOrZero int page,
-//            @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
-//            @RequestParam(defaultValue = "") String filter) {
-//        System.out.println("[UserController] /list Entrou aqui"); //EXCLUIR
-//
-//        return userService.list(page, pageSize, filter);
-//    }
-//}
+
