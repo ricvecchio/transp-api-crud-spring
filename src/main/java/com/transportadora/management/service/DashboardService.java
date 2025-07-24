@@ -31,11 +31,10 @@ public class DashboardService {
 
 //        List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
 //        List<Object[]> totaisPorMesResult = pedidoRepository.findTotaisPorMes();
-//        Map<String, List<ClienteGastoDTO>> clientesPorMes = new HashMap<>();
+        Map<String, List<ClienteGastoDTO>> clientesPorMes = new HashMap<>();
 
         List<Object[]> topClientesResult = List.of(); //EXLUIR
         List<Object[]> totaisPorMesResult = List.of(); //EXLUIR
-        List<ClienteGastoDTO> clientesPorMes = List.of(); //EXLUIR
 
 //
         for (Object[] row : topClientesResult) {
