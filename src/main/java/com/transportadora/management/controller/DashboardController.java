@@ -32,7 +32,8 @@ public class DashboardController {
 //        return dashboardService.dashboard(page, pageSize, filtro);
 //    }
 
-    @GetMapping
+//    @GetMapping
+    @GetMapping("/dash")
     public DashboardDTO dashboard(
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
