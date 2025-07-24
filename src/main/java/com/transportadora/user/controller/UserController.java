@@ -30,9 +30,7 @@ public class UserController {
 
     private final DashboardService dashboardService;
 
-//    public DashboardController(DashboardService dashboardService) {
-//        this.dashboardService = dashboardService;
-//    }
+    private final UserService userService;
 
     @GetMapping
     public ResponseEntity<?> dashboard(
@@ -44,6 +42,11 @@ public class UserController {
         System.out.println("🔎 Controller: Usuário autenticado: " + auth.getName());  // EXCLUIR
         System.out.println("🔎 Controller: Authorities: " + auth.getAuthorities());  // EXCLUIR
         return dashboardService.dashboard(page, pageSize, filtro);
+    }
+
+        @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO body) {
+        return userService.login(body);
     }
 
 }
