@@ -24,13 +24,13 @@ public class DashboardService {
         this.pedidoRepository = pedidoRepository;
     }
 
-    public DashboardDTO painel(int page, int pageSize, String filtro) {
+    public DashboardDTO dashboard(int page, int pageSize, String filtro) {
         System.out.println("[DashboardService] Entrou aqui"); //EXCLUIR
         return null;
     }
 
 //    @Cacheable(value = "Pedidos")
-//    public DashboardDTO painel(int page, int pageSize, String filtro) {
+//    public DashboardDTO dashboard(int page, int pageSize, String filtro) {
 //        System.out.println("[DashboardService] Entrou aqui"); //EXCLUIR
 //
 //        List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
