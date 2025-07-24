@@ -20,20 +20,21 @@ public class DashboardController {
 
     private final DashboardService dashboardService;
 
-    @GetMapping
-    public ResponseEntity<?> dashboard(
-            @RequestParam(defaultValue = "0") @PositiveOrZero int page,
-            @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
-            @RequestParam(required = false) String filtro) {
-        System.out.println("DashboardController: Entrou aqui");  // EXCLUIR
-
-        return dashboardService.dashboard(page, pageSize, filtro);
-    }
+//    @GetMapping
+//    public ResponseEntity<?> dashboard(
+//            @RequestParam(defaultValue = "0") @PositiveOrZero int page,
+//            @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
+//            @RequestParam(required = false) String filtro) {
+//        System.out.println("DashboardController: Entrou aqui");  // EXCLUIR
+//
+//        return dashboardService.dashboard(page, pageSize, filtro);
+//    }
 
     // EXCLUIR TUDO PARA BAIXO
     private final UserService userService;
 
-    @GetMapping("/list")
+//    @GetMapping("/list")
+    @GetMapping
     public UserPaginacaoDTO list(
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
