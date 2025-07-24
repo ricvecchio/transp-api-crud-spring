@@ -36,10 +36,10 @@ public class DashboardController {
             //@RequestParam(required = false) String filtro
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(required = false) String filtro
+            @RequestParam(defaultValue = "") String filter) {
     ) {
         System.out.println("Entrou no método original");
-        return dashboardService.dashboard(page, pageSize, filtro);
+        return dashboardService.dashboard(page, pageSize, filter);
     }
 
 
