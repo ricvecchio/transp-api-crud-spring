@@ -43,12 +43,6 @@ public class UserController {
         System.out.println("🔎 Controller: Authorities: " + auth.getAuthorities());  // EXCLUIR
         return dashboardService.dashboard(page, pageSize, filtro);
     }
-
-        @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDTO body) {
-        return userService.login(body);
-    }
-
 }
 
 //@Validated
