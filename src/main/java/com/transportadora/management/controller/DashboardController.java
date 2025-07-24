@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 @RestController
 @CrossOrigin(origins = "https://saotomecatimesaotomecatime.com")
-@RequestMapping("/api/dashboard")
+//@RequestMapping("/api/dashboard")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class DashboardController {
 
