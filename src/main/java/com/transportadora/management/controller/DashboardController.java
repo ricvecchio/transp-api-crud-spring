@@ -38,22 +38,32 @@ public class DashboardController {
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
             @RequestParam(defaultValue = "") String filter) {
-        System.out.println("[DashboardController] Entrou aqui"); //EXCLUIR
+        System.out.println("[DashboardController] Entrou aqui /painel"); //EXCLUIR
 
         return dashboardService.painel(page, pageSize, filter);
     }
 
     // EXCLUIR ABAIXO
-    private final UserService userService;
+//    private final UserService userService;
+//
+//    @GetMapping("/list")
+//    public UserPaginacaoDTO list(
+//            @RequestParam(defaultValue = "0") @PositiveOrZero int page,
+//            @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
+//            @RequestParam(defaultValue = "") String filter) {
+//        System.out.println("[DashboardController] Entrou aqui /list"); //EXCLUIR
+//
+//        return userService.list(page, pageSize, filter);
+//    }
 
     @GetMapping("/list")
-    public UserPaginacaoDTO list(
+    public DashboardDTO list(
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
             @RequestParam(defaultValue = "") String filter) {
-        System.out.println("[DashboardController] Entrou aqui /list"); //EXCLUIR
+        System.out.println("[DashboardController] Entrou aqui /list dash"); //EXCLUIR
 
-        return userService.list(page, pageSize, filter);
+        return dashboardService.painel(page, pageSize, filter);
     }
 
 }
