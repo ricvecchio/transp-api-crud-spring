@@ -43,6 +43,15 @@ public class UserController {
         System.out.println("🔎 Controller: Authorities: " + auth.getAuthorities());  // EXCLUIR
         return dashboardService.dashboard(page, pageSize, filtro);
     }
+    @GetMapping("/list")
+    public UserPaginacaoDTO list(
+            @RequestParam(defaultValue = "0") @PositiveOrZero int page,
+            @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
+            @RequestParam(defaultValue = "") String filter) {
+        System.out.println("[DashboardController] Entrou aqui"); //EXCLUIR
+
+        return userService.list(page, pageSize, filter);
+    }
 }
 
 //@Validated
