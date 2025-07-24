@@ -57,8 +57,8 @@ import java.util.Optional;
 @Validated
 @RestController
 @CrossOrigin(origins = "https://saotomecatimesaotomecatime.com")
-@RequestMapping("/api/users")
-//@RequestMapping("/api/dashboard")
+//@RequestMapping("/api/users")
+@RequestMapping("/api/dashboard")
 @RequiredArgsConstructor
 public class DashboardController {
 
