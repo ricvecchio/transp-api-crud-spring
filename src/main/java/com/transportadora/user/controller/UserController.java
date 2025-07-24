@@ -1,5 +1,6 @@
 package com.transportadora.user.controller;
 
+import com.transportadora.management.service.DashboardService;
 import com.transportadora.user.dto.*;
 import com.transportadora.user.entities.User;
 import com.transportadora.user.service.PasswordRecoveryService;
@@ -12,6 +13,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,64 +24,91 @@ import java.util.Optional;
 @Validated
 @RestController
 @CrossOrigin(origins = "https://saotomecatimesaotomecatime.com")
-@RequestMapping("/api/users")
+@RequestMapping("/api/dashboard")
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
-    private final PasswordRecoveryService passwordRecoveryService;
+    private final DashboardService dashboardService;
 
-    @GetMapping("/list")
-    public UserPaginacaoDTO list(
+//    public DashboardController(DashboardService dashboardService) {
+//        this.dashboardService = dashboardService;
+//    }
+
+    @GetMapping
+    public ResponseEntity<?> dashboard(
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
-            @RequestParam(defaultValue = "") String filter) {
-        return userService.list(page, pageSize, filter);
-    }
-
-    @GetMapping("/{username}")
-    public Optional<User> findByUsername(@PathVariable @NotNull String username) {
-        return userService.findByUsername(username);
-    }
-
-    @PutMapping("/{idUser}")
-    public UserDTO update(@PathVariable @NotNull String idUser, @RequestBody @Valid UserDTO user) {
-        return userService.update(idUser, user);
-    }
-
-    @DeleteMapping("/{idUser}")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable @NotNull String idUser) {
-        userService.delete(idUser);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDTO body) {
-        return userService.login(body);
-    }
-
-    @PostMapping("/recoverPassword")
-    public ResponseEntity<Map<String, String>> recoverPassword(@RequestBody RecoveryPasswordDTO body) {
-        passwordRecoveryService.sendRecoveryEmail(body.email(), body.username());
-        return ResponseEntity.ok(Collections.singletonMap("message", "E-mail de recuperação enviado!"));
-
-    }
-
-    @PostMapping("/resetPassword")
-    public ResponseEntity<Map<String, String>> resetPassword(@RequestBody ResetPasswordDTO body) {
-        passwordRecoveryService.resetPassword(body.token(), body.newPassword());
-        return ResponseEntity.ok(Collections.singletonMap("message", "Senha redefinida com sucesso!"));
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
-        try {
-            userService.register(body);
-            return ResponseEntity.ok(Collections.singletonMap("message", "Usuário cadastrado com sucesso!"));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("message", "Username já cadastrado!"));
-        }
+            @RequestParam(required = false) String filtro) {
+        System.out.println("DashboardController: Entrou aqui");  // EXCLUIR
+        var auth = SecurityContextHolder.getContext().getAuthentication();  // EXCLUIR
+        System.out.println("🔎 Controller: Usuário autenticado: " + auth.getName());  // EXCLUIR
+        System.out.println("🔎 Controller: Authorities: " + auth.getAuthorities());  // EXCLUIR
+        return dashboardService.dashboard(page, pageSize, filtro);
     }
 
 }
+
+//@Validated
+//@RestController
+//@CrossOrigin(origins = "https://saotomecatimesaotomecatime.com")
+//@RequestMapping("/api/users")
+//@RequiredArgsConstructor
+//public class UserController {
+//
+//    private final UserService userService;
+//    private final PasswordRecoveryService passwordRecoveryService;
+//
+//    @GetMapping("/list")
+//    public UserPaginacaoDTO list(
+//            @RequestParam(defaultValue = "0") @PositiveOrZero int page,
+//            @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
+//            @RequestParam(defaultValue = "") String filter) {
+//        return userService.list(page, pageSize, filter);
+//    }
+//
+//    @GetMapping("/{username}")
+//    public Optional<User> findByUsername(@PathVariable @NotNull String username) {
+//        return userService.findByUsername(username);
+//    }
+//
+//    @PutMapping("/{idUser}")
+//    public UserDTO update(@PathVariable @NotNull String idUser, @RequestBody @Valid UserDTO user) {
+//        return userService.update(idUser, user);
+//    }
+//
+//    @DeleteMapping("/{idUser}")
+//    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+//    public void delete(@PathVariable @NotNull String idUser) {
+//        userService.delete(idUser);
+//    }
+//
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody LoginRequestDTO body) {
+//        return userService.login(body);
+//    }
+//
+//    @PostMapping("/recoverPassword")
+//    public ResponseEntity<Map<String, String>> recoverPassword(@RequestBody RecoveryPasswordDTO body) {
+//        passwordRecoveryService.sendRecoveryEmail(body.email(), body.username());
+//        return ResponseEntity.ok(Collections.singletonMap("message", "E-mail de recuperação enviado!"));
+//
+//    }
+//
+//    @PostMapping("/resetPassword")
+//    public ResponseEntity<Map<String, String>> resetPassword(@RequestBody ResetPasswordDTO body) {
+//        passwordRecoveryService.resetPassword(body.token(), body.newPassword());
+//        return ResponseEntity.ok(Collections.singletonMap("message", "Senha redefinida com sucesso!"));
+//    }
+//
+//    @PostMapping("/register")
+//    public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
+//        try {
+//            userService.register(body);
+//            return ResponseEntity.ok(Collections.singletonMap("message", "Usuário cadastrado com sucesso!"));
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.CONFLICT)
+//                    .body(Map.of("message", "Username já cadastrado!"));
+//        }
+//    }
+//
+//}
