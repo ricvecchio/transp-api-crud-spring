@@ -33,14 +33,14 @@ public class DashboardController {
 //    }
 
 //    @GetMapping
-    @GetMapping("/dash")
-    public DashboardDTO dashboard(
+    @GetMapping("/painel")
+    public DashboardDTO painel(
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
             @RequestParam(defaultValue = "") String filter) {
         System.out.println("[DashboardController] Entrou aqui"); //EXCLUIR
 
-        return dashboardService.dashboard(page, pageSize, filter);
+        return dashboardService.painel(page, pageSize, filter);
     }
 
     // EXCLUIR ABAIXO
