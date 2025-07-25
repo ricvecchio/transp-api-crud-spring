@@ -4,16 +4,27 @@ import com.transportadora.management.dto.ClienteGastoDTO;
 import com.transportadora.management.dto.DashboardDTO;
 import com.transportadora.management.dto.GastoMensalDTO;
 import com.transportadora.management.repository.PedidoRepository;
+import com.transportadora.user.dto.UserDTO;
 import com.transportadora.user.dto.UserPaginacaoDTO;
+import com.transportadora.user.entities.User;
+import com.transportadora.user.security.TokenService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import com.transportadora.user.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Validated
 @Service
@@ -21,9 +32,18 @@ public class DashboardService {
 
     private final PedidoRepository pedidoRepository;
 
-    public DashboardService(PedidoRepository pedidoRepository) {
+    public DashboardService(PedidoRepository pedidoRepository, UserRepository userRepository) {
         this.pedidoRepository = pedidoRepository;
+        this.userRepository = userRepository;
     }
+//    public DashboardService(PedidoRepository pedidoRepository) {
+//        this.pedidoRepository = pedidoRepository;
+//    }
+
+//    public DashboardService(PedidoRepository pedidoRepository, PedidoRepository pedidoRepository1, UserRepository userRepository) {
+//        this.pedidoRepository = pedidoRepository1;
+//        this.userRepository = userRepository;
+//    }
 
     @Cacheable(value = "Pedidos")
     public DashboardDTO dashboard(int page, int pageSize, String filter) {
@@ -64,6 +84,26 @@ public class DashboardService {
         }
 
         return new DashboardDTO(resposta);
+    }
+
+    //EXCLUIR TUDO ABAIXO
+    private final UserRepository userRepository; // EXCLUIR
+    @Cacheable(value = "users")
+    public UserPaginacaoDTO list(int page, int pageSize, String filter) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<User> pageUser = userRepository.findAllByFilter(filter, pageable);
+
+        List<UserDTO> users = pageUser.getContent().stream().map(user ->
+                new UserDTO(
+                        user.getIdUser(),
+                        user.getName(),
+                        user.getEmail(),
+                        user.getUsername(),
+                        user.getPassword(),
+                        user.getPermission()
+                )
+        ).collect(Collectors.toList());
+        return new UserPaginacaoDTO(users, pageUser.getTotalElements(), pageUser.getTotalPages());
     }
 
 }
