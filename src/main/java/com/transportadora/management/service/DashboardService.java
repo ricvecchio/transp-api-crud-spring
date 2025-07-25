@@ -36,8 +36,8 @@ public class DashboardService {
     public DashboardDTO dashboard(int page, int pageSize, String filter) {
         System.out.println("[DashboardService] Entrou aqui /dashboard");
 
-        List<Object[]> topClientesResult = List.of(); //EXLUIR
-//        List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
+//        List<Object[]> topClientesResult = List.of(); //EXLUIR
+        List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
         System.out.println("Resultado topClientesResult = " + (topClientesResult == null ? "null" : topClientesResult.size()));
 
         List<Object[]> totaisPorMesResult = List.of(); //EXLUIR
