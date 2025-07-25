@@ -25,7 +25,7 @@ public class DashboardController {
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
             @RequestParam(defaultValue = "") String filter) {
-
+        System.out.println("[DashboardController] Entrou aqui /dashboard"); //EXCLUIR
         return dashboardService.dashboard(page, pageSize, filter);
     }
 
@@ -36,6 +36,7 @@ public class DashboardController {
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
             @RequestParam(defaultValue = "") String filter) {
+        System.out.println("[DashboardController] Entrou aqui /list"); //EXCLUIR
         return userService.list(page, pageSize, filter);
     }
 }
