@@ -34,57 +34,61 @@ public class DashboardService {
 
     @Cacheable(value = "Pedidos")
     public DashboardDTO dashboard(int page, int pageSize, String filter) {
-        System.out.println("[DashboardService] Entrou aqui /dashboard");
+        try {
+            System.out.println("[DashboardService] Entrou aqui /dashboard");
 
-        List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
-        List<Object[]> totaisPorMesResult = pedidoRepository.findTotaisPorMes();
-        Map<String, List<ClienteGastoDTO>> clientesPorMes = new HashMap<>();
+            List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
+            List<Object[]> totaisPorMesResult = pedidoRepository.findTotaisPorMes();
 
-        // Processa topClientesResult
-        for (Object[] row : topClientesResult) {
-            if (row == null || row.length < 4) {
-                System.out.println("[DashboardService] Linha inválida em topClientesResult: " + Arrays.toString(row));
-                continue;
+            // Adicione logs para verificar os resultados
+            System.out.println("Top clientes result: " + Arrays.deepToString(topClientesResult.toArray()));
+            System.out.println("Totais por mes result: " + Arrays.deepToString(totaisPorMesResult.toArray()));
+
+            // Validação dos resultados
+            if (topClientesResult == null || totaisPorMesResult == null) {
+                throw new IllegalStateException("Resultados das queries não podem ser nulos");
             }
-            try {
-                Long idCliente = Long.parseLong(row[0].toString());
-                Double precoTotal = Double.parseDouble(row[1].toString());
-                Integer mes = Integer.parseInt(row[2].toString());
-                Integer ano = Integer.parseInt(row[3].toString());
 
-                String chave = ano + "-" + mes;
-                clientesPorMes
-                        .computeIfAbsent(chave, k -> new ArrayList<>())
-                        .add(new ClienteGastoDTO(idCliente, precoTotal));
-            } catch (Exception e) {
-                System.out.println("[DashboardService] Erro ao processar linha topClientesResult: " + Arrays.toString(row));
-                e.printStackTrace();
+            Map<String, List<ClienteGastoDTO>> clientesPorMes = new HashMap<>();
+
+            for (Object[] row : topClientesResult) {
+                try {
+                    Long idCliente = row[0] != null ? ((Number) row[0]).longValue() : 0L;
+                    Double precoTotal = row[1] != null ? ((Number) row[1]).doubleValue() : 0.0;
+                    Integer mes = row[2] != null ? ((Number) row[2]).intValue() : 0;
+                    Integer ano = row[3] != null ? ((Number) row[3]).intValue() : 0;
+
+                    String chave = ano + "-" + mes;
+                    clientesPorMes
+                            .computeIfAbsent(chave, k -> new ArrayList<>())
+                            .add(new ClienteGastoDTO(idCliente, precoTotal));
+                } catch (Exception e) {
+                    System.err.println("Erro ao processar linha de topClientesResult: " + Arrays.toString(row));
+                    e.printStackTrace();
+                }
             }
+
+            List<GastoMensalDTO> resposta = new ArrayList<>();
+            for (Object[] row : totaisPorMesResult) {
+                try {
+                    Integer mes = row[0] != null ? ((Number) row[0]).intValue() : 0;
+                    Integer ano = row[1] != null ? ((Number) row[1]).intValue() : 0;
+                    Double totalMes = row[2] != null ? ((Number) row[2]).doubleValue() : 0.0;
+                    String chave = ano + "-" + mes;
+
+                    List<ClienteGastoDTO> clientes = clientesPorMes.getOrDefault(chave, new ArrayList<>());
+                    resposta.add(new GastoMensalDTO(ano, mes, totalMes, clientes));
+                } catch (Exception e) {
+                    System.err.println("Erro ao processar linha de totaisPorMesResult: " + Arrays.toString(row));
+                    e.printStackTrace();
+                }
+            }
+            return new DashboardDTO(resposta);
+        } catch (Exception e) {
+            System.err.println("Erro no método dashboard: ");
+            e.printStackTrace();
+            throw e; // Re-lança a exceção para ver o erro no Insomnia
         }
-
-        List<GastoMensalDTO> resposta = new ArrayList<>();
-        // Processa totaisPorMesResult
-        for (Object[] row : totaisPorMesResult) {
-            if (row == null || row.length < 3) {
-                System.out.println("[DashboardService] Linha inválida em totaisPorMesResult: " + Arrays.toString(row));
-                continue;
-            }
-            try {
-                Integer mes = Integer.parseInt(row[0].toString());
-                Integer ano = Integer.parseInt(row[1].toString());
-                Double totalMes = Double.parseDouble(row[2].toString());
-
-                String chave = ano + "-" + mes;
-                List<ClienteGastoDTO> clientes = clientesPorMes.getOrDefault(chave, new ArrayList<>());
-
-                resposta.add(new GastoMensalDTO(ano, mes, totalMes, clientes));
-            } catch (Exception e) {
-                System.out.println("[DashboardService] Erro ao processar linha totaisPorMesResult: " + Arrays.toString(row));
-                e.printStackTrace();
-            }
-        }
-
-        return new DashboardDTO(resposta);
     }
 
 //    @Cacheable(value = "Pedidos")
