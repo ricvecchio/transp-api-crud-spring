@@ -40,11 +40,6 @@ public class DashboardService {
 //        this.pedidoRepository = pedidoRepository;
 //    }
 
-//    public DashboardService(PedidoRepository pedidoRepository, PedidoRepository pedidoRepository1, UserRepository userRepository) {
-//        this.pedidoRepository = pedidoRepository1;
-//        this.userRepository = userRepository;
-//    }
-
     @Cacheable(value = "Pedidos")
     public DashboardDTO dashboard(int page, int pageSize, String filter) {
         System.out.println("[DashboardService] Entrou aqui"); //EXCLUIR
