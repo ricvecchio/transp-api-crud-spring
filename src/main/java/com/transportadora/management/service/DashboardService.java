@@ -43,24 +43,15 @@ public class DashboardService {
 //        Long idCliente = null;
 //        Pageable pageable = null;
 //        List<Pedido> topClientesResult = pedidoRepository.findTopByIdClienteOrderByDataAtualizacaoPedidoDesc(idCliente, pageable);
-//        List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
-//        System.out.println("Resultado topClientesResult = " + (topClientesResult == null ? "null" : topClientesResult.size()));
+        List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
+        System.out.println("Resultado topClientesResult = " + (topClientesResult == null ? "null" : topClientesResult.size()));
+
 
 //        List<Object[]> totaisPorMesResult = List.of(); //EXLUIR
 //        List<Object[]> totaisPorMesResult = pedidoRepository.findTotaisPorMes();
 //        List<Pedido> totaisPorMesResult = pedidoRepository.findTotaisPorMes();
 //        List<Object[]> totaisPorMesResult = pedidoRepository.findTotaisPorMes();
 //        System.out.println("Resultado totaisPorMesResult = " + (totaisPorMesResult == null ? "null" : totaisPorMesResult.size()));
-
-        try {
-            List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
-            List<Object[]> totaisPorMesResult = pedidoRepository.findTotaisPorMes();
-            System.out.println("topClientesResult.size() = " + topClientesResult.size());
-            System.out.println("totaisPorMesResult.size() = " + totaisPorMesResult.size());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
 
 
         Map<String, List<ClienteGastoDTO>> clientesPorMes = new HashMap<>();
