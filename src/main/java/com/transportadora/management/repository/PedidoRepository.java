@@ -127,6 +127,25 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
             @Param("idCliente") Long idCliente,
             Pageable pageable);
 
+//    @Query(value = "SELECT id_cliente AS idCliente, preco_total AS precoTotal, mes_total AS mesTotal, ano_total AS anoTotal " +
+//            "FROM ( " +
+//            "    SELECT " +
+//            "        p.id_cliente, " +
+//            "        COALESCE(SUM(CAST((REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(p.preco_final, E'[\\s\\u00A0]', '', 'g'), 'R$', ''), '.', ''), ',', '.') AS DOUBLE PRECISION)), 0) AS preco_total, " +
+//            "        EXTRACT(MONTH FROM p.data_atualizacao_pedido) AS mes_total, " +
+//            "        EXTRACT(YEAR FROM p.data_atualizacao_pedido) AS ano_total, " +
+//            "        ROW_NUMBER() OVER ( " +
+//            "            PARTITION BY EXTRACT(MONTH FROM p.data_atualizacao_pedido) " +
+//            "            ORDER BY COALESCE(SUM(CAST(REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(p.preco_final, E'[\\s\\u00A0]', '', 'g'), 'R$', ''), '.', ''), ',', '.') AS DOUBLE PRECISION)), 0) DESC " +
+//            "        ) AS ranking " +
+//            "    FROM pedidos p " +
+//            "    WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
+//            "    GROUP BY p.id_cliente, mes_total, ano_total " +
+//            ") AS sub " +
+//            "WHERE sub.ranking <= 5 " +
+//            "ORDER BY sub.ano_total, sub.mes_total, sub.preco_total DESC",
+//            nativeQuery = true)
+//    List<Object[]> findTop5ClientesPorMesNative();
     @Query(value = "SELECT id_cliente AS idCliente, preco_total AS precoTotal, mes_total AS mesTotal, ano_total AS anoTotal " +
             "FROM ( " +
             "    SELECT " +
@@ -138,15 +157,15 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
             "            PARTITION BY EXTRACT(MONTH FROM p.data_atualizacao_pedido) " +
             "            ORDER BY COALESCE(SUM(CAST(REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(p.preco_final, E'[\\s\\u00A0]', '', 'g'), 'R$', ''), '.', ''), ',', '.') AS DOUBLE PRECISION)), 0) DESC " +
             "        ) AS ranking " +
-            "    FROM pedidos p " +
+            "    FROM \"Pedidos\" p " +  // ATENÇÃO: Aspas se a tabela tem P maiúsculo
             "    WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
-            "    GROUP BY p.id_cliente, mes_total, ano_total " +
+            "    GROUP BY p.id_cliente, " +
+            "             EXTRACT(MONTH FROM p.data_atualizacao_pedido), " +
+            "             EXTRACT(YEAR FROM p.data_atualizacao_pedido) " +
             ") AS sub " +
             "WHERE sub.ranking <= 5 " +
-            "ORDER BY sub.ano_total, sub.mes_total, sub.preco_total DESC",
-            nativeQuery = true)
+            "ORDER BY sub.ano_total, sub.mes_total, sub.preco_total DESC", nativeQuery = true)
     List<Object[]> findTop5ClientesPorMesNative();
-
 
     @Query(value = "SELECT " +
             "EXTRACT(MONTH FROM p.data_atualizacao_pedido) AS mes_total, " +
