@@ -143,8 +143,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
             "    GROUP BY p.id_cliente, mes_total, ano_total " +
             ") AS sub " +
             "WHERE sub.ranking <= 5 " +
-            "ORDER BY sub.ano_total, sub.mes_total, sub.preco_total DESC", nativeQuery = true)
-    List<Pedido> findTop5ClientesPorMesNative();
+            "ORDER BY sub.ano_total, sub.mes_total, sub.preco_total DESC",
+            nativeQuery = true)
+    List<Object[]> findTop5ClientesPorMesNative();
 
 
     @Query(value = "SELECT " +
@@ -154,9 +155,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
             "FROM pedidos p " +
             "WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
             "GROUP BY mes_total, ano_total " +
-            "ORDER BY ano_total, mes_total", nativeQuery = true)
-    List<Pedido> findTotaisPorMes();
-
+            "ORDER BY ano_total, mes_total",
+            nativeQuery = true)
+    List<Object[]> findTotaisPorMes();
 
 //    @Query(value = "SELECT p FROM Pedido p WHERE p.status = :statusFiltro ORDER BY p.idPedido DESC",
 //            countQuery = "SELECT COUNT(p) FROM Pedido p WHERE p.status = :statusFiltro")

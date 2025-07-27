@@ -43,13 +43,14 @@ public class DashboardService {
 //        Long idCliente = null;
 //        Pageable pageable = null;
 //        List<Pedido> topClientesResult = pedidoRepository.findTopByIdClienteOrderByDataAtualizacaoPedidoDesc(idCliente, pageable);
-        List<Pedido> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
+        List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
         System.out.println("Resultado topClientesResult = " + (topClientesResult == null ? "null" : topClientesResult.size()));
 
 //        List<Object[]> totaisPorMesResult = List.of(); //EXLUIR
 //        List<Object[]> totaisPorMesResult = pedidoRepository.findTotaisPorMes();
 //        List<Pedido> totaisPorMesResult = pedidoRepository.findTotaisPorMes();
-//        System.out.println("Resultado totaisPorMesResult = " + (totaisPorMesResult == null ? "null" : totaisPorMesResult.size()));
+        List<Object[]> totaisPorMesResult = pedidoRepository.findTotaisPorMes();
+        System.out.println("Resultado totaisPorMesResult = " + (totaisPorMesResult == null ? "null" : totaisPorMesResult.size()));
 
         Map<String, List<ClienteGastoDTO>> clientesPorMes = new HashMap<>();
         System.out.println("Resultado clientesPorMes = " + clientesPorMes);
