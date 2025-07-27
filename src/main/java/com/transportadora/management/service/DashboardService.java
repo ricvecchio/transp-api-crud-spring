@@ -3,6 +3,7 @@ package com.transportadora.management.service;
 import com.transportadora.management.dto.ClienteGastoDTO;
 import com.transportadora.management.dto.DashboardDTO;
 import com.transportadora.management.dto.GastoMensalDTO;
+import com.transportadora.management.model.Pedido;
 import com.transportadora.management.repository.PedidoRepository;
 import com.transportadora.user.dto.UserDTO;
 import com.transportadora.user.dto.UserPaginacaoDTO;
@@ -12,6 +13,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -38,7 +40,11 @@ public class DashboardService {
 
 //        List<Object[]> topClientesResult = List.of(); //EXLUIR
 //        List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
-//        System.out.println("Resultado topClientesResult = " + (topClientesResult == null ? "null" : topClientesResult.size()));
+
+        Long idCliente = null;
+        Pageable pageable = null;
+        List<Pedido> topClientesResult = pedidoRepository.findTopByIdClienteOrderByDataAtualizacaoPedidoDesc(idCliente, pageable);
+        System.out.println("Resultado topClientesResult = " + (topClientesResult == null ? "null" : topClientesResult.size()));
 
 //        List<Object[]> totaisPorMesResult = List.of(); //EXLUIR
 //        List<Object[]> totaisPorMesResult = pedidoRepository.findTotaisPorMes();
