@@ -40,10 +40,10 @@ public class DashboardService {
 
 //        List<Object[]> topClientesResult = List.of(); //EXLUIR
 //        List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
-
-        Long idCliente = null;
-        Pageable pageable = null;
-        List<Pedido> topClientesResult = pedidoRepository.findTopByIdClienteOrderByDataAtualizacaoPedidoDesc(idCliente, pageable);
+//        Long idCliente = null;
+//        Pageable pageable = null;
+//        List<Pedido> topClientesResult = pedidoRepository.findTopByIdClienteOrderByDataAtualizacaoPedidoDesc(idCliente, pageable);
+        List<Pedido> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
         System.out.println("Resultado topClientesResult = " + (topClientesResult == null ? "null" : topClientesResult.size()));
 
 //        List<Object[]> totaisPorMesResult = List.of(); //EXLUIR
