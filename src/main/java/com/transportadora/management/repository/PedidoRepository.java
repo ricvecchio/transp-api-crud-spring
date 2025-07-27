@@ -166,7 +166,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
                     "WHERE sub.ranking <= 5 " +
                     "ORDER BY sub.ano_total, sub.mes_total, sub.preco_total DESC",
             nativeQuery = true)
-    List<Object[]> findTop5ClientesPorMesDesdeAbril();
+    List<Object[]> findTop5ClientesPorMesNative();
 
 
     @Query(value = "SELECT " +
