@@ -1,5 +1,7 @@
 package com.transportadora.user.service;
 
+import com.transportadora.management.model.Pedido;
+import com.transportadora.management.repository.PedidoRepository;
 import com.transportadora.user.dto.*;
 import com.transportadora.user.entities.User;
 import com.transportadora.user.repository.UserRepository;
@@ -31,15 +33,29 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
+    private final PedidoRepository pedidoRepository; //EXCLUIR
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenService tokenService) {
+
+//    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenService tokenService) {
+//        this.userRepository = userRepository;
+//        this.passwordEncoder = passwordEncoder;
+//        this.tokenService = tokenService;
+//    }
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenService tokenService, PedidoRepository pedidoRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenService = tokenService;
+        this.pedidoRepository = pedidoRepository;
     }
 
     @Cacheable(value = "users")
     public UserPaginacaoDTO list(int page, int pageSize, String filter) {
+        // EXCLUIR
+        List<Pedido> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
+        System.out.println("Resultado topClientesResult = " + (topClientesResult == null ? "null" : topClientesResult.size()));
+
+
+
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<User> pageUser = userRepository.findAllByFilter(filter, pageable);
 
