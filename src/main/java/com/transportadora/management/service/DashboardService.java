@@ -47,46 +47,46 @@ public class DashboardService {
 
         Map<String, List<ClienteGastoDTO>> clientesPorMes = new HashMap<>();
 
-        if (topClientesResult != null) {
-            for (Object[] row : topClientesResult) {
-                System.out.println("Linha topClientesResult: " + Arrays.toString(row));
-
-                if (row[0] == null || row[1] == null || row[2] == null || row[3] == null) {
-                    continue; // evita NullPointer
-                }
-
-                Long idCliente = ((Number) row[0]).longValue();
-                Double precoTotal = ((Number) row[1]).doubleValue();
-                Integer mes = ((Number) row[2]).intValue();
-                Integer ano = ((Number) row[3]).intValue();
-
-                String chave = ano + "-" + mes;
-                clientesPorMes
-                        .computeIfAbsent(chave, k -> new ArrayList<>())
-                        .add(new ClienteGastoDTO(idCliente, precoTotal));
-            }
-        }
-
-        List<GastoMensalDTO> resposta = new ArrayList<>();
-        if (totaisPorMesResult != null) {
-            for (Object[] row : totaisPorMesResult) {
-                System.out.println("Linha totaisPorMesResult: " + Arrays.toString(row));
-
-                if (row[0] == null || row[1] == null || row[2] == null) {
-                    continue;
-                }
-
-                Integer mes = ((Number) row[0]).intValue();
-                Integer ano = ((Number) row[1]).intValue();
-                Double totalMes = ((Number) row[2]).doubleValue();
-                String chave = ano + "-" + mes;
-
-                List<ClienteGastoDTO> clientes = clientesPorMes.getOrDefault(chave, new ArrayList<>());
-                resposta.add(new GastoMensalDTO(ano, mes, totalMes, clientes));
-            }
-        }
-
-        return new DashboardDTO(resposta);
+//        if (topClientesResult != null) {
+//            for (Object[] row : topClientesResult) {
+//                System.out.println("Linha topClientesResult: " + Arrays.toString(row));
+//
+//                if (row[0] == null || row[1] == null || row[2] == null || row[3] == null) {
+//                    continue; // evita NullPointer
+//                }
+//
+//                Long idCliente = ((Number) row[0]).longValue();
+//                Double precoTotal = ((Number) row[1]).doubleValue();
+//                Integer mes = ((Number) row[2]).intValue();
+//                Integer ano = ((Number) row[3]).intValue();
+//
+//                String chave = ano + "-" + mes;
+//                clientesPorMes
+//                        .computeIfAbsent(chave, k -> new ArrayList<>())
+//                        .add(new ClienteGastoDTO(idCliente, precoTotal));
+//            }
+//        }
+//
+//        List<GastoMensalDTO> resposta = new ArrayList<>();
+//        if (totaisPorMesResult != null) {
+//            for (Object[] row : totaisPorMesResult) {
+//                System.out.println("Linha totaisPorMesResult: " + Arrays.toString(row));
+//
+//                if (row[0] == null || row[1] == null || row[2] == null) {
+//                    continue;
+//                }
+//
+//                Integer mes = ((Number) row[0]).intValue();
+//                Integer ano = ((Number) row[1]).intValue();
+//                Double totalMes = ((Number) row[2]).doubleValue();
+//                String chave = ano + "-" + mes;
+//
+//                List<ClienteGastoDTO> clientes = clientesPorMes.getOrDefault(chave, new ArrayList<>());
+//                resposta.add(new GastoMensalDTO(ano, mes, totalMes, clientes));
+//            }
+//        }
+        return null;
+//        return new DashboardDTO(resposta);
     }
 
 //    @Cacheable(value = "Pedidos")
