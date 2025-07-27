@@ -40,11 +40,9 @@ public class DashboardService {
         List<Object[]> topClientesResult = pedidoRepository.findTop5ClientesPorMesNative();
         System.out.println("Resultado topClientesResult = " + (topClientesResult == null ? "null" : topClientesResult.size()));
 
-        List<Object[]> totaisPorMesResult = List.of(); //EXLUIR
-//        List<Object[]> totaisPorMesResult = pedidoRepository.findTotaisPorMes();
+//        List<Object[]> totaisPorMesResult = List.of(); //EXLUIR
+        List<Object[]> totaisPorMesResult = pedidoRepository.findTotaisPorMes();
         System.out.println("Resultado totaisPorMesResult = " + (totaisPorMesResult == null ? "null" : totaisPorMesResult.size()));
-
-
 
 
         Map<String, List<ClienteGastoDTO>> clientesPorMes = new HashMap<>();
