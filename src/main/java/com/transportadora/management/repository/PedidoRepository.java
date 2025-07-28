@@ -231,6 +231,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
 
 
+
     @Query(value = "SELECT " +
             "EXTRACT(MONTH FROM p.data_atualizacao_pedido) AS mes_total, " +
             "EXTRACT(YEAR FROM p.data_atualizacao_pedido) AS ano_total, " +
