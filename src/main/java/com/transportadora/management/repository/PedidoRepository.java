@@ -204,13 +204,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
                     "WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
                     "  AND EXTRACT(MONTH FROM p.data_atualizacao_pedido) >= 4",
             nativeQuery = true)
-    List<Object[]> findPedidosParaProcessamento();
-
-
-
-
-
-
+    List<Object[]> findTop5ClientesPorMesNative();
 
 
 
