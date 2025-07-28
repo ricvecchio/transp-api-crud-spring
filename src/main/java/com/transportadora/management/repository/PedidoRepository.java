@@ -208,18 +208,22 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
                     "  FROM pedidos p " +
                     "  WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
                     "    AND EXTRACT(MONTH FROM p.data_atualizacao_pedido) >= 4 " +
+                    "), ranked AS ( " +
+                    "  SELECT id_cliente, " +
+                    "         SUM(preco_num) AS preco_total, " +
+                    "         mes_total, " +
+                    "         ano_total, " +
+                    "         ROW_NUMBER() OVER (PARTITION BY mes_total ORDER BY SUM(preco_num) DESC) AS ranking " +
+                    "  FROM preco_convertido " +
+                    "  GROUP BY id_cliente, mes_total, ano_total " +
                     ") " +
-                    "SELECT id_cliente, " +
-                    "       SUM(preco_num) AS preco_total, " +
-                    "       mes_total, " +
-                    "       ano_total, " +
-                    "       ROW_NUMBER() OVER (PARTITION BY mes_total ORDER BY SUM(preco_num) DESC) AS ranking " +
-                    "FROM preco_convertido " +
-                    "GROUP BY id_cliente, mes_total, ano_total " +
-                    "HAVING ROW_NUMBER() OVER (PARTITION BY mes_total ORDER BY SUM(preco_num) DESC) <= 5 " +
+                    "SELECT id_cliente, preco_total, mes_total, ano_total " +
+                    "FROM ranked " +
+                    "WHERE ranking <= 5 " +
                     "ORDER BY ano_total, mes_total, preco_total DESC",
             nativeQuery = true)
     List<Object[]> findTop5ClientesPorMesNative();
+
 
 
 
