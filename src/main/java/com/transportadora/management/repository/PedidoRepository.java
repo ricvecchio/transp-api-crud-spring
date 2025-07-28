@@ -127,7 +127,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
             @Param("idCliente") Long idCliente,
             Pageable pageable);
 
-    //    @Query(value = "SELECT id_cliente AS idCliente, preco_total AS precoTotal, mes_total AS mesTotal, ano_total AS anoTotal " +
+//    @Query(value = "SELECT id_cliente AS idCliente, preco_total AS precoTotal, mes_total AS mesTotal, ano_total AS anoTotal " +
 //            "FROM ( " +
 //            "    SELECT " +
 //            "        p.id_cliente, " +
@@ -198,14 +198,20 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 //            nativeQuery = true)
 //    List<Object[]> findTop5ClientesPorMesNative();
 
+//    @Query(value =
+//            "SELECT p.id_cliente, p.preco_final, p.data_atualizacao_pedido " +
+//                    "FROM pedidos p " +
+//                    "WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
+//                    "  AND EXTRACT(MONTH FROM p.data_atualizacao_pedido) >= 4",
+//            nativeQuery = true)
+//    List<Object[]> findPedidosParaProcessamento();
+
     @Query(value =
             "SELECT p.id_cliente, p.preco_final, p.data_atualizacao_pedido " +
                     "FROM pedidos p " +
-                    "WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
-                    "  AND EXTRACT(MONTH FROM p.data_atualizacao_pedido) >= 4",
+                    "WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025",
             nativeQuery = true)
-    List<Object[]> findTop5ClientesPorMesNative();
-
+    List<Object[]> findPedidosParaProcessamento();
 
 
 
@@ -220,12 +226,4 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
             nativeQuery = true)
     List<Object[]> findTotaisPorMes();
 
-//    @Query(value = "SELECT p FROM Pedido p WHERE p.status = :statusFiltro ORDER BY p.idPedido DESC",
-//            countQuery = "SELECT COUNT(p) FROM Pedido p WHERE p.status = :statusFiltro")
-//    Page<Pedido> findTop5ClientesPorMesNative(@Param("statusFiltro") String statusFiltro, Pageable pageable);
-//
-//
-//    @Query(value = "SELECT p FROM Pedido p WHERE p.status = :statusFiltro ORDER BY p.idPedido DESC",
-//            countQuery = "SELECT COUNT(p) FROM Pedido p WHERE p.status = :statusFiltro")
-//    Page<Pedido> findTotaisPorMes(@Param("statusFiltro") String statusFiltro, Pageable pageable);
 }
