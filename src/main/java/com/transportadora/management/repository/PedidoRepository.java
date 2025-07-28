@@ -188,21 +188,16 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 //    List<Object[]> findTop5ClientesPorMesNative();
 
     @Query(value =
-            "SELECT id_cliente, preco_total, mes_total, ano_total FROM ( " +
-                    "    SELECT p.id_cliente, " +
-                    "           SUM(NULLIF(REPLACE(REPLACE(REPLACE(p.preco_final, 'R$', ''), '.', ''), ',', '.'), '')::DOUBLE PRECISION) AS preco_total, " +
-                    "           EXTRACT(MONTH FROM p.data_atualizacao_pedido) AS mes_total, " +
-                    "           EXTRACT(YEAR FROM p.data_atualizacao_pedido) AS ano_total, " +
-                    "           ROW_NUMBER() OVER (PARTITION BY EXTRACT(MONTH FROM p.data_atualizacao_pedido) " +
-                    "                             ORDER BY SUM(NULLIF(REPLACE(REPLACE(REPLACE(p.preco_final, 'R$', ''), '.', ''), ',', '.'), '')::DOUBLE PRECISION) DESC) AS ranking " +
-                    "    FROM pedidos p " +
-                    "    WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
-                    "      AND EXTRACT(MONTH FROM p.data_atualizacao_pedido) >= 4 " +
-                    "    GROUP BY p.id_cliente, mes_total, ano_total " +
-                    ") AS sub " +
-                    "WHERE ranking <= 5",
+            "SELECT p.id_cliente, " +
+                    "       REPLACE(REPLACE(REPLACE(p.preco_final, 'R$', ''), '.', ''), ',', '.') AS preco_convertido, " +
+                    "       EXTRACT(MONTH FROM p.data_atualizacao_pedido) AS mes_total, " +
+                    "       EXTRACT(YEAR FROM p.data_atualizacao_pedido) AS ano_total " +
+                    "FROM pedidos p " +
+                    "WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
+                    "  AND EXTRACT(MONTH FROM p.data_atualizacao_pedido) >= 4",
             nativeQuery = true)
     List<Object[]> findTop5ClientesPorMesNative();
+
 
 
 
