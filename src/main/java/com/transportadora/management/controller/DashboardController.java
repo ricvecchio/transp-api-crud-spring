@@ -2,8 +2,6 @@ package com.transportadora.management.controller;
 
 import com.transportadora.management.dto.DashboardDTO;
 import com.transportadora.management.service.DashboardService;
-import com.transportadora.user.dto.UserPaginacaoDTO;
-import com.transportadora.user.service.UserService;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -25,7 +23,6 @@ public class DashboardController {
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
             @RequestParam(defaultValue = "") String filter) {
-        System.out.println("[DashboardController] Entrou aqui /dashboard"); //EXCLUIR
         return dashboardService.dashboard(page, pageSize, filter);
     }
 
