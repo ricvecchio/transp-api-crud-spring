@@ -172,6 +172,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
 //    @Query(value =
 //            "SELECT p.id_cliente, " +
+//                    "       SUM(1) AS preco_total, " +
 //                    "       EXTRACT(MONTH FROM p.data_atualizacao_pedido) AS mes_total, " +
 //                    "       EXTRACT(YEAR FROM p.data_atualizacao_pedido) AS ano_total " +
 //                    "FROM pedidos p " +
@@ -182,16 +183,22 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 //    List<Object[]> findTop5ClientesPorMesNative();
 
     @Query(value =
-            "SELECT p.id_cliente, " +
-                    "       SUM(1) AS preco_total, " +
-                    "       EXTRACT(MONTH FROM p.data_atualizacao_pedido) AS mes_total, " +
-                    "       EXTRACT(YEAR FROM p.data_atualizacao_pedido) AS ano_total " +
-                    "FROM pedidos p " +
-                    "WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
-                    "  AND EXTRACT(MONTH FROM p.data_atualizacao_pedido) >= 4 " +
-                    "GROUP BY p.id_cliente, mes_total, ano_total",
+            "SELECT id_cliente, preco_total, mes_total, ano_total FROM ( " +
+                    "    SELECT p.id_cliente, " +
+                    "           SUM(1) AS preco_total, " +
+                    "           EXTRACT(MONTH FROM p.data_atualizacao_pedido) AS mes_total, " +
+                    "           EXTRACT(YEAR FROM p.data_atualizacao_pedido) AS ano_total, " +
+                    "           ROW_NUMBER() OVER (PARTITION BY EXTRACT(MONTH FROM p.data_atualizacao_pedido) " +
+                    "                             ORDER BY SUM(1) DESC) AS ranking " +
+                    "    FROM pedidos p " +
+                    "    WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
+                    "      AND EXTRACT(MONTH FROM p.data_atualizacao_pedido) >= 4 " +
+                    "    GROUP BY p.id_cliente, mes_total, ano_total " +
+                    ") AS sub " +
+                    "WHERE ranking <= 5",
             nativeQuery = true)
     List<Object[]> findTop5ClientesPorMesNative();
+
 
 
     @Query(value = "SELECT " +
