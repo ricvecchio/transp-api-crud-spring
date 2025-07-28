@@ -3,21 +3,12 @@ package com.transportadora.management.service;
 import com.transportadora.management.dto.ClienteGastoDTO;
 import com.transportadora.management.dto.DashboardDTO;
 import com.transportadora.management.dto.GastoMensalDTO;
-import com.transportadora.management.model.Pedido;
 import com.transportadora.management.repository.PedidoRepository;
-import com.transportadora.user.dto.UserDTO;
-import com.transportadora.user.dto.UserPaginacaoDTO;
-import com.transportadora.user.entities.User;
-import com.transportadora.user.repository.UserRepository;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import java.sql.Timestamp;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,13 +19,9 @@ public class DashboardService {
 
     private final PedidoRepository pedidoRepository;
 
-    public DashboardService(PedidoRepository pedidoRepository, UserRepository userRepository) {
+    public DashboardService(PedidoRepository pedidoRepository) {
         this.pedidoRepository = pedidoRepository;
-        this.userRepository = userRepository;
     }
-//    public DashboardService(PedidoRepository pedidoRepository) {
-//        this.pedidoRepository = pedidoRepository;
-//    }
 
 //    @Cacheable(value = "Pedidos")
 //    public DashboardDTO dashboard(int page, int pageSize, String filter) {
@@ -146,9 +133,6 @@ public class DashboardService {
         return new DashboardDTO(resposta);
     }
 
-    /**
-     * Limpa e converte um valor monetário brasileiro em double.
-     */
     private double parsePreco(String preco) {
         if (preco == null) return 0.0;
         String cleaned = preco
@@ -162,27 +146,6 @@ public class DashboardService {
         } catch (NumberFormatException e) {
             return 0.0;
         }
-    }
-
-    //EXCLUIR TUDO ABAIXO
-    private final UserRepository userRepository; // EXCLUIR
-    @Cacheable(value = "users")
-    public UserPaginacaoDTO list(int page, int pageSize, String filter) {
-        System.out.println("[DashboardService] Entrou aqui /list"); //EXCLUIR
-        Pageable pageable = PageRequest.of(page, pageSize);
-        Page<User> pageUser = userRepository.findAllByFilter(filter, pageable);
-
-        List<UserDTO> users = pageUser.getContent().stream().map(user ->
-                new UserDTO(
-                        user.getIdUser(),
-                        user.getName(),
-                        user.getEmail(),
-                        user.getUsername(),
-                        user.getPassword(),
-                        user.getPermission()
-                )
-        ).collect(Collectors.toList());
-        return new UserPaginacaoDTO(users, pageUser.getTotalElements(), pageUser.getTotalPages());
     }
 
 }
