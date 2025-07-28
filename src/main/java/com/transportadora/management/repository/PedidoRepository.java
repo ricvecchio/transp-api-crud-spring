@@ -198,18 +198,12 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 //            nativeQuery = true)
 //    List<Object[]> findTop5ClientesPorMesNative();
 
-//    @Query(value =
-//            "SELECT p.id_cliente, p.preco_final, p.data_atualizacao_pedido " +
-//                    "FROM pedidos p " +
-//                    "WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
-//                    "  AND EXTRACT(MONTH FROM p.data_atualizacao_pedido) >= 4",
-//            nativeQuery = true)
-//    List<Object[]> findPedidosParaProcessamento();
 
     @Query(value =
             "SELECT p.id_cliente, p.preco_final, p.data_atualizacao_pedido " +
                     "FROM pedidos p " +
-                    "WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025",
+                    "WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
+                    "  AND EXTRACT(MONTH FROM p.data_atualizacao_pedido) >= 4",
             nativeQuery = true)
     List<Object[]> findPedidosParaProcessamento();
 
