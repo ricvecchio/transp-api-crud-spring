@@ -188,13 +188,17 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 //    List<Object[]> findTop5ClientesPorMesNative();
 
     @Query(value =
-            "SELECT id_cliente, preco_total, mes_total, ano_total FROM ( " +
-                    "    SELECT p.id_cliente, " +
-                    "           SUM(CAST(p.preco_final AS DOUBLE PRECISION)) AS preco_total, " +
-                    "           EXTRACT(MONTH FROM p.data_atualizacao_pedido) AS mes_total, " +
-                    "           EXTRACT(YEAR FROM p.data_atualizacao_pedido) AS ano_total, " +
-                    "           ROW_NUMBER() OVER (PARTITION BY EXTRACT(MONTH FROM p.data_atualizacao_pedido) " +
-                    "                             ORDER BY SUM(CAST(p.preco_final AS DOUBLE PRECISION)) DESC) AS ranking " +
+            "SELECT id_cliente AS idCliente, preco_total AS precoTotal, mes_total AS mesTotal, ano_total AS anoTotal " +
+                    "FROM ( " +
+                    "    SELECT " +
+                    "        p.id_cliente, " +
+                    "        COALESCE(SUM(NULLIF(REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(p.preco_final, '[\\s\\u00A0]', '', 'g'), 'R$', ''), '.', ''), ',', '.'), '')::DOUBLE PRECISION), 0) AS preco_total, " +
+                    "        EXTRACT(MONTH FROM p.data_atualizacao_pedido) AS mes_total, " +
+                    "        EXTRACT(YEAR FROM p.data_atualizacao_pedido) AS ano_total, " +
+                    "        ROW_NUMBER() OVER ( " +
+                    "            PARTITION BY EXTRACT(MONTH FROM p.data_atualizacao_pedido) " +
+                    "            ORDER BY COALESCE(SUM(NULLIF(REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(p.preco_final, '[\\s\\u00A0]', '', 'g'), 'R$', ''), '.', ''), ',', '.'), '')::DOUBLE PRECISION), 0) DESC " +
+                    "        ) AS ranking " +
                     "    FROM pedidos p " +
                     "    WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
                     "      AND EXTRACT(MONTH FROM p.data_atualizacao_pedido) >= 4 " +
@@ -204,6 +208,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
                     "ORDER BY sub.ano_total, sub.mes_total, sub.preco_total DESC",
             nativeQuery = true)
     List<Object[]> findTop5ClientesPorMesNative();
+
 
 
 
