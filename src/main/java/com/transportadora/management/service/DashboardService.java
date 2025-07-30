@@ -24,9 +24,9 @@ public class DashboardService {
     }
 
     @Cacheable(value = "Pedidos")
-    public DashboardDTO dashboard(int page, int pageSize, String filter) {
+    public DashboardDTO dashboard(int page, int pageSize, String filter, int ano) {
 
-        List<Object[]> pedidos = pedidoRepository.findPedidosParaProcessamento();
+        List<Object[]> pedidos = pedidoRepository.findPedidosParaProcessamento(ano);
 
         Map<String, Map<Long, Double>> somaPorClientePorMes = new HashMap<>();
         Map<String, Double> somaTotalPorMes = new HashMap<>();
@@ -38,8 +38,8 @@ public class DashboardService {
             LocalDateTime data = ts.toLocalDateTime();
 
             int mes = data.getMonthValue();
-            int ano = data.getYear();
-            String chave = ano + "-" + mes;
+            int anoData = data.getYear();
+            String chave = anoData + "-" + mes;
 
             double valor = parsePreco(precoFinalStr);
 
@@ -55,12 +55,11 @@ public class DashboardService {
         for (String chave : somaTotalPorMes.keySet()) {
             Double totalMes = somaTotalPorMes.get(chave);
             String[] partes = chave.split("-");
-            Integer ano = Integer.parseInt(partes[0]);
+            Integer anoResp = Integer.parseInt(partes[0]);
             Integer mes = Integer.parseInt(partes[1]);
 
             Map<Long, Double> clientesMap = somaPorClientePorMes.getOrDefault(chave, Collections.emptyMap());
 
-            // Pega top 5 clientes desse mês
             List<ClienteGastoDTO> top5Clientes = clientesMap.entrySet()
                     .stream()
                     .sorted((a, b) -> Double.compare(b.getValue(), a.getValue()))
@@ -68,10 +67,9 @@ public class DashboardService {
                     .map(e -> new ClienteGastoDTO(e.getKey(), e.getValue()))
                     .collect(Collectors.toList());
 
-            resposta.add(new GastoMensalDTO(ano, mes, totalMes, top5Clientes));
+            resposta.add(new GastoMensalDTO(anoResp, mes, totalMes, top5Clientes));
         }
 
-        // Ordena por ano e mês
         resposta.sort(Comparator.comparing(GastoMensalDTO::getAnoTotal)
                 .thenComparing(GastoMensalDTO::getMesTotal));
 
@@ -92,5 +90,4 @@ public class DashboardService {
             return 0.0;
         }
     }
-
 }

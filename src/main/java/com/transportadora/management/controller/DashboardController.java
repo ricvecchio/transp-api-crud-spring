@@ -22,8 +22,10 @@ public class DashboardController {
     public DashboardDTO dashboard(
             @RequestParam(defaultValue = "0") @PositiveOrZero int page,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize,
-            @RequestParam(defaultValue = "") String filter) {
-        return dashboardService.dashboard(page, pageSize, filter);
+            @RequestParam(defaultValue = "") String filter,
+            @RequestParam(name = "year") int year) {
+
+        return dashboardService.dashboard(page, pageSize, filter, year);
     }
 
 }

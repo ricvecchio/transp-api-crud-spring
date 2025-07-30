@@ -130,9 +130,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     @Query(value =
             "SELECT p.id_cliente, p.preco_final, p.data_atualizacao_pedido " +
                     "FROM pedidos p " +
-                    "WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = 2025 " +
-                    "  AND EXTRACT(MONTH FROM p.data_atualizacao_pedido) >= 4",
+                    "WHERE EXTRACT(YEAR FROM p.data_atualizacao_pedido) = ?1 ",
             nativeQuery = true)
-    List<Object[]> findPedidosParaProcessamento();
+    List<Object[]> findPedidosParaProcessamento(int ano);
 
 }
