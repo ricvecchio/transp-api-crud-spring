@@ -32,8 +32,16 @@ public class SecurityFilter extends OncePerRequestFilter {
             User user = userRepository.findByUsername(login).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
 
             var authorities = new ArrayList<SimpleGrantedAuthority>();
-            if (user.getPermission() != null) {
-                authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getPermission()));
+
+            String permission = user.getPermission();
+            if (permission != null) {
+                permission = permission.trim();
+            }
+
+            if (permission != null && !permission.isEmpty()) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_" + permission.toUpperCase()));
+            } else {
+                authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
             }
 
             var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
