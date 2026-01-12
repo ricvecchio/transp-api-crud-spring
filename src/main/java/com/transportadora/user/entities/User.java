@@ -29,7 +29,7 @@ public class User {
 
     private String password;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String permission;
 
 }

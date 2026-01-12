@@ -142,6 +142,9 @@ public class Pedido {
     @Column(nullable = false)
     private String observacao;
 
+    @Column(nullable = false)
+    private String observacao2;
+
     @NotNull
     @Column(length = 15, nullable = false)
     private String status;
@@ -486,6 +489,14 @@ public class Pedido {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public String getObservacao2() {
+        return observacao2;
+    }
+
+    public void setObservacao2(String observacao2) {
+        this.observacao2 = observacao2;
     }
 
     public String getStatus() {

@@ -148,6 +148,7 @@ public class PedidoService {
                     recordFound.setAdicional(pedidoDTO.adicional());
                     recordFound.setPrecoFinal(pedidoDTO.precoFinal());
                     recordFound.setObservacao(pedidoDTO.observacao());
+                    recordFound.setObservacao2(pedidoDTO.observacao2());
                     recordFound.setStatus(pedidoDTO.status());
                     recordFound.setDataAtualizacaoPedido(pedidoDTO.dataAtualizacaoPedido());
                     recordFound.setImagemPedido(pedidoDTO.imagemPedido());

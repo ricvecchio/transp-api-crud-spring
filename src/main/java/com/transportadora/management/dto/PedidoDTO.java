@@ -50,6 +50,7 @@ public record PedidoDTO(
         String adicional,
         String precoFinal,
         String observacao,
+        String observacao2,
         String status,
         LocalDateTime dataAtualizacaoPedido,
         String imagemPedido) {

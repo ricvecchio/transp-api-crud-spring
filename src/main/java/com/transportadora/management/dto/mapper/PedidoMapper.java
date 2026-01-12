@@ -54,6 +54,7 @@ public class PedidoMapper {
                 pedido.getAdicional(),
                 pedido.getPrecoFinal(),
                 pedido.getObservacao(),
+                pedido.getObservacao2(),
                 pedido.getStatus(),
                 pedido.getDataAtualizacaoPedido(),
                 pedido.getImagemPedido());
@@ -110,6 +111,7 @@ public class PedidoMapper {
         pedido.setAdicional(pedidoDTO.adicional());
         pedido.setPrecoFinal(pedidoDTO.precoFinal());
         pedido.setObservacao(pedidoDTO.observacao());
+        pedido.setObservacao2(pedidoDTO.observacao2());
         pedido.setStatus(pedidoDTO.status());
         pedido.setDataAtualizacaoPedido(pedidoDTO.dataAtualizacaoPedido());
         pedido.setImagemPedido(pedidoDTO.imagemPedido());
