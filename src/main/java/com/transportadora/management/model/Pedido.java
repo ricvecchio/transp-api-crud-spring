@@ -142,7 +142,7 @@ public class Pedido {
     @Column(nullable = false)
     private String observacao;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String observacao2;
 
     @NotNull
