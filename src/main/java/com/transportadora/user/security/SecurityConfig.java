@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -27,21 +26,51 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
+                .cors(cors -> {})
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+
                 .authorizeHttpRequests(authorize -> authorize
+
+                        // LIBERA PREFLIGHT CORS
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // LIBERA /error PARA DEBUG E TRATAMENTO
+                        .requestMatchers("/error").permitAll()
+
+                        // LOGIN / AUTH
                         .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/recoverPassword").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/resetPassword").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/users/list").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/dashboard").hasRole("ADMIN")
-                        .requestMatchers("/api/clientes", "/api/clientes/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/pedidos", "/api/pedidos/**").hasAnyRole("USER", "ADMIN")
+
+                        // DASHBOARD / USERS
+                        .requestMatchers(HttpMethod.GET, "/api/users/list")
+                        .hasAnyRole("ADMIN", "DESENV")
+
+                        .requestMatchers(HttpMethod.GET, "/api/dashboard")
+                        .hasAnyRole("ADMIN", "DESENV")
+
+                        // CLIENTES
+                        .requestMatchers("/api/clientes", "/api/clientes/**")
+                        .hasAnyRole("USER", "ADMIN", "DESENV")
+
+                        // PEDIDOS
+                        .requestMatchers("/api/pedidos", "/api/pedidos/**")
+                        .hasAnyRole("USER", "ADMIN", "DESENV")
+
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+
+                .addFilterBefore(
+                        securityFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                );
 
         return http.build();
     }
@@ -52,7 +81,7 @@ public class SecurityConfig {
     }
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
-
 }
