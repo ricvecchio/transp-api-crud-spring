@@ -43,6 +43,9 @@ public class SecurityConfig {
                         // LIBERA /error PARA DEBUG E TRATAMENTO
                         .requestMatchers("/error").permitAll()
 
+                        // HEALTH CHECK
+                        .requestMatchers(HttpMethod.GET, "/api/health").permitAll()
+
                         // LOGIN / AUTH
                         .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
