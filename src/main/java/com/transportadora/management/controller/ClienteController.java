@@ -36,6 +36,11 @@ public class ClienteController {
         return clienteService.list(page, pageSize, filter);
     }
 
+    @GetMapping("/backup")
+    public List<ClienteDTO> listBackupClientes() {
+        return clienteService.listBackupClientes();
+    }
+
     @GetMapping("/{idCliente}")
     public ClienteDTO findById(@PathVariable @NotNull @Positive Long idCliente) {
         return clienteService.findById(idCliente);
@@ -54,7 +59,7 @@ public class ClienteController {
 
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<String> handleDuplicateKeyException(DuplicateKeyException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT); // Código 409
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
     @PutMapping("/{idCliente}")

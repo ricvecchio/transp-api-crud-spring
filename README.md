@@ -9,7 +9,7 @@ O objetivo principal é fornecer um backend robusto, seguro e escalável para in
 
 ## 🚀 Funcionalidades Principais
 
-- **Gestão de Clientes 🧑‍💼:** cadastro, atualização, exclusão, paginação e busca por trecho do nome/razão social/cpf-cnpj.
+- **Gestão de Clientes 🧑‍💼:** cadastro, atualização, exclusão, paginação, busca por trecho do nome/razão social/cpf-cnpj e exportação completa para backup.
 - **Gestão de Pedidos 📦:** criação, edição, cancelamento lógico e listagem dos últimos pedidos por cliente.
 - **Filtros avançados de pedidos 🔎:** consulta por cliente, intervalo de datas e status.
 - **Controle de Usuários 👥:** login, registro, listagem paginada, consulta por username, atualização de permissão e exclusão.
@@ -90,6 +90,7 @@ Antes de executar o projeto, certifique-se de ter:
 | Método | Endpoint | Descrição | Autenticação |
 |--------|----------|-----------|--------------|
 | GET | `/api/clientes?page=0&pageSize=10&filter=` | Lista clientes com paginação e filtro | `USER/ADMIN/DESENV` |
+| GET | `/api/clientes/backup` | Retorna todos os clientes sem paginação (exportação/backup) | `USER/ADMIN/DESENV` |
 | GET | `/api/clientes/{idCliente}` | Busca cliente por ID | `USER/ADMIN/DESENV` |
 | GET | `/api/clientes/trecho/{trechoBusca}` | Busca por trecho (nome/razão social/cpf-cnpj) | `USER/ADMIN/DESENV` |
 | POST | `/api/clientes` | Cria cliente | `USER/ADMIN/DESENV` |
@@ -198,7 +199,8 @@ O workflow `/.github/workflows/deploy.yml` executa:
 
 ## Observações
 
-- A API possui cache habilitado para consultas de clientes, pedidos e usuários.
+- A API possui cache habilitado para consultas de clientes (`Clientes` e `ClientesBackup`), pedidos e usuários.
+- O endpoint `GET /api/clientes/backup` retorna a lista completa de clientes sem paginação, com cache próprio (`ClientesBackup`), invalidado automaticamente em qualquer operação de escrita.
 - O endpoint de recuperação de senha envia link para o frontend em `https://saotomecatimesaotomecatime.com/home/recuperar-senha`.
 - O endpoint `GET /api/health` pode ser usado pelo frontend para validar conectividade com o servidor antes de exibir a interface.
 
