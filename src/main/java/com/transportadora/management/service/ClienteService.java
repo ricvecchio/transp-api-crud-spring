@@ -50,6 +50,14 @@ public class ClienteService {
         return new ClientePaginacaoDTO(clientes, pageCliente.getTotalElements(), pageCliente.getTotalPages());
     }
 
+    @Cacheable(value = "ClientesBackup")
+    public List<ClienteDTO> listBackupClientes() {
+        return clienteRepository.findAllByOrderByIdClienteDesc()
+                .stream()
+                .map(clienteMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
     @Cacheable(value = "Clientes")
     public ClienteDTO findById(Long idCliente) {
         return clienteRepository.findById(idCliente).map(clienteMapper::toDTO).orElse(null);
@@ -66,7 +74,7 @@ public class ClienteService {
         }
     }
 
-    @CacheEvict(value = "Clientes", allEntries = true)
+    @CacheEvict(value = {"Clientes", "ClientesBackup"}, allEntries = true)
     public ClienteDTO create(@Valid @NotNull ClienteDTO clienteDTO) {
         if (clienteDTO.cpfCnpj() != null && !clienteDTO.cpfCnpj().trim().isEmpty()) {
             boolean exists = clienteRepository.existsByCpfCnpj(clienteDTO.cpfCnpj().trim());
@@ -77,7 +85,7 @@ public class ClienteService {
         return clienteMapper.toDTO(clienteRepository.save(clienteMapper.toEntity(clienteDTO)));
     }
 
-    @CacheEvict(value = "Clientes", allEntries = true)
+    @CacheEvict(value = {"Clientes", "ClientesBackup"}, allEntries = true)
     public ClienteDTO update(@NotNull @Positive Long idCliente, @Valid ClienteDTO clienteDTO) {
         return clienteRepository.findById(idCliente)
                 .map(recordFound -> {
@@ -122,7 +130,7 @@ public class ClienteService {
                 }).orElseThrow(() -> new RecordNotFoundException(idCliente));
     }
 
-    @CacheEvict(value = "Clientes", allEntries = true)
+    @CacheEvict(value = {"Clientes", "ClientesBackup"}, allEntries = true)
     public void delete(@NotNull @Positive Long idCliente) {
         clienteRepository.delete(clienteRepository.findById(idCliente)
                 .orElseThrow(() -> new RecordNotFoundException(idCliente)));
@@ -172,4 +180,3 @@ public class ClienteService {
                 .collect(Collectors.toList());
     }
 }
-
