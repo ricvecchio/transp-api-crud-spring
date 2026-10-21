@@ -13,6 +13,7 @@ import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -125,6 +126,76 @@ class PrecosSabadoIntegrationTest {
         conferirVazios(consultar("/api/pedidos/" + pedidoId));
     }
 
+    @ParameterizedTest
+    @CsvSource({"SIM,SIM", "SIM,NÃO", "NÃO,SIM", "NÃO,NÃO"})
+    void persisteOpcoesDoPedidoNoPostPutGetEListagens(String entregaSabado, String exibirPreco) throws Exception {
+        JsonNode cliente = enviar(post("/api/clientes"), clientePayload(), 201);
+        long clienteId = cliente.get("idCliente").asLong();
+        ObjectNode pedido = pedidoPayload(cliente);
+        pedido.put("ajudante", "SIM");
+        pedido.put("adicional", "NÃO");
+        pedido.put("entregaSabado", entregaSabado);
+        pedido.put("exibirPreco", exibirPreco);
+        JsonNode criado = enviar(post("/api/pedidos"), pedido, 201);
+        long id = criado.get("idPedido").asLong();
+        conferirOpcoes(criado, entregaSabado, exibirPreco, "SIM", "NÃO");
+        recarregar();
+        conferirOpcoes(consultar("/api/pedidos/" + id), entregaSabado, exibirPreco, "SIM", "NÃO");
+        conferirOpcoes(consultar("/api/pedidos?statusFiltro=Aberto").get("pedidos").get(0),
+                entregaSabado, exibirPreco, "SIM", "NÃO");
+        conferirOpcoes(consultar("/api/pedidos/ultimos?idCliente=" + clienteId).get(0),
+                entregaSabado, exibirPreco, "SIM", "NÃO");
+
+        String novaEntrega = entregaSabado.equals("SIM") ? "NÃO" : "SIM";
+        String novaExibicao = exibirPreco.equals("SIM") ? "NÃO" : "SIM";
+        pedido.put("entregaSabado", novaEntrega);
+        pedido.put("exibirPreco", novaExibicao);
+        pedido.put("ajudante", "NÃO");
+        pedido.put("adicional", "SIM");
+        conferirOpcoes(enviar(put("/api/pedidos/" + id), pedido, 200),
+                novaEntrega, novaExibicao, "NÃO", "SIM");
+        recarregar();
+        conferirOpcoes(consultar("/api/pedidos/" + id), novaEntrega, novaExibicao, "NÃO", "SIM");
+        conferirOpcoes(consultar("/api/pedidos?statusFiltro=Aberto").get("pedidos").get(0),
+                novaEntrega, novaExibicao, "NÃO", "SIM");
+        conferirOpcoes(consultar("/api/pedidos/ultimos?idCliente=" + clienteId).get(0),
+                novaEntrega, novaExibicao, "NÃO", "SIM");
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void usaNaoParaOpcoesOmitidasOuNulasNoPostEPut(boolean nuloExplicito) throws Exception {
+        ObjectNode pedido = pedidoPayload(enviar(post("/api/clientes"), clientePayload(), 201));
+        pedido.put("ajudante", "SIM");
+        pedido.put("adicional", "SIM");
+        if (nuloExplicito) {
+            pedido.putNull("entregaSabado");
+            pedido.putNull("exibirPreco");
+        }
+        JsonNode criado = enviar(post("/api/pedidos"), pedido, 201);
+        long id = criado.get("idPedido").asLong();
+        conferirOpcoes(criado, "NÃO", "NÃO", "SIM", "SIM");
+        recarregar();
+        conferirOpcoes(consultar("/api/pedidos/" + id), "NÃO", "NÃO", "SIM", "SIM");
+
+        ObjectNode selecionado = pedido.deepCopy();
+        selecionado.put("entregaSabado", "SIM");
+        selecionado.put("exibirPreco", "SIM");
+        conferirOpcoes(enviar(put("/api/pedidos/" + id), selecionado, 200), "SIM", "SIM", "SIM", "SIM");
+        recarregar();
+        conferirOpcoes(enviar(put("/api/pedidos/" + id), pedido, 200), "NÃO", "NÃO", "SIM", "SIM");
+        recarregar();
+        conferirOpcoes(consultar("/api/pedidos/" + id), "NÃO", "NÃO", "SIM", "SIM");
+    }
+
+    private void conferirOpcoes(JsonNode pedido, String entregaSabado, String exibirPreco,
+                               String ajudante, String adicional) {
+        assertThat(pedido.get("entregaSabado").asText()).isEqualTo(entregaSabado);
+        assertThat(pedido.get("exibirPreco").asText()).isEqualTo(exibirPreco);
+        assertThat(pedido.get("ajudante").asText()).isEqualTo(ajudante);
+        assertThat(pedido.get("adicional").asText()).isEqualTo(adicional);
+    }
+
     private ObjectNode clientePayload() throws Exception {
         try (var input = new ClassPathResource("cliente-precos-sabado.json").getInputStream()) {
             return (ObjectNode) json.readTree(input);
@@ -149,12 +220,12 @@ class PrecosSabadoIntegrationTest {
     private JsonNode enviar(MockHttpServletRequestBuilder request, JsonNode payload, int status) throws Exception {
         return json.readTree(mvc.perform(request.contentType(MediaType.APPLICATION_JSON)
                         .content(json.writeValueAsString(payload)))
-                .andExpect(status().is(status)).andReturn().getResponse().getContentAsString());
+                .andExpect(status().is(status)).andReturn().getResponse().getContentAsByteArray());
     }
 
     private JsonNode consultar(String url) throws Exception {
         return json.readTree(mvc.perform(get(url)).andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString());
+                .andReturn().getResponse().getContentAsByteArray());
     }
 
     private void conferirPrecos(JsonNode resultado, JsonNode esperado) {

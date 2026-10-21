@@ -279,6 +279,55 @@ Repita com os campos omitidos ou nulos para confirmar o retorno `""`.
 
 ---
 
+## Opções salvas no Pedido
+
+`entregaSabado` e `exibirPreco` são strings `"SIM"`/`"NÃO"` independentes de
+`ajudante` e `adicional`. São persistidas em `pedidos.entrega_sabado` e
+`pedidos.exibir_preco` (`VARCHAR(10) NOT NULL`) e retornadas no POST, PUT,
+GET `/api/pedidos/{idPedido}`, listagem paginada e `/api/pedidos/ultimos`.
+Ao editar um pedido emitido, o frontend deve usar esses valores retornados,
+sem recalculá-los a partir dos preços ou do cadastro atual do Cliente.
+
+Antes (payload antigo, trecho):
+
+```json
+{
+  "ajudante": "SIM",
+  "adicional": "NÃO"
+}
+```
+
+Depois (acrescentar ao payload completo de criação/atualização):
+
+```json
+{
+  "ajudante": "SIM",
+  "adicional": "NÃO",
+  "entregaSabado": "SIM",
+  "exibirPreco": "NÃO"
+}
+```
+
+Campos novos omitidos ou `null` recebem `"NÃO"`, inclusive no PUT, que
+continua sendo atualização completa. Registros antigos também recebem
+`"NÃO"`; não é possível reconstruir a seleção histórica que não foi salva.
+
+Execute o script antes do deploy, após backup, em cada banco existente
+(inclusive local, antes do JPA auto update):
+
+```sh
+psql "$DATABASE_URL" -X -v ON_ERROR_STOP=1 \
+  -f src/main/resources/db/scripts/20261021_opcoes_pedido.sql
+```
+
+O script é transacional e reexecutável: adiciona as duas colunas, corrige
+nulos e define o padrão `"NÃO"` com restrição `NOT NULL`. Reinicie a API
+para renovar os caches. Os testes de mapper (`PedidoOpcoesMapperTest`) e
+integração (`PrecosSabadoIntegrationTest`) cobrem as quatro combinações,
+POST/PUT/GET/listagens, campos omitidos/nulos e preservação de ajudante/adicional.
+
+---
+
 ## Observações
 
 - A API possui cache habilitado para consultas de clientes (`Clientes` e `ClientesBackup`), pedidos e usuários.

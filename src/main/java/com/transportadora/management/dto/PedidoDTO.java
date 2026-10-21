@@ -54,10 +54,16 @@ public record PedidoDTO(
         String precoLv15Sabado,
         String ajudante,
         String adicional,
+        String entregaSabado,
+        String exibirPreco,
         String precoFinal,
         String observacao,
         String observacao2,
         String status,
         LocalDateTime dataAtualizacaoPedido,
         String imagemPedido) {
+    public PedidoDTO {
+        entregaSabado = entregaSabado == null ? "NÃO" : entregaSabado;
+        exibirPreco = exibirPreco == null ? "NÃO" : exibirPreco;
+    }
 }

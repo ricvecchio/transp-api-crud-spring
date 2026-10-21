@@ -154,6 +154,12 @@ public class Pedido {
     @Column(length = 10, nullable = false)
     private String adicional;
 
+    @Column(name = "entrega_sabado", length = 10, nullable = false)
+    private String entregaSabado = "NÃO";
+
+    @Column(name = "exibir_preco", length = 10, nullable = false)
+    private String exibirPreco = "NÃO";
+
     @Column(length = 12, nullable = false)
     private String precoFinal;
 
@@ -539,6 +545,22 @@ public class Pedido {
 
     public void setAdicional(String adicional) {
         this.adicional = adicional;
+    }
+
+    public String getEntregaSabado() {
+        return entregaSabado == null ? "NÃO" : entregaSabado;
+    }
+
+    public void setEntregaSabado(String entregaSabado) {
+        this.entregaSabado = entregaSabado == null ? "NÃO" : entregaSabado;
+    }
+
+    public String getExibirPreco() {
+        return exibirPreco == null ? "NÃO" : exibirPreco;
+    }
+
+    public void setExibirPreco(String exibirPreco) {
+        this.exibirPreco = exibirPreco == null ? "NÃO" : exibirPreco;
     }
 
     public String getPrecoFinal() {

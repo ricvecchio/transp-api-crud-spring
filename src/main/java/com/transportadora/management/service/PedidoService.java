@@ -152,6 +152,8 @@ public class PedidoService {
                     recordFound.setPrecoLv15Sabado(pedidoDTO.precoLv15Sabado());
                     recordFound.setAjudante(pedidoDTO.ajudante());
                     recordFound.setAdicional(pedidoDTO.adicional());
+                    recordFound.setEntregaSabado(pedidoDTO.entregaSabado());
+                    recordFound.setExibirPreco(pedidoDTO.exibirPreco());
                     recordFound.setPrecoFinal(pedidoDTO.precoFinal());
                     recordFound.setObservacao(pedidoDTO.observacao());
                     recordFound.setObservacao2(pedidoDTO.observacao2());

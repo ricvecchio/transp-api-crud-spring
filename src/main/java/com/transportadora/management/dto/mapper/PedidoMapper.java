@@ -58,6 +58,8 @@ public class PedidoMapper {
                 pedido.getPrecoLv15Sabado(),
                 pedido.getAjudante(),
                 pedido.getAdicional(),
+                pedido.getEntregaSabado(),
+                pedido.getExibirPreco(),
                 pedido.getPrecoFinal(),
                 pedido.getObservacao(),
                 pedido.getObservacao2(),
@@ -121,6 +123,8 @@ public class PedidoMapper {
         pedido.setPrecoLv15Sabado(pedidoDTO.precoLv15Sabado());
         pedido.setAjudante(pedidoDTO.ajudante());
         pedido.setAdicional(pedidoDTO.adicional());
+        pedido.setEntregaSabado(pedidoDTO.entregaSabado());
+        pedido.setExibirPreco(pedidoDTO.exibirPreco());
         pedido.setPrecoFinal(pedidoDTO.precoFinal());
         pedido.setObservacao(pedidoDTO.observacao());
         pedido.setObservacao2(pedidoDTO.observacao2());
