@@ -50,6 +50,12 @@ public class PedidoMapper {
                 pedido.getPrecoLv5(),
                 pedido.getPrecoLv10(),
                 pedido.getPrecoLv15(),
+                pedido.getPrecoCx5Sabado(),
+                pedido.getPrecoCx10Sabado(),
+                pedido.getPrecoCx15Sabado(),
+                pedido.getPrecoLv5Sabado(),
+                pedido.getPrecoLv10Sabado(),
+                pedido.getPrecoLv15Sabado(),
                 pedido.getAjudante(),
                 pedido.getAdicional(),
                 pedido.getPrecoFinal(),
@@ -107,6 +113,12 @@ public class PedidoMapper {
         pedido.setPrecoLv5(pedidoDTO.precoLv5());
         pedido.setPrecoLv10(pedidoDTO.precoLv10());
         pedido.setPrecoLv15(pedidoDTO.precoLv15());
+        pedido.setPrecoCx5Sabado(pedidoDTO.precoCx5Sabado());
+        pedido.setPrecoCx10Sabado(pedidoDTO.precoCx10Sabado());
+        pedido.setPrecoCx15Sabado(pedidoDTO.precoCx15Sabado());
+        pedido.setPrecoLv5Sabado(pedidoDTO.precoLv5Sabado());
+        pedido.setPrecoLv10Sabado(pedidoDTO.precoLv10Sabado());
+        pedido.setPrecoLv15Sabado(pedidoDTO.precoLv15Sabado());
         pedido.setAjudante(pedidoDTO.ajudante());
         pedido.setAdicional(pedidoDTO.adicional());
         pedido.setPrecoFinal(pedidoDTO.precoFinal());

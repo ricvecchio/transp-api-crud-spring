@@ -144,6 +144,12 @@ public class PedidoService {
                     recordFound.setPrecoLv5(pedidoDTO.precoLv5());
                     recordFound.setPrecoLv10(pedidoDTO.precoLv10());
                     recordFound.setPrecoLv15(pedidoDTO.precoLv15());
+                    recordFound.setPrecoCx5Sabado(pedidoDTO.precoCx5Sabado());
+                    recordFound.setPrecoCx10Sabado(pedidoDTO.precoCx10Sabado());
+                    recordFound.setPrecoCx15Sabado(pedidoDTO.precoCx15Sabado());
+                    recordFound.setPrecoLv5Sabado(pedidoDTO.precoLv5Sabado());
+                    recordFound.setPrecoLv10Sabado(pedidoDTO.precoLv10Sabado());
+                    recordFound.setPrecoLv15Sabado(pedidoDTO.precoLv15Sabado());
                     recordFound.setAjudante(pedidoDTO.ajudante());
                     recordFound.setAdicional(pedidoDTO.adicional());
                     recordFound.setPrecoFinal(pedidoDTO.precoFinal());

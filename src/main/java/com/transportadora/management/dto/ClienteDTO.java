@@ -44,10 +44,15 @@ public record ClienteDTO(
         String precoLv5,
         String precoLv10,
         String precoLv15,
+        String precoCx5Sabado,
+        String precoCx10Sabado,
+        String precoCx15Sabado,
+        String precoLv5Sabado,
+        String precoLv10Sabado,
+        String precoLv15Sabado,
         String observacao,
         LocalDateTime dataAtualizacaoCliente) {
 }
-
 
 
 

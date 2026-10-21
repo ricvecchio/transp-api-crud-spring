@@ -49,6 +49,12 @@ public class ClienteMapper {
                 cliente.getPrecoLv5(),
                 cliente.getPrecoLv10(),
                 cliente.getPrecoLv15(),
+                cliente.getPrecoCx5Sabado(),
+                cliente.getPrecoCx10Sabado(),
+                cliente.getPrecoCx15Sabado(),
+                cliente.getPrecoLv5Sabado(),
+                cliente.getPrecoLv10Sabado(),
+                cliente.getPrecoLv15Sabado(),
                 cliente.getObservacao(),
                 cliente.getDataAtualizacaoCliente());
     }
@@ -98,6 +104,12 @@ public class ClienteMapper {
         cliente.setPrecoLv5(clienteDTO.precoLv5());
         cliente.setPrecoLv10(clienteDTO.precoLv10());
         cliente.setPrecoLv15(clienteDTO.precoLv15());
+        cliente.setPrecoCx5Sabado(clienteDTO.precoCx5Sabado());
+        cliente.setPrecoCx10Sabado(clienteDTO.precoCx10Sabado());
+        cliente.setPrecoCx15Sabado(clienteDTO.precoCx15Sabado());
+        cliente.setPrecoLv5Sabado(clienteDTO.precoLv5Sabado());
+        cliente.setPrecoLv10Sabado(clienteDTO.precoLv10Sabado());
+        cliente.setPrecoLv15Sabado(clienteDTO.precoLv15Sabado());
         cliente.setObservacao(clienteDTO.observacao());
         cliente.setDataAtualizacaoCliente(clienteDTO.dataAtualizacaoCliente());
 

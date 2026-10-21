@@ -124,6 +124,12 @@ public class ClienteService {
                     recordFound.setPrecoLv5(clienteDTO.precoLv5());
                     recordFound.setPrecoLv10(clienteDTO.precoLv10());
                     recordFound.setPrecoLv15(clienteDTO.precoLv15());
+                    recordFound.setPrecoCx5Sabado(clienteDTO.precoCx5Sabado());
+                    recordFound.setPrecoCx10Sabado(clienteDTO.precoCx10Sabado());
+                    recordFound.setPrecoCx15Sabado(clienteDTO.precoCx15Sabado());
+                    recordFound.setPrecoLv5Sabado(clienteDTO.precoLv5Sabado());
+                    recordFound.setPrecoLv10Sabado(clienteDTO.precoLv10Sabado());
+                    recordFound.setPrecoLv15Sabado(clienteDTO.precoLv15Sabado());
                     recordFound.setObservacao(clienteDTO.observacao());
                     recordFound.setDataAtualizacaoCliente(clienteDTO.dataAtualizacaoCliente());
                     return clienteMapper.toDTO(clienteRepository.save(recordFound));
@@ -138,45 +144,7 @@ public class ClienteService {
 
     private List<ClienteDTO> converteDadosCliente(List<Cliente> cliente) {
         return cliente.stream()
-                .map(c -> new ClienteDTO(
-                        c.getIdCliente(),
-                        c.getNome(),
-                        c.getCpfCnpj(),
-                        c.getRazaoSocial(),
-                        c.getTelefone(),
-                        c.getCelular(),
-                        c.getEmail(),
-                        c.getContatosAdicionais(),
-                        c.getCep(),
-                        c.getLogradouro(),
-                        c.getNumero(),
-                        c.getComplemento(),
-                        c.getBairro(),
-                        c.getCidade(),
-                        c.getEstado(),
-                        c.getTipoPgto(),
-                        c.getInfoPagamento(),
-                        c.getCepEntrega(),
-                        c.getLogradouroEntrega(),
-                        c.getNumeroEntrega(),
-                        c.getComplementoEntrega(),
-                        c.getBairroEntrega(),
-                        c.getCidadeEntrega(),
-                        c.getEstadoEntrega(),
-                        c.getSfobras(),
-                        c.getCno(),
-                        c.getIe(),
-                        c.getMangueira(),
-                        c.getValorAjudante(),
-                        c.getValorAdicional(),
-                        c.getPrecoCx5(),
-                        c.getPrecoCx10(),
-                        c.getPrecoCx15(),
-                        c.getPrecoLv5(),
-                        c.getPrecoLv10(),
-                        c.getPrecoLv15(),
-                        c.getObservacao(),
-                        c.getDataAtualizacaoCliente()))
+                .map(clienteMapper::toDTO)
                 .collect(Collectors.toList());
     }
 }

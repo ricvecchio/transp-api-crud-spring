@@ -197,6 +197,88 @@ O workflow `/.github/workflows/deploy.yml` executa:
 
 ---
 
+## Preços para entregas aos sábados
+
+Cliente e Pedido aceitam e retornam `precoCx5Sabado`, `precoCx10Sabado`,
+`precoCx15Sabado`, `precoLv5Sabado`, `precoLv10Sabado` e `precoLv15Sabado`
+nos endpoints POST, PUT, GET e listagens, incluindo o backup de clientes.
+São strings de moeda, armazenadas em `VARCHAR(12) NOT NULL`, como os preços
+existentes. Campos novos omitidos ou enviados como `null` são gravados e
+retornados como `""`, inclusive no PUT (não é atualização parcial).
+
+Acrescente este bloco ao payload completo de criação ou atualização de Cliente
+ou Pedido, mantendo os demais campos obrigatórios:
+
+```json
+{
+  "precoCx5Sabado": "100,00",
+  "precoCx10Sabado": "200,00",
+  "precoCx15Sabado": "300,00",
+  "precoLv5Sabado": "110,00",
+  "precoLv10Sabado": "220,00",
+  "precoLv15Sabado": "330,00"
+}
+```
+
+Um [payload completo de Cliente](src/test/resources/cliente-precos-sabado.json)
+está disponível como exemplo. Para criar um Pedido a partir de um Cliente,
+o frontend continua copiando os dados retornados pelo GET do Cliente para o
+payload do Pedido, incluindo os seis preços, `idCliente` e os demais campos
+próprios de Pedido. Não há consulta automática de preços pelo `idCliente`:
+o Pedido preserva o snapshot enviado, independentemente de alterações futuras
+no Cliente.
+
+### Atualização do PostgreSQL
+
+O projeto não usa Flyway/Liquibase. O perfil local usa `ddl-auto=update`,
+mas produção usa `ddl-auto=none`. **Execute o script antes de iniciar a nova
+versão**, também em bases locais que já tenham registros:
+
+```sh
+psql "$DATABASE_URL" -X -v ON_ERROR_STOP=1 \
+  -f src/main/resources/db/scripts/20261021_precos_sabado.sql
+```
+
+Use uma URL de conexão aceita pelo `psql` (não a URL JDBC), apontando para a
+base correta de homologação ou produção. Faça backup antes da execução.
+O script transacional adiciona as doze colunas em `clientes` e `pedidos`,
+preenche registros existentes com `""` e mantém esse valor como padrão para
+inserções de versões antigas. Pode ser reexecutado sem recriar colunas.
+Reinicie a aplicação após a atualização para renovar os caches.
+
+Para conferir a estrutura:
+
+```sql
+SELECT table_name, column_name, data_type, character_maximum_length,
+       is_nullable, column_default
+FROM information_schema.columns
+WHERE table_schema = 'public'
+  AND table_name IN ('clientes', 'pedidos')
+  AND column_name IN (
+      'preco_cx5_sabado', 'preco_cx10_sabado', 'preco_cx15_sabado',
+      'preco_lv5_sabado', 'preco_lv10_sabado', 'preco_lv15_sabado'
+  )
+ORDER BY table_name, column_name;
+```
+
+O resultado deve conter 12 linhas, com tamanho `12` e `is_nullable = 'NO'`.
+
+### Validação
+
+```sh
+# Java 21 e Maven instalados; testes usam H2 isolado, sem acessar o banco local.
+mvn -Dtest=PrecosSabadoMapperTest,PrecosSabadoIntegrationTest test
+mvn clean package
+```
+
+Para validar manualmente em homologação, com um JWT autorizado: crie um Cliente
+com o payload completo do exemplo; consulte seu ID; copie os dados para um
+Pedido e acrescente seus campos obrigatórios; consulte o Pedido; altere os seis
+preços via PUT e confira os GETs, as listagens e `/api/clientes/backup`.
+Repita com os campos omitidos ou nulos para confirmar o retorno `""`.
+
+---
+
 ## Observações
 
 - A API possui cache habilitado para consultas de clientes (`Clientes` e `ClientesBackup`), pedidos e usuários.
