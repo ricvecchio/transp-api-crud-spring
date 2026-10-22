@@ -43,6 +43,10 @@ public class ClienteMapper {
                 cliente.getMangueira(),
                 cliente.getValorAjudante(),
                 cliente.getValorAdicional(),
+                valueOrEmpty(cliente.getValorAjudanteVuc()),
+                valueOrEmpty(cliente.getValorAjudanteToco()),
+                valueOrEmpty(cliente.getAdicionalMangueira()),
+                valueOrEmpty(cliente.getAdicionalBombaGas()),
                 cliente.getPrecoCx5(),
                 cliente.getPrecoCx10(),
                 cliente.getPrecoCx15(),
@@ -98,6 +102,7 @@ public class ClienteMapper {
         cliente.setMangueira(clienteDTO.mangueira());
         cliente.setValorAjudante(clienteDTO.valorAjudante());
         cliente.setValorAdicional(clienteDTO.valorAdicional());
+        aplicarValores(cliente, clienteDTO);
         cliente.setPrecoCx5(clienteDTO.precoCx5());
         cliente.setPrecoCx10(clienteDTO.precoCx10());
         cliente.setPrecoCx15(clienteDTO.precoCx15());
@@ -116,4 +121,19 @@ public class ClienteMapper {
         return cliente;
     }
 
+
+    public void aplicarValores(Cliente cliente, ClienteDTO dto) {
+        cliente.setValorAjudanteVuc(firstNotBlank(dto.valorAjudanteVuc(), dto.valorAjudante()));
+        cliente.setValorAjudanteToco(valueOrEmpty(dto.valorAjudanteToco()));
+        cliente.setAdicionalMangueira(firstNotBlank(dto.adicionalMangueira(), dto.valorAdicional()));
+        cliente.setAdicionalBombaGas(valueOrEmpty(dto.adicionalBombaGas()));
+    }
+
+    private static String firstNotBlank(String preferred, String fallback) {
+        return preferred != null && !preferred.isBlank() ? preferred : valueOrEmpty(fallback);
+    }
+
+    private static String valueOrEmpty(String value) {
+        return value == null ? "" : value;
+    }
 }

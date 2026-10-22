@@ -107,6 +107,22 @@ public class Cliente {
     private String valorAdicional;
 
     @Column(length = 12, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("''")
+    private String valorAjudanteVuc = "";
+
+    @Column(length = 12, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("''")
+    private String valorAjudanteToco = "";
+
+    @Column(length = 12, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("''")
+    private String adicionalMangueira = "";
+
+    @Column(length = 12, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("''")
+    private String adicionalBombaGas = "";
+
+    @Column(length = 12, nullable = false)
     private String precoCx5;
 
     @Column(length = 12, nullable = false)
@@ -437,6 +453,38 @@ public class Cliente {
 
     public void setValorAdicional(String valorAdicional) {
         this.valorAdicional = valorAdicional;
+    }
+
+    public String getValorAjudanteVuc() {
+        return valorAjudanteVuc;
+    }
+
+    public void setValorAjudanteVuc(String valorAjudanteVuc) {
+        this.valorAjudanteVuc = valorAjudanteVuc;
+    }
+
+    public String getValorAjudanteToco() {
+        return valorAjudanteToco;
+    }
+
+    public void setValorAjudanteToco(String valorAjudanteToco) {
+        this.valorAjudanteToco = valorAjudanteToco;
+    }
+
+    public String getAdicionalMangueira() {
+        return adicionalMangueira;
+    }
+
+    public void setAdicionalMangueira(String adicionalMangueira) {
+        this.adicionalMangueira = adicionalMangueira;
+    }
+
+    public String getAdicionalBombaGas() {
+        return adicionalBombaGas;
+    }
+
+    public void setAdicionalBombaGas(String adicionalBombaGas) {
+        this.adicionalBombaGas = adicionalBombaGas;
     }
 
     public String getPrecoCx5() {

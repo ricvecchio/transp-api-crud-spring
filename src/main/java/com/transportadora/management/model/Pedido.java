@@ -109,6 +109,22 @@ public class Pedido {
     @Column(length = 12, nullable = false)
     private String valorAdicional;
 
+    @Column(length = 12, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("''")
+    private String valorAjudanteVuc = "";
+
+    @Column(length = 12, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("''")
+    private String valorAjudanteToco = "";
+
+    @Column(length = 12, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("''")
+    private String adicionalMangueira = "";
+
+    @Column(length = 12, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("''")
+    private String adicionalBombaGas = "";
+
     @Column(length = 10, nullable = false)
     private String volume;
 
@@ -153,6 +169,14 @@ public class Pedido {
 
     @Column(length = 10, nullable = false)
     private String adicional;
+
+    @Column(length = 10, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("'NÃO'")
+    private String ajudanteToco = "NÃO";
+
+    @Column(length = 10, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("'NÃO'")
+    private String bombaGas = "NÃO";
 
     @Column(name = "entrega_sabado", length = 10, nullable = false)
     private String entregaSabado = "NÃO";
@@ -475,6 +499,38 @@ public class Pedido {
         this.valorAdicional = valorAdicional;
     }
 
+    public String getValorAjudanteVuc() {
+        return valorAjudanteVuc;
+    }
+
+    public void setValorAjudanteVuc(String valorAjudanteVuc) {
+        this.valorAjudanteVuc = valorAjudanteVuc;
+    }
+
+    public String getValorAjudanteToco() {
+        return valorAjudanteToco;
+    }
+
+    public void setValorAjudanteToco(String valorAjudanteToco) {
+        this.valorAjudanteToco = valorAjudanteToco;
+    }
+
+    public String getAdicionalMangueira() {
+        return adicionalMangueira;
+    }
+
+    public void setAdicionalMangueira(String adicionalMangueira) {
+        this.adicionalMangueira = adicionalMangueira;
+    }
+
+    public String getAdicionalBombaGas() {
+        return adicionalBombaGas;
+    }
+
+    public void setAdicionalBombaGas(String adicionalBombaGas) {
+        this.adicionalBombaGas = adicionalBombaGas;
+    }
+
     public String getVolume() {
         return volume;
     }
@@ -545,6 +601,22 @@ public class Pedido {
 
     public void setAdicional(String adicional) {
         this.adicional = adicional;
+    }
+
+    public String getAjudanteToco() {
+        return ajudanteToco;
+    }
+
+    public void setAjudanteToco(String ajudanteToco) {
+        this.ajudanteToco = ajudanteToco;
+    }
+
+    public String getBombaGas() {
+        return bombaGas;
+    }
+
+    public void setBombaGas(String bombaGas) {
+        this.bombaGas = bombaGas;
     }
 
     public String getEntregaSabado() {

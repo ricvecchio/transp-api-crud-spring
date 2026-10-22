@@ -97,6 +97,8 @@ Antes de executar o projeto, certifique-se de ter:
 | PUT | `/api/clientes/{idCliente}` | Atualiza cliente | `USER/ADMIN/DESENV` |
 | DELETE | `/api/clientes/{idCliente}` | Remove cliente | `USER/ADMIN/DESENV` |
 
+Campos novos (Cliente e Pedido, String; legado `valorAjudante`/`valorAdicional` mantido): `valorAjudanteVuc`, `valorAjudanteToco`, `adicionalMangueira`, `adicionalBombaGas`; no Pedido também `ajudanteToco` e `bombaGas` (`SIM`/`NÃO`). Script de produção: `src/main/resources/sql/2026-add-valores-ajudante-adicional.sql`.
+
 ### PedidoController 📦
 | Método | Endpoint | Descrição | Autenticação |
 |--------|----------|-----------|--------------|

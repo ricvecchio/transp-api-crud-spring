@@ -137,6 +137,7 @@ public class PedidoService {
                     recordFound.setMangueira(pedidoDTO.mangueira());
                     recordFound.setValorAjudante(pedidoDTO.valorAjudante());
                     recordFound.setValorAdicional(pedidoDTO.valorAdicional());
+                    pedidoMapper.aplicarValores(recordFound, pedidoDTO);
                     recordFound.setVolume(pedidoDTO.volume());
                     recordFound.setPrecoCx5(pedidoDTO.precoCx5());
                     recordFound.setPrecoCx10(pedidoDTO.precoCx10());

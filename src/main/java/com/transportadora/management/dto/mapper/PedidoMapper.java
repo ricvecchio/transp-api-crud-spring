@@ -43,6 +43,10 @@ public class PedidoMapper {
                 pedido.getMangueira(),
                 pedido.getValorAjudante(),
                 pedido.getValorAdicional(),
+                valueOr(pedido.getValorAjudanteVuc(), ""),
+                valueOr(pedido.getValorAjudanteToco(), ""),
+                valueOr(pedido.getAdicionalMangueira(), ""),
+                valueOr(pedido.getAdicionalBombaGas(), ""),
                 pedido.getVolume(),
                 pedido.getPrecoCx5(),
                 pedido.getPrecoCx10(),
@@ -58,6 +62,8 @@ public class PedidoMapper {
                 pedido.getPrecoLv15Sabado(),
                 pedido.getAjudante(),
                 pedido.getAdicional(),
+                valueOr(pedido.getAjudanteToco(), "NÃO"),
+                valueOr(pedido.getBombaGas(), "NÃO"),
                 pedido.getEntregaSabado(),
                 pedido.getExibirPreco(),
                 pedido.getPrecoFinal(),
@@ -108,6 +114,7 @@ public class PedidoMapper {
         pedido.setMangueira(pedidoDTO.mangueira());
         pedido.setValorAjudante(pedidoDTO.valorAjudante());
         pedido.setValorAdicional(pedidoDTO.valorAdicional());
+        aplicarValores(pedido, pedidoDTO);
         pedido.setVolume(pedidoDTO.volume());
         pedido.setPrecoCx5(pedidoDTO.precoCx5());
         pedido.setPrecoCx10(pedidoDTO.precoCx10());
@@ -133,4 +140,21 @@ public class PedidoMapper {
         pedido.setImagemPedido(pedidoDTO.imagemPedido());
         return pedido;
     }
-};
+
+    public void aplicarValores(Pedido pedido, PedidoDTO dto) {
+        pedido.setValorAjudanteVuc(firstNotBlank(dto.valorAjudanteVuc(), dto.valorAjudante()));
+        pedido.setValorAjudanteToco(valueOr(dto.valorAjudanteToco(), ""));
+        pedido.setAdicionalMangueira(firstNotBlank(dto.adicionalMangueira(), dto.valorAdicional()));
+        pedido.setAdicionalBombaGas(valueOr(dto.adicionalBombaGas(), ""));
+        pedido.setAjudanteToco(valueOr(dto.ajudanteToco(), "NÃO"));
+        pedido.setBombaGas(valueOr(dto.bombaGas(), "NÃO"));
+    }
+
+    private static String firstNotBlank(String preferred, String fallback) {
+        return preferred != null && !preferred.isBlank() ? preferred : valueOr(fallback, "");
+    }
+
+    private static String valueOr(String value, String defaultValue) {
+        return value == null ? defaultValue : value;
+    }
+}

@@ -118,6 +118,7 @@ public class ClienteService {
                     recordFound.setMangueira(clienteDTO.mangueira());
                     recordFound.setValorAjudante(clienteDTO.valorAjudante());
                     recordFound.setValorAdicional(clienteDTO.valorAdicional());
+                    clienteMapper.aplicarValores(recordFound, clienteDTO);
                     recordFound.setPrecoCx5(clienteDTO.precoCx5());
                     recordFound.setPrecoCx10(clienteDTO.precoCx10());
                     recordFound.setPrecoCx15(clienteDTO.precoCx15());

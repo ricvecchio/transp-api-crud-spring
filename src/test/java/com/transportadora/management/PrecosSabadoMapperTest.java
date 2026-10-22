@@ -24,7 +24,13 @@ class PrecosSabadoMapperTest {
         for (int i = 0; i < campos().length; i++) {
             payload.put(campos()[i], "R$ " + (100 + i) + ",50");
         }
+        for (String campo : new String[]{"valorAjudanteVuc", "valorAjudanteToco",
+                "adicionalMangueira", "adicionalBombaGas"}) {
+            payload.put(campo, "R$ 1,00");
+        }
         ClienteDTO cliente = json.treeToValue(payload, ClienteDTO.class);
+        payload.put("ajudanteToco", "NÃO");
+        payload.put("bombaGas", "NÃO");
         PedidoDTO pedido = json.treeToValue(payload, PedidoDTO.class);
 
         assertThat(clienteMapper.toDTO(clienteMapper.toEntity(cliente))).isEqualTo(cliente);
