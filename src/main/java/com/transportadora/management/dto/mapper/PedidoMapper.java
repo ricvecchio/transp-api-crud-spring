@@ -43,6 +43,10 @@ public class PedidoMapper {
                 pedido.getMangueira(),
                 pedido.getValorAjudante(),
                 pedido.getValorAdicional(),
+                valueOr(pedido.getValorAjudanteVuc(), ""),
+                valueOr(pedido.getValorAjudanteToco(), ""),
+                valueOr(pedido.getAdicionalMangueira(), ""),
+                valueOr(pedido.getAdicionalBombaGas(), ""),
                 pedido.getVolume(),
                 pedido.getPrecoCx5(),
                 pedido.getPrecoCx10(),
@@ -50,8 +54,18 @@ public class PedidoMapper {
                 pedido.getPrecoLv5(),
                 pedido.getPrecoLv10(),
                 pedido.getPrecoLv15(),
+                pedido.getPrecoCx5Sabado(),
+                pedido.getPrecoCx10Sabado(),
+                pedido.getPrecoCx15Sabado(),
+                pedido.getPrecoLv5Sabado(),
+                pedido.getPrecoLv10Sabado(),
+                pedido.getPrecoLv15Sabado(),
                 pedido.getAjudante(),
                 pedido.getAdicional(),
+                valueOr(pedido.getAjudanteToco(), "NÃO"),
+                valueOr(pedido.getBombaGas(), "NÃO"),
+                pedido.getEntregaSabado(),
+                pedido.getExibirPreco(),
                 pedido.getPrecoFinal(),
                 pedido.getObservacao(),
                 pedido.getObservacao2(),
@@ -100,6 +114,7 @@ public class PedidoMapper {
         pedido.setMangueira(pedidoDTO.mangueira());
         pedido.setValorAjudante(pedidoDTO.valorAjudante());
         pedido.setValorAdicional(pedidoDTO.valorAdicional());
+        aplicarValores(pedido, pedidoDTO);
         pedido.setVolume(pedidoDTO.volume());
         pedido.setPrecoCx5(pedidoDTO.precoCx5());
         pedido.setPrecoCx10(pedidoDTO.precoCx10());
@@ -107,8 +122,16 @@ public class PedidoMapper {
         pedido.setPrecoLv5(pedidoDTO.precoLv5());
         pedido.setPrecoLv10(pedidoDTO.precoLv10());
         pedido.setPrecoLv15(pedidoDTO.precoLv15());
+        pedido.setPrecoCx5Sabado(pedidoDTO.precoCx5Sabado());
+        pedido.setPrecoCx10Sabado(pedidoDTO.precoCx10Sabado());
+        pedido.setPrecoCx15Sabado(pedidoDTO.precoCx15Sabado());
+        pedido.setPrecoLv5Sabado(pedidoDTO.precoLv5Sabado());
+        pedido.setPrecoLv10Sabado(pedidoDTO.precoLv10Sabado());
+        pedido.setPrecoLv15Sabado(pedidoDTO.precoLv15Sabado());
         pedido.setAjudante(pedidoDTO.ajudante());
         pedido.setAdicional(pedidoDTO.adicional());
+        pedido.setEntregaSabado(pedidoDTO.entregaSabado());
+        pedido.setExibirPreco(pedidoDTO.exibirPreco());
         pedido.setPrecoFinal(pedidoDTO.precoFinal());
         pedido.setObservacao(pedidoDTO.observacao());
         pedido.setObservacao2(pedidoDTO.observacao2());
@@ -117,4 +140,21 @@ public class PedidoMapper {
         pedido.setImagemPedido(pedidoDTO.imagemPedido());
         return pedido;
     }
-};
+
+    public void aplicarValores(Pedido pedido, PedidoDTO dto) {
+        pedido.setValorAjudanteVuc(firstNotBlank(dto.valorAjudanteVuc(), dto.valorAjudante()));
+        pedido.setValorAjudanteToco(valueOr(dto.valorAjudanteToco(), ""));
+        pedido.setAdicionalMangueira(firstNotBlank(dto.adicionalMangueira(), dto.valorAdicional()));
+        pedido.setAdicionalBombaGas(valueOr(dto.adicionalBombaGas(), ""));
+        pedido.setAjudanteToco(valueOr(dto.ajudanteToco(), "NÃO"));
+        pedido.setBombaGas(valueOr(dto.bombaGas(), "NÃO"));
+    }
+
+    private static String firstNotBlank(String preferred, String fallback) {
+        return preferred != null && !preferred.isBlank() ? preferred : valueOr(fallback, "");
+    }
+
+    private static String valueOr(String value, String defaultValue) {
+        return value == null ? defaultValue : value;
+    }
+}

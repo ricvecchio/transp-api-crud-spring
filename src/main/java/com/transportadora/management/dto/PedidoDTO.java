@@ -39,6 +39,10 @@ public record PedidoDTO(
         String mangueira,
         String valorAjudante,
         String valorAdicional,
+        String valorAjudanteVuc,
+        String valorAjudanteToco,
+        String adicionalMangueira,
+        String adicionalBombaGas,
         String volume,
         String precoCx5,
         String precoCx10,
@@ -46,12 +50,26 @@ public record PedidoDTO(
         String precoLv5,
         String precoLv10,
         String precoLv15,
+        String precoCx5Sabado,
+        String precoCx10Sabado,
+        String precoCx15Sabado,
+        String precoLv5Sabado,
+        String precoLv10Sabado,
+        String precoLv15Sabado,
         String ajudante,
         String adicional,
+        String ajudanteToco,
+        String bombaGas,
+        String entregaSabado,
+        String exibirPreco,
         String precoFinal,
         String observacao,
         String observacao2,
         String status,
         LocalDateTime dataAtualizacaoPedido,
         String imagemPedido) {
+    public PedidoDTO {
+        entregaSabado = entregaSabado == null ? "NÃO" : entregaSabado;
+        exibirPreco = exibirPreco == null ? "NÃO" : exibirPreco;
+    }
 }

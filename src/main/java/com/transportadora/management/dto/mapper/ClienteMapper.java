@@ -43,12 +43,22 @@ public class ClienteMapper {
                 cliente.getMangueira(),
                 cliente.getValorAjudante(),
                 cliente.getValorAdicional(),
+                valueOrEmpty(cliente.getValorAjudanteVuc()),
+                valueOrEmpty(cliente.getValorAjudanteToco()),
+                valueOrEmpty(cliente.getAdicionalMangueira()),
+                valueOrEmpty(cliente.getAdicionalBombaGas()),
                 cliente.getPrecoCx5(),
                 cliente.getPrecoCx10(),
                 cliente.getPrecoCx15(),
                 cliente.getPrecoLv5(),
                 cliente.getPrecoLv10(),
                 cliente.getPrecoLv15(),
+                cliente.getPrecoCx5Sabado(),
+                cliente.getPrecoCx10Sabado(),
+                cliente.getPrecoCx15Sabado(),
+                cliente.getPrecoLv5Sabado(),
+                cliente.getPrecoLv10Sabado(),
+                cliente.getPrecoLv15Sabado(),
                 cliente.getObservacao(),
                 cliente.getDataAtualizacaoCliente());
     }
@@ -92,16 +102,38 @@ public class ClienteMapper {
         cliente.setMangueira(clienteDTO.mangueira());
         cliente.setValorAjudante(clienteDTO.valorAjudante());
         cliente.setValorAdicional(clienteDTO.valorAdicional());
+        aplicarValores(cliente, clienteDTO);
         cliente.setPrecoCx5(clienteDTO.precoCx5());
         cliente.setPrecoCx10(clienteDTO.precoCx10());
         cliente.setPrecoCx15(clienteDTO.precoCx15());
         cliente.setPrecoLv5(clienteDTO.precoLv5());
         cliente.setPrecoLv10(clienteDTO.precoLv10());
         cliente.setPrecoLv15(clienteDTO.precoLv15());
+        cliente.setPrecoCx5Sabado(clienteDTO.precoCx5Sabado());
+        cliente.setPrecoCx10Sabado(clienteDTO.precoCx10Sabado());
+        cliente.setPrecoCx15Sabado(clienteDTO.precoCx15Sabado());
+        cliente.setPrecoLv5Sabado(clienteDTO.precoLv5Sabado());
+        cliente.setPrecoLv10Sabado(clienteDTO.precoLv10Sabado());
+        cliente.setPrecoLv15Sabado(clienteDTO.precoLv15Sabado());
         cliente.setObservacao(clienteDTO.observacao());
         cliente.setDataAtualizacaoCliente(clienteDTO.dataAtualizacaoCliente());
 
         return cliente;
     }
 
+
+    public void aplicarValores(Cliente cliente, ClienteDTO dto) {
+        cliente.setValorAjudanteVuc(firstNotBlank(dto.valorAjudanteVuc(), dto.valorAjudante()));
+        cliente.setValorAjudanteToco(valueOrEmpty(dto.valorAjudanteToco()));
+        cliente.setAdicionalMangueira(firstNotBlank(dto.adicionalMangueira(), dto.valorAdicional()));
+        cliente.setAdicionalBombaGas(valueOrEmpty(dto.adicionalBombaGas()));
+    }
+
+    private static String firstNotBlank(String preferred, String fallback) {
+        return preferred != null && !preferred.isBlank() ? preferred : valueOrEmpty(fallback);
+    }
+
+    private static String valueOrEmpty(String value) {
+        return value == null ? "" : value;
+    }
 }

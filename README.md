@@ -97,6 +97,8 @@ Antes de executar o projeto, certifique-se de ter:
 | PUT | `/api/clientes/{idCliente}` | Atualiza cliente | `USER/ADMIN/DESENV` |
 | DELETE | `/api/clientes/{idCliente}` | Remove cliente | `USER/ADMIN/DESENV` |
 
+Campos novos (Cliente e Pedido, String; legado `valorAjudante`/`valorAdicional` mantido): `valorAjudanteVuc`, `valorAjudanteToco`, `adicionalMangueira`, `adicionalBombaGas`; no Pedido também `ajudanteToco` e `bombaGas` (`SIM`/`NÃO`). Script de produção: `src/main/resources/sql/2026-add-valores-ajudante-adicional.sql`.
+
 ### PedidoController 📦
 | Método | Endpoint | Descrição | Autenticação |
 |--------|----------|-----------|--------------|
@@ -194,6 +196,137 @@ O workflow `/.github/workflows/deploy.yml` executa:
 3. build do JAR com Maven;
 4. cópia do artefato para VPS via SSH;
 5. restart do serviço systemd `transp-api-crud-spring`.
+
+---
+
+## Preços para entregas aos sábados
+
+Cliente e Pedido aceitam e retornam `precoCx5Sabado`, `precoCx10Sabado`,
+`precoCx15Sabado`, `precoLv5Sabado`, `precoLv10Sabado` e `precoLv15Sabado`
+nos endpoints POST, PUT, GET e listagens, incluindo o backup de clientes.
+São strings de moeda, armazenadas em `VARCHAR(12) NOT NULL`, como os preços
+existentes. Campos novos omitidos ou enviados como `null` são gravados e
+retornados como `""`, inclusive no PUT (não é atualização parcial).
+
+Acrescente este bloco ao payload completo de criação ou atualização de Cliente
+ou Pedido, mantendo os demais campos obrigatórios:
+
+```json
+{
+  "precoCx5Sabado": "100,00",
+  "precoCx10Sabado": "200,00",
+  "precoCx15Sabado": "300,00",
+  "precoLv5Sabado": "110,00",
+  "precoLv10Sabado": "220,00",
+  "precoLv15Sabado": "330,00"
+}
+```
+
+Um [payload completo de Cliente](src/test/resources/cliente-precos-sabado.json)
+está disponível como exemplo. Para criar um Pedido a partir de um Cliente,
+o frontend continua copiando os dados retornados pelo GET do Cliente para o
+payload do Pedido, incluindo os seis preços, `idCliente` e os demais campos
+próprios de Pedido. Não há consulta automática de preços pelo `idCliente`:
+o Pedido preserva o snapshot enviado, independentemente de alterações futuras
+no Cliente.
+
+### Atualização do PostgreSQL
+
+O projeto não usa Flyway/Liquibase. O perfil local usa `ddl-auto=update`,
+mas produção usa `ddl-auto=none`. **Execute o script antes de iniciar a nova
+versão**, também em bases locais que já tenham registros:
+
+```sh
+psql "$DATABASE_URL" -X -v ON_ERROR_STOP=1 \
+  -f src/main/resources/db/scripts/20261021_precos_sabado.sql
+```
+
+Use uma URL de conexão aceita pelo `psql` (não a URL JDBC), apontando para a
+base correta de homologação ou produção. Faça backup antes da execução.
+O script transacional adiciona as doze colunas em `clientes` e `pedidos`,
+preenche registros existentes com `""` e mantém esse valor como padrão para
+inserções de versões antigas. Pode ser reexecutado sem recriar colunas.
+Reinicie a aplicação após a atualização para renovar os caches.
+
+Para conferir a estrutura:
+
+```sql
+SELECT table_name, column_name, data_type, character_maximum_length,
+       is_nullable, column_default
+FROM information_schema.columns
+WHERE table_schema = 'public'
+  AND table_name IN ('clientes', 'pedidos')
+  AND column_name IN (
+      'preco_cx5_sabado', 'preco_cx10_sabado', 'preco_cx15_sabado',
+      'preco_lv5_sabado', 'preco_lv10_sabado', 'preco_lv15_sabado'
+  )
+ORDER BY table_name, column_name;
+```
+
+O resultado deve conter 12 linhas, com tamanho `12` e `is_nullable = 'NO'`.
+
+### Validação
+
+```sh
+# Java 21 e Maven instalados; testes usam H2 isolado, sem acessar o banco local.
+mvn -Dtest=PrecosSabadoMapperTest,PrecosSabadoIntegrationTest test
+mvn clean package
+```
+
+Para validar manualmente em homologação, com um JWT autorizado: crie um Cliente
+com o payload completo do exemplo; consulte seu ID; copie os dados para um
+Pedido e acrescente seus campos obrigatórios; consulte o Pedido; altere os seis
+preços via PUT e confira os GETs, as listagens e `/api/clientes/backup`.
+Repita com os campos omitidos ou nulos para confirmar o retorno `""`.
+
+---
+
+## Opções salvas no Pedido
+
+`entregaSabado` e `exibirPreco` são strings `"SIM"`/`"NÃO"` independentes de
+`ajudante` e `adicional`. São persistidas em `pedidos.entrega_sabado` e
+`pedidos.exibir_preco` (`VARCHAR(10) NOT NULL`) e retornadas no POST, PUT,
+GET `/api/pedidos/{idPedido}`, listagem paginada e `/api/pedidos/ultimos`.
+Ao editar um pedido emitido, o frontend deve usar esses valores retornados,
+sem recalculá-los a partir dos preços ou do cadastro atual do Cliente.
+
+Antes (payload antigo, trecho):
+
+```json
+{
+  "ajudante": "SIM",
+  "adicional": "NÃO"
+}
+```
+
+Depois (acrescentar ao payload completo de criação/atualização):
+
+```json
+{
+  "ajudante": "SIM",
+  "adicional": "NÃO",
+  "entregaSabado": "SIM",
+  "exibirPreco": "NÃO"
+}
+```
+
+Campos novos omitidos ou `null` recebem `"NÃO"`, inclusive no PUT, que
+continua sendo atualização completa. Registros antigos também recebem
+`"NÃO"`; não é possível reconstruir a seleção histórica que não foi salva.
+
+Execute o script antes do deploy, após backup, em cada banco existente
+(inclusive local, antes do JPA auto update):
+
+```sh
+psql "$DATABASE_URL" -X -v ON_ERROR_STOP=1 \
+  -f src/main/resources/db/scripts/20261021_opcoes_pedido.sql
+```
+
+O script é transacional e reexecutável: adiciona as duas colunas, corrige
+nulos e define o padrão `"NÃO"` com restrição `NOT NULL`. Reinicie a API
+para renovar os caches. Os testes de mapper (`PedidoOpcoesMapperTest`) e
+integração (`PrecosSabadoIntegrationTest`) cobrem as quatro combinações,
+POST/PUT/GET/listagens, campos omitidos/nulos e preservação de ajudante/adicional.
 
 ---
 

@@ -137,6 +137,7 @@ public class PedidoService {
                     recordFound.setMangueira(pedidoDTO.mangueira());
                     recordFound.setValorAjudante(pedidoDTO.valorAjudante());
                     recordFound.setValorAdicional(pedidoDTO.valorAdicional());
+                    pedidoMapper.aplicarValores(recordFound, pedidoDTO);
                     recordFound.setVolume(pedidoDTO.volume());
                     recordFound.setPrecoCx5(pedidoDTO.precoCx5());
                     recordFound.setPrecoCx10(pedidoDTO.precoCx10());
@@ -144,8 +145,16 @@ public class PedidoService {
                     recordFound.setPrecoLv5(pedidoDTO.precoLv5());
                     recordFound.setPrecoLv10(pedidoDTO.precoLv10());
                     recordFound.setPrecoLv15(pedidoDTO.precoLv15());
+                    recordFound.setPrecoCx5Sabado(pedidoDTO.precoCx5Sabado());
+                    recordFound.setPrecoCx10Sabado(pedidoDTO.precoCx10Sabado());
+                    recordFound.setPrecoCx15Sabado(pedidoDTO.precoCx15Sabado());
+                    recordFound.setPrecoLv5Sabado(pedidoDTO.precoLv5Sabado());
+                    recordFound.setPrecoLv10Sabado(pedidoDTO.precoLv10Sabado());
+                    recordFound.setPrecoLv15Sabado(pedidoDTO.precoLv15Sabado());
                     recordFound.setAjudante(pedidoDTO.ajudante());
                     recordFound.setAdicional(pedidoDTO.adicional());
+                    recordFound.setEntregaSabado(pedidoDTO.entregaSabado());
+                    recordFound.setExibirPreco(pedidoDTO.exibirPreco());
                     recordFound.setPrecoFinal(pedidoDTO.precoFinal());
                     recordFound.setObservacao(pedidoDTO.observacao());
                     recordFound.setObservacao2(pedidoDTO.observacao2());

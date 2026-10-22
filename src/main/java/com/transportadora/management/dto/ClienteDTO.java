@@ -38,16 +38,25 @@ public record ClienteDTO(
         String mangueira,
         String valorAjudante,
         String valorAdicional,
+        String valorAjudanteVuc,
+        String valorAjudanteToco,
+        String adicionalMangueira,
+        String adicionalBombaGas,
         String precoCx5,
         String precoCx10,
         String precoCx15,
         String precoLv5,
         String precoLv10,
         String precoLv15,
+        String precoCx5Sabado,
+        String precoCx10Sabado,
+        String precoCx15Sabado,
+        String precoLv5Sabado,
+        String precoLv10Sabado,
+        String precoLv15Sabado,
         String observacao,
         LocalDateTime dataAtualizacaoCliente) {
 }
-
 
 
 

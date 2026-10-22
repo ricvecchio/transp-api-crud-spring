@@ -107,6 +107,22 @@ public class Cliente {
     private String valorAdicional;
 
     @Column(length = 12, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("''")
+    private String valorAjudanteVuc = "";
+
+    @Column(length = 12, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("''")
+    private String valorAjudanteToco = "";
+
+    @Column(length = 12, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("''")
+    private String adicionalMangueira = "";
+
+    @Column(length = 12, nullable = false)
+    @org.hibernate.annotations.ColumnDefault("''")
+    private String adicionalBombaGas = "";
+
+    @Column(length = 12, nullable = false)
     private String precoCx5;
 
     @Column(length = 12, nullable = false)
@@ -124,6 +140,24 @@ public class Cliente {
     @Column(length = 12, nullable = false)
     private String precoLv15;
 
+    @Column(name = "preco_cx5_sabado", length = 12, nullable = false)
+    private String precoCx5Sabado = "";
+
+    @Column(name = "preco_cx10_sabado", length = 12, nullable = false)
+    private String precoCx10Sabado = "";
+
+    @Column(name = "preco_cx15_sabado", length = 12, nullable = false)
+    private String precoCx15Sabado = "";
+
+    @Column(name = "preco_lv5_sabado", length = 12, nullable = false)
+    private String precoLv5Sabado = "";
+
+    @Column(name = "preco_lv10_sabado", length = 12, nullable = false)
+    private String precoLv10Sabado = "";
+
+    @Column(name = "preco_lv15_sabado", length = 12, nullable = false)
+    private String precoLv15Sabado = "";
+
     @Column(nullable = false)
     private String observacao;
 
@@ -131,6 +165,54 @@ public class Cliente {
     private LocalDateTime dataAtualizacaoCliente;
 
     public Cliente() {
+    }
+
+    public String getPrecoCx5Sabado() {
+        return precoCx5Sabado;
+    }
+
+    public void setPrecoCx5Sabado(String precoCx5Sabado) {
+        this.precoCx5Sabado = precoCx5Sabado == null ? "" : precoCx5Sabado;
+    }
+
+    public String getPrecoCx10Sabado() {
+        return precoCx10Sabado;
+    }
+
+    public void setPrecoCx10Sabado(String precoCx10Sabado) {
+        this.precoCx10Sabado = precoCx10Sabado == null ? "" : precoCx10Sabado;
+    }
+
+    public String getPrecoCx15Sabado() {
+        return precoCx15Sabado;
+    }
+
+    public void setPrecoCx15Sabado(String precoCx15Sabado) {
+        this.precoCx15Sabado = precoCx15Sabado == null ? "" : precoCx15Sabado;
+    }
+
+    public String getPrecoLv5Sabado() {
+        return precoLv5Sabado;
+    }
+
+    public void setPrecoLv5Sabado(String precoLv5Sabado) {
+        this.precoLv5Sabado = precoLv5Sabado == null ? "" : precoLv5Sabado;
+    }
+
+    public String getPrecoLv10Sabado() {
+        return precoLv10Sabado;
+    }
+
+    public void setPrecoLv10Sabado(String precoLv10Sabado) {
+        this.precoLv10Sabado = precoLv10Sabado == null ? "" : precoLv10Sabado;
+    }
+
+    public String getPrecoLv15Sabado() {
+        return precoLv15Sabado;
+    }
+
+    public void setPrecoLv15Sabado(String precoLv15Sabado) {
+        this.precoLv15Sabado = precoLv15Sabado == null ? "" : precoLv15Sabado;
     }
 
     public Long getIdCliente() {
@@ -371,6 +453,38 @@ public class Cliente {
 
     public void setValorAdicional(String valorAdicional) {
         this.valorAdicional = valorAdicional;
+    }
+
+    public String getValorAjudanteVuc() {
+        return valorAjudanteVuc;
+    }
+
+    public void setValorAjudanteVuc(String valorAjudanteVuc) {
+        this.valorAjudanteVuc = valorAjudanteVuc;
+    }
+
+    public String getValorAjudanteToco() {
+        return valorAjudanteToco;
+    }
+
+    public void setValorAjudanteToco(String valorAjudanteToco) {
+        this.valorAjudanteToco = valorAjudanteToco;
+    }
+
+    public String getAdicionalMangueira() {
+        return adicionalMangueira;
+    }
+
+    public void setAdicionalMangueira(String adicionalMangueira) {
+        this.adicionalMangueira = adicionalMangueira;
+    }
+
+    public String getAdicionalBombaGas() {
+        return adicionalBombaGas;
+    }
+
+    public void setAdicionalBombaGas(String adicionalBombaGas) {
+        this.adicionalBombaGas = adicionalBombaGas;
     }
 
     public String getPrecoCx5() {
